@@ -7,6 +7,7 @@
 //
 
 #import "YLSaleViewController.h"
+#import "YLHeaderView.h"
 
 @interface YLSaleViewController ()
 
@@ -20,11 +21,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"卖车进度" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    
 }
 
 - (void)rightBarButtonItemClick {

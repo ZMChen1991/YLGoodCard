@@ -16,7 +16,16 @@
 #define YLMargin 10
 
 // 屏幕宽高
-#define YLScreenWidth self.frame.size.width
-#define YLScreenheight self.fram.size.height
+#define YLScreenWidth self.view.frame.size.width
+#define YLScreenheight self.view.fram.size.height
+
+
+// RGB颜色
+#define YLColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+// 随机色
+#define YLRandomColor YLColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+
+#import "UIView+Extension.h"
+
 
 #endif /* PrefixHeader_pch */

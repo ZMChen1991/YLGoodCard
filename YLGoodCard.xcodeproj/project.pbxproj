@@ -23,6 +23,7 @@
 		8A0E3F6D218AA82700275131 /* YLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0E3F6C218AA82700275131 /* YLTableViewCell.m */; };
 		8A0E3F70218AA85400275131 /* YLCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0E3F6F218AA85400275131 /* YLCellModel.m */; };
 		8A0E3F75218AEA8600275131 /* YLHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0E3F74218AEA8600275131 /* YLHeaderView.m */; };
+		8A0E3F79218AEC8400275131 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A0E3F77218AEC8400275131 /* UIView+Extension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,8 @@
 		8A0E3F72218AE60300275131 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		8A0E3F73218AEA8600275131 /* YLHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLHeaderView.h; sourceTree = "<group>"; };
 		8A0E3F74218AEA8600275131 /* YLHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLHeaderView.m; sourceTree = "<group>"; };
+		8A0E3F77218AEC8400275131 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		8A0E3F78218AEC8400275131 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,9 +265,19 @@
 		8A0E3F71218AE5E700275131 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				8A0E3F76218AEC5C00275131 /* Catory */,
 				8A0E3F72218AE60300275131 /* PrefixHeader.pch */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		8A0E3F76218AEC5C00275131 /* Catory */ = {
+			isa = PBXGroup;
+			children = (
+				8A0E3F78218AEC8400275131 /* UIView+Extension.h */,
+				8A0E3F77218AEC8400275131 /* UIView+Extension.m */,
+			);
+			path = Catory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,6 +361,7 @@
 				8A0E3F42218A940800275131 /* YLTabBarController.m in Sources */,
 				8A0E3F4E218A94D800275131 /* YLSaleViewController.m in Sources */,
 				8A0E3F6A218AA50D00275131 /* PictureRotate.m in Sources */,
+				8A0E3F79218AEC8400275131 /* UIView+Extension.m in Sources */,
 				8A0E3F6D218AA82700275131 /* YLTableViewCell.m in Sources */,
 				8A0E3F2C218A926F00275131 /* AppDelegate.m in Sources */,
 				8A0E3F51218A95F300275131 /* YLMineController.m in Sources */,
@@ -503,6 +517,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
 		};
@@ -523,6 +538,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
 		};

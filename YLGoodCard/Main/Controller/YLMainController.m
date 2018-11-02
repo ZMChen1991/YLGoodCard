@@ -10,6 +10,7 @@
 #import "YLTitleButton.h"
 #import "PictureRotate.h"
 #import "YLTableViewCell.h"
+#import "YLHeaderView.h"
 
 #define screenW self.view.frame.size.width
 #define screenH self.view.frame.size.height
@@ -26,6 +27,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+   
     
     [self setNav];
     
@@ -34,8 +36,9 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    NSLog(@"%@", self.navigationController.navigationBar);
+
+    YLHeaderView *headerView = [[YLHeaderView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 120)];
+    self.tableView.tableHeaderView = headerView;
 }
 
 - (void)didReceiveMemoryWarning {
