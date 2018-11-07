@@ -1,7 +1,8 @@
 target 'YLGoodCard' do
 
-pod 'AMapLocation'
+#pod 'AMapLocation'
 
-#pod 'SDWebImage'
+pod 'SDWebImage'
+pod 'Masonry'
 
 end

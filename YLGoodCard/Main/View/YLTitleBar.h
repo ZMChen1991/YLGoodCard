@@ -1,5 +1,5 @@
 //
-//  YLTitleButton.h
+//  YLTitleBar.h
 //  YLGoodCard
 //
 //  Created by lm on 2018/11/1.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YLTitleButton : UIButton
+@interface YLTitleBar : UIButton
 
 @end

@@ -32,7 +32,6 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        
     }
     return self;
 }
@@ -65,7 +64,7 @@
     _rightImageView = rightImageView;
     
     UIPageControl *pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, viewH - 20, viewW, 20)];
-    pageControl.numberOfPages = _images.count;
+    pageControl.numberOfPages = self.images.count;
     pageControl.currentPage = _currentPage;
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.pageIndicatorTintColor = [UIColor whiteColor];
@@ -78,13 +77,28 @@
     
     _currentPage = 0;// 默认是第一张图片
     
-    _leftImageView.image = [UIImage imageNamed:_images[_images.count - 1]];
-    _middleImageView.image = [UIImage imageNamed:_images[_currentPage]];
-    _rightImageView.image = [UIImage imageNamed:_images[_currentPage + 1]];
+    _leftImageView.image = [UIImage imageNamed:self.images[_images.count - 1]];
+    _middleImageView.image = [UIImage imageNamed:self.images[_currentPage]];
+    _rightImageView.image = [UIImage imageNamed:self.images[_currentPage + 1]];
 }
 
 #pragma mark UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    // 设置ScrollView水平移动
+    CGPoint contentOffset = scrollView.contentOffset;
+    NSLog(@"%f", contentOffset.x);
+    contentOffset.y = 0;
+    if (contentOffset.x < 0) {
+        contentOffset.x = 0;
+    }
+    // 这里还需要设置contentOffset.x的偏移量
+//    if (contentOffset.x > 2 * self.frame.size.width) {
+//        contentOffset.x = self.frame.size.width;
+//    }
+    scrollView.contentOffset = contentOffset;
+
+    
     
     // 拖拽的时候需要暂停定时器，以免在拖拽过程中出现轮转
     [self resumeTimer];
@@ -103,7 +117,6 @@
     
 //    NSLog(@"scrollViewDidEndDragging:%f",scrollView.contentOffset.x);
     CGPoint contentOffset = scrollView.contentOffset;
-//    NSLog(@"%f", contentOffset.x);
     [self changeCurrent:contentOffset];
     
     // 结束拖拽的时候开启定时器

@@ -17,15 +17,42 @@
 
 // 屏幕宽高
 #define YLScreenWidth self.view.frame.size.width
-#define YLScreenheight self.view.fram.size.height
+#define YLScreenHeight self.view.frame.size.height
 
+// 左右上下边距
+#define YLLeftMargin 15
+#define YLRighthMargin YLLeftMargin
+#define YLTopMargin 12
+#define YLBottomMargin YLTopMargin
+
+// 文本与文本间距
+#define textMargin 5
+
+
+#define weakSelf __weak typeof(self) weakSelf = self
+
+// 用户信息路径
+#define YLManagerInfoPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"managerInfo.archive"]
 
 // RGB颜色
 #define YLColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 // 随机色
 #define YLRandomColor YLColor(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
 
+// 是否为iOS7
+#define iOS7 ([[UIDevice currentDevice].systemVersion doubleValue] >= 7.0)
+
+// 头文件
+
+#import "YLSingleton.h"
+#import "UIImage+Extension.h"
 #import "UIView+Extension.h"
+
+//1. 对于约束参数可以省去"mas_"
+#define MAS_SHORTHAND
+//2. 对于默认的约束参数自动装箱
+#define MAS_SHORTHAND_GLOBALS
+#import "Masonry.h"
 
 
 #endif /* PrefixHeader_pch */
