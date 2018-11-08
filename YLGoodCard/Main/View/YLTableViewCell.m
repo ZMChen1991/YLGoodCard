@@ -53,20 +53,20 @@
     self.cellImage = imageView;
     
     UILabel *nameL = [[UILabel alloc] init];
-    nameL.textColor = YLColor(116.f, 116.f, 116.f);
+    nameL.textColor = [UIColor blackColor];
     nameL.font = [UIFont systemFontOfSize:14];
     [self addSubview:nameL];
     self.nameL = nameL;
     
     UILabel *subtitleL = [[UILabel alloc] init];
-    subtitleL.textColor = YLColor(116.f, 116.f, 116.f);
+    subtitleL.textColor = [UIColor blackColor];
     subtitleL.font = [UIFont systemFontOfSize:14];
     [self addSubview:subtitleL];
     self.subtitleL = subtitleL;
     
     UILabel *priceL = [[UILabel alloc] init];
     priceL.textColor = YLColor(116.f, 116.f, 116.f);
-    priceL.font = [UIFont systemFontOfSize:14];
+    priceL.font = [UIFont systemFontOfSize:10];
     [self addSubview:priceL];
     self.priceL = priceL;
     
@@ -80,7 +80,7 @@
     [self addSubview:line];
     self.line = line;
     
-    self.cellImage.backgroundColor = [UIColor redColor];
+//    self.cellImage.backgroundColor = [UIColor redColor];
 //    self.nameL.backgroundColor = [UIColor redColor];
 //    self.subtitleL.backgroundColor = [UIColor redColor];
 //    self.priceL.backgroundColor = [UIColor redColor];
@@ -92,67 +92,46 @@
     
     [super layoutSubviews];
     
-    self.cellImage.frame = CGRectMake(10, 10, 150, 120);
-//    [self.cellImage makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.bottom.equalTo(YLTopMargin);
-//        make.left.equalTo(YLLeftMargin);
-//        make.width.equalTo(120);
-//        make.height.equalTo(60);
-//    }];
-//
-//    [self.nameL makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(YLTopMargin);
-//        make.right.equalTo(-YLLeftMargin);
-//        make.left.equalTo(self.cellImage.right).equalTo(YLLeftMargin);
-//        make.height.equalTo(34);
-//    }];
-//
-//    [self.subtitleL makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.nameL.bottom).equalTo(textMargin);
-//        make.left.right.equalTo(self.nameL);
-//        make.height.equalTo(17);
-//    }];
-//
-//    [self.secondPriceL makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(self.nameL);
-//        make.top.equalTo(self.subtitleL.bottom).equalTo(textMargin);
-//        make.bottom.equalTo(YLBottomMargin);
-//        make.width.equalTo(64);
-//    }];
-//
-//    [self.priceL makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.secondPriceL).equalTo(textMargin);
-//        make.left.equalTo(self.secondPriceL.right).equalTo(textMargin);
-//        make.right.equalTo(YLTopMargin);
-//        make.bottom.equalTo(YLBottomMargin);
-//    }];
-//
-//    [self.line makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.cellImage.bottom).equalTo(YLTopMargin);
-//        make.height.equalTo(1);
-//        make.left.right.equalTo(0);
-//    }];
+    if (self.type == YLTableViewCellTypeSmallImage) {
+        self.cellImage.frame = CGRectMake(YLLeftMargin, YLTopMargin, 120, 86);
+        
+        float nameLx = CGRectGetMaxX(self.cellImage.frame) + YLLeftMargin;
+        self.nameL.frame = CGRectMake(nameLx, YLTopMargin, 213, 34);
+        self.nameL.numberOfLines = 0;
+        self.nameL.lineBreakMode = NSLineBreakByWordWrapping;
+        
+        float subtitleLx = nameLx;
+        float subtitleLy = CGRectGetMaxY(self.nameL.frame) + 5;
+        self.subtitleL.frame = CGRectMake(subtitleLx, subtitleLy, 95, 17);
+        
+        float secondPriceLx = subtitleLx;
+        float secondPriceLy = CGRectGetMaxY(self.subtitleL.frame) + 5;
+        self.secondPriceL.frame = CGRectMake(secondPriceLx, secondPriceLy, 64, 25);
+        
+        float priceLx = CGRectGetMaxX(self.secondPriceL.frame) + YLMargin;
+        float priceLy = secondPriceLy;
+        self.priceL.frame = CGRectMake(priceLx, priceLy, 100, 25);
+        
+        float liney = CGRectGetMaxY(self.cellImage.frame) + YLMargin;
+        float width = self.bounds.size.width;
+        self.line.frame = CGRectMake(0, liney, width, 1);
+    } else {
+        
+        self.cellImage.frame = CGRectMake(YLLeftMargin, YLLeftMargin, self.frame.size.width - 2 * YLLeftMargin, 228);
+        
+        self.nameL.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(self.cellImage.frame) + YLLeftMargin, self.frame.size.width - 2 *YLLeftMargin, 17);
+        
+        self.subtitleL.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(self.nameL.frame) + 5, self.frame.size.width - 2 * YLLeftMargin, 17);
+        
+        self.secondPriceL.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(self.subtitleL.frame) + 5, 64, 25);
+
+        self.priceL.frame = CGRectMake(CGRectGetMaxX(self.secondPriceL.frame) + 5, CGRectGetMaxY(self.subtitleL.frame) + 10, 71, 17);
+        
+        float liney = CGRectGetMaxY(self.priceL.frame) + YLLeftMargin;
+        float width = self.bounds.size.width;
+        self.line.frame = CGRectMake(0, liney, width, 1);
+    }
     
-    float nameLx = CGRectGetMaxX(self.cellImage.frame) + YLMargin;
-    self.nameL.frame = CGRectMake(nameLx, 10, 200, 60);
-    self.nameL.numberOfLines = 0;
-    self.nameL.lineBreakMode = NSLineBreakByWordWrapping;
-
-    float subtitleLx = nameLx;
-    float subtitleLy = CGRectGetMaxY(self.nameL.frame) + YLMargin;
-    self.subtitleL.frame = CGRectMake(subtitleLx, subtitleLy, 100, 20);
-
-    float secondPriceLx = subtitleLx;
-    float secondPriceLy = CGRectGetMaxY(self.subtitleL.frame) + YLMargin;
-    self.secondPriceL.frame = CGRectMake(secondPriceLx, secondPriceLy, 100, 20);
-
-    float priceLx = CGRectGetMaxX(self.secondPriceL.frame) + YLMargin;
-    float priceLy = secondPriceLy;
-    self.priceL.frame = CGRectMake(priceLx, priceLy, 100, 20);
-
-    float liney = CGRectGetMaxY(self.cellImage.frame) + YLMargin;
-    float width = self.bounds.size.width;
-    self.line.frame = CGRectMake(0, liney, width, 1);
 }
 
 - (void)setCellModel:(YLCellModel *)cellModel {

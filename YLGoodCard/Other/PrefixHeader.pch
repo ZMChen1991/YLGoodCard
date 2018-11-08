@@ -16,8 +16,8 @@
 #define YLMargin 10
 
 // 屏幕宽高
-#define YLScreenWidth self.view.frame.size.width
-#define YLScreenHeight self.view.frame.size.height
+#define YLScreenWidth [UIScreen mainScreen].bounds.size.width
+#define YLScreenHeight [UIScreen mainScreen].bounds.size.height
 
 // 左右上下边距
 #define YLLeftMargin 15
@@ -47,6 +47,7 @@
 #import "YLSingleton.h"
 #import "UIImage+Extension.h"
 #import "UIView+Extension.h"
+#import "NSString+Extension.h"
 
 //1. 对于约束参数可以省去"mas_"
 #define MAS_SHORTHAND

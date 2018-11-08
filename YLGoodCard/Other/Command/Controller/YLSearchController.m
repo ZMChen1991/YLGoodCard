@@ -8,9 +8,7 @@
 
 #import "YLSearchController.h"
 #import "YLSearchBar.h"
-#import "YLButton.h"
-#import "YLTableHeaderView.h"
-#import "YLTableHeaderModel.h"
+#import "YLCondition.h"
 
 @interface YLSearchController ()
 
@@ -26,29 +24,19 @@
     searchBar.width = 200;
     searchBar.height = 30;
     self.navigationItem.titleView = searchBar;
+
+    YLCondition *btn = [YLCondition buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(100, 100, 200, 50);
+    btn.type = YLConditionTypeBlue;
+    [btn setTitle:@"热售车" forState:UIControlStateNormal];
+    [self.view addSubview:btn];
     
-//    YLButton *btn = [YLButton buttonWithType:UIButtonTypeCustom];
-//    btn.frame = CGRectMake(100, 200, 150, 30);
-//    btn.backgroundColor = [UIColor yellowColor];
-//    [btn setTitle:@"查看更多参数配置" forState:UIControlStateNormal];
-//    [btn setImage:[UIImage imageNamed:@" "] forState:UIControlStateNormal];
-//    btn.titleLabel.backgroundColor = [UIColor greenColor];
-//    btn.imageView.backgroundColor = [UIColor redColor];
-//    [self.view addSubview:btn];
+    YLCondition *btn1 = [YLCondition buttonWithType:UIButtonTypeCustom];
+    btn1.frame = CGRectMake(100, 200, 200, 50);
+    btn1.type = YLConditionTypeWhite;
+    [btn1 setTitle:@"热卖车" forState:UIControlStateNormal];
+    [self.view addSubview:btn1];
     
-    YLTableHeaderModel *model =[[YLTableHeaderModel alloc] init];
-    model.title = @"热门二手车";
-    model.subtitle = @"查看全部";
-//    model.icon = @"";
-    
-    YLTableHeaderView *view = [[YLTableHeaderView alloc] initWithFrame:CGRectMake(15, 100, self.view.frame.size.width-30, 35)];
-//    view.tableHeadertype = YLTableHeaderTypeTitle;
-//    view.tableHeadertype = YLTableHeaderTypeImage;
-    view.tableHeadertype = YLTableHeaderTypeSubtitle;
-//    view.tableHeadertype = YLTableHeaderTypeNone;
-    view.tableHeaderModel = model;
-//    view.backgroundColor = [UIColor redColor];
-    [self.view addSubview:view];
     
 }
 

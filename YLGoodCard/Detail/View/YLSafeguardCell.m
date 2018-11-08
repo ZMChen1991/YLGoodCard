@@ -17,15 +17,63 @@
 
 @implementation YLSafeguardCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
++ (instancetype)cellWithTable:(UITableView *)tableView {
+    
+    static NSString *ID = @"cellID";
+    YLSafeguardCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (!cell) {
+        cell = [[YLSafeguardCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+    }
+    return cell;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+//        self.backgroundColor = [UIColor redColor];
+        [self setupUI];
+        
+//        NSLog(@"%@", self);
+    }
+    return self;
+}
 
-    // Configure the view for the selected state
+- (void)setupUI {
+    
+    NSArray *array = @[@"售后保障", @"30天可退", @"调表车赔付", @"禁售抢盗车"];
+    float width = (self.frame.size.width - 2 * YLLeftMargin) / array.count;
+    float height = 80;
+    for (int i = 0; i < array.count; i++) {
+        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(i * width + YLLeftMargin, YLLeftMargin, width, height)];
+        [btn setTitle:array[i] forState:UIControlStateNormal];
+        [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+        [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
+        [btn setBackgroundColor:YLRandomColor];
+        [self addSubview:btn];
+    }
+    UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(YLLeftMargin, height, self.frame.size.width - 2 * YLLeftMargin, height)];
+    image.backgroundColor = [UIColor redColor];
+    [self addSubview:image];
+    self.provideView = image;
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(image.frame), self.frame.size.width, 1)];
+    [self addSubview:line];
+}
+
+- (void)btnClick {
+    NSLog(@"click");
+    self.provideView.backgroundColor = YLRandomColor;
+}
+
+- (float)height {
+    return 160;
+}
+
+// cell获取的宽不对，这里重设宽
+- (void)setFrame:(CGRect)frame {
+    frame.size.width = YLScreenWidth;
+    [super setFrame:frame];
 }
 
 @end

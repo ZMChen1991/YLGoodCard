@@ -9,9 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "YLCellModel.h"
 
+typedef NS_ENUM(NSInteger, YLTableViewCellType) {
+    YLTableViewCellTypeSmallImage,
+    YLTableViewCellTypeLargeImage,
+};
+
 @interface YLTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) YLCellModel *cellModel;
+@property (nonatomic, assign) YLTableViewCellType type;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 

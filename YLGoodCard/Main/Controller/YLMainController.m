@@ -33,7 +33,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-   
+    // 不自动调节滚动区域
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self setNav];
     
@@ -41,6 +42,7 @@
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.bounces = NO; // 禁止弹跳
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     NSArray *images = @[@"pic_1.jpeg", @"pic_2.jpeg", @"pic_3.jpeg", @"pic_4.jpeg"];
@@ -83,7 +85,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 141;
+    return 110;
 }
 
 - (void)checkMore {
@@ -96,11 +98,11 @@
 - (void)setNav {
     
     // 设置导航栏透明
-    [self.navigationController.navigationBar setTranslucent:YES];
-    // 设置导航栏背景为空
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    // 设置导航栏底部线条为空
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//    [self.navigationController.navigationBar setTranslucent:YES];
+//    // 设置导航栏背景为空
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    // 设置导航栏底部线条为空
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
     // 添加左右导航栏按钮
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"阳江" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonItemClick)];
@@ -110,7 +112,6 @@
     YLTitleBar *titleBtn = [[YLTitleBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
     [titleBtn setTitle:@"    搜索您想要的车   " forState:UIControlStateNormal];
     [titleBtn addTarget:self action:@selector(titleClick) forControlEvents:UIControlEventTouchUpInside];
-    titleBtn.backgroundColor = YLColor(239.f, 242.f, 247.f);
     self.navigationItem.titleView = titleBtn;
 }
 

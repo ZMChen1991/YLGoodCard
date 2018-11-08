@@ -14,12 +14,14 @@
     
     self = [super initWithFrame:frame];
     if (self) {
-        [self setTitleColor:YLColor(193.f, 198.f, 205.f) forState:UIControlStateNormal];
+        [self setTitleColor:YLColor(155.f, 155.f, 155.f	) forState:UIControlStateNormal];
         self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        self.layer.cornerRadius = 15.0;
+        self.layer.cornerRadius = 5.0;
         self.layer.masksToBounds = YES;
         [self setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         [self setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
+        self.alpha = 0.5;
+        self.backgroundColor = YLColor(255.f, 255.f, 255.f);
     }
     return self;
 }

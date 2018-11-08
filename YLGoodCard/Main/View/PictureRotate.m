@@ -87,19 +87,12 @@
     
     // 设置ScrollView水平移动
     CGPoint contentOffset = scrollView.contentOffset;
-    NSLog(@"%f", contentOffset.x);
     contentOffset.y = 0;
     if (contentOffset.x < 0) {
         contentOffset.x = 0;
     }
-    // 这里还需要设置contentOffset.x的偏移量
-//    if (contentOffset.x > 2 * self.frame.size.width) {
-//        contentOffset.x = self.frame.size.width;
-//    }
     scrollView.contentOffset = contentOffset;
 
-    
-    
     // 拖拽的时候需要暂停定时器，以免在拖拽过程中出现轮转
     [self resumeTimer];
     

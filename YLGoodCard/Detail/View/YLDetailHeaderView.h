@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YLDetailHeaderView : UITableViewHeaderFooterView
+@interface YLDetailHeaderView : UIView
 
 @end

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YLDetailController : UITableViewController
+@interface YLDetailController : UIViewController
 
 @end

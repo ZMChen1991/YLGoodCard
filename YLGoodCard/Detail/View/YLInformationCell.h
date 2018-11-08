@@ -6,8 +6,14 @@
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
+// 基本信息
+
 #import <UIKit/UIKit.h>
 
 @interface YLInformationCell : UITableViewCell
+
+@property (nonatomic, assign) float height;
+
++ (instancetype)cellWithTable:(UITableView *)tableView;
 
 @end

@@ -9,7 +9,7 @@
 #import "YLMineController.h"
 #import "YLTableViewCell.h"
 
-#import "YLLinkageView.h"
+#import "YLCustomPrice.h"
 
 //1. 对于约束参数可以省去"mas_"
 #define MAS_SHORTHAND
@@ -37,13 +37,11 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"消息" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
     
-//    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, screenW, screenH)];
-//    [self.view addSubview:self.tableView];
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource = self;
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
-
+    
+    YLCustomPrice *view = [[YLCustomPrice alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 400)];
+    
+    [self.view addSubview:view];
+    
 }
 
 

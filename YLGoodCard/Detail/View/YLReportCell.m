@@ -10,15 +10,15 @@
 
 @implementation YLReportCell
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
++ (instancetype)cellWithTable:(UITableView *)tableView {
+    
+    static NSString *ID = @"cellID";
+    YLReportCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (!cell) {
+        cell = [[YLReportCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+    }
+    return cell;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 @end
