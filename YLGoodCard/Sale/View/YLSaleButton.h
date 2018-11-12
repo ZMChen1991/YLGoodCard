@@ -12,7 +12,7 @@
 
 @protocol YLSaleButtonDelegate <NSObject>
 
-- (void)pushController;
+- (void)pushController:(YLSaleButton *)sender;
 
 @end
 

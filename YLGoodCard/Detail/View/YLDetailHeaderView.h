@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLCondition.h"
 
 @interface YLDetailHeaderView : UIView
+
+@property (nonatomic, strong) YLCondition *bargain;// 砍价
 
 @end

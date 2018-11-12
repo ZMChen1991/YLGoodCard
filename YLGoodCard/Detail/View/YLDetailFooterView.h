@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLCondition.h"
 
 @interface YLDetailFooterView : UIView
+
+@property (nonatomic, strong) YLCondition *bargain;
+@property (nonatomic, strong) YLCondition *order;
 
 @end

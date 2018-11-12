@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+//typedef NS_ENUM(NSInteger, YLButtonType) {
+//    YLButtonTypeRight, // 图片右
+//    YLButtonTypeLeft, // 左
+//    YLButtonTypeUp, // 上
+//    YLButtonTypeDown,// 下
+//};
+
 @class YLButton;
 @protocol YLButtonDelegate <NSObject>
 
@@ -17,6 +24,8 @@
 
 @interface YLButton : UIButton
 
-@property (nonatomic, copy) id<YLButtonDelegate> delegate;
+@property (nonatomic, weak) id<YLButtonDelegate> delegate;
+
+//@property (nonatomic, assign) YLButtonType type;
 
 @end

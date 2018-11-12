@@ -8,20 +8,13 @@
 
 #import "YLMineController.h"
 #import "YLTableViewCell.h"
+#import "YLMineHeader.h"
+#import "YLDetailController.h"
+#import "YLFunctionView.h"
+#import "YLSuggestionController.h"
+#import "YLLoginController.h"
 
-#import "YLCustomPrice.h"
-
-//1. 对于约束参数可以省去"mas_"
-#define MAS_SHORTHAND
-//2. 对于默认的约束参数自动装箱
-#define MAS_SHORTHAND_GLOBALS
-
-#import "Masonry.h"
-
-#define screenW self.view.frame.size.width
-#define screenH self.view.frame.size.height
-
-@interface YLMineController () <UITableViewDelegate, UITableViewDataSource>
+@interface YLMineController () <UITableViewDelegate, UITableViewDataSource, YLFunctionViewDelegate, YLLoginHeaderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -34,14 +27,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    [self setupNav];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"消息" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+    YLMineHeader *header = [[YLMineHeader alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 96+88*3)];
+    header.fun.delegate = self;
+    header.header.delegate = self;
+
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, YLScreenHeight)];
+    [self.view addSubview:self.tableView];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.bounces = NO; // 禁止弹跳
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.tableHeaderView = header;
+}
+
+- (void)setupNav {
     
-    
-    YLCustomPrice *view = [[YLCustomPrice alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 400)];
-    
-    [self.view addSubview:view];
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
 }
 
 
@@ -66,10 +69,74 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 140;
+    return 110;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    YLDetailController *detailVc = [[YLDetailController alloc] init];
+    [self.navigationController pushViewController:detailVc animated:YES];
 }
 
 - (void)rightBarButtonItemClick {
     NSLog(@"消息被点击了");
 }
+
+#pragma mark 代理
+- (void)skipToLogin {
+    
+    NSLog(@"点击了登录按钮");
+    YLLoginController *loginVc = [[YLLoginController alloc] init];
+    [self.navigationController pushViewController:loginVc animated:YES];
+}
+
+- (void)callTelephone {
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"13800138000" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"呼叫", nil];
+    [alert show];
+}
+
+- (void)btnClickToController:(UIButton *)sender {
+    
+//    NSLog(@"%@",sender.titleLabel.text);
+    NSInteger tag = sender.tag;
+    switch (tag) {
+        case 100:
+            NSLog(@"即将看车");
+            break;
+        case 101:
+            NSLog(@"我的收藏");
+            break;
+        case 102:
+            NSLog(@"浏览记录");
+            break;
+        case 103:
+            NSLog(@"我的订阅");
+            break;
+        case 104:
+            NSLog(@"卖车订单");
+            break;
+        case 105:
+            NSLog(@"买车订单");
+            break;
+        case 106:
+            NSLog(@"砍价记录");
+            break;
+        case 107:
+            NSLog(@"降价提醒");
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
+- (void)suggestions {
+    
+    NSLog(@"弹出意见反馈页面");
+    YLSuggestionController *suggestionVc = [[YLSuggestionController alloc] init];
+    [self.navigationController pushViewController:suggestionVc animated:YES];
+}
+
 @end

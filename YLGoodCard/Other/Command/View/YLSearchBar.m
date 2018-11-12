@@ -16,10 +16,10 @@
     if (self) {
         // 设置背景
 //        self.background = [UIImage resizedImage:@"searchbar_textfield_background"];
-        self.backgroundColor = YLRandomColor;
+        self.backgroundColor = [UIColor redColor];
         
         // 设置圆角
-        self.layer.cornerRadius = 15;
+        self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
         
         // 设置内容 -- 垂直居中

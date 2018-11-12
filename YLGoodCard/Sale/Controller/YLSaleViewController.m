@@ -21,7 +21,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    [self setupNav];
+//    [self setupNav];
     YLSaleView *saleView = [[YLSaleView alloc] init];
     saleView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self.view addSubview:saleView];
@@ -42,7 +42,7 @@
 }
 
 #pragma mark YLSaleButton代理方法
-- (void)pushController {
+- (void)pushController:(YLSaleButton *)sender {
     
     YLOrderController *orderVc = [[YLOrderController alloc] init];
     [self.navigationController pushViewController:orderVc animated:YES];

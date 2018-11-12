@@ -7,7 +7,6 @@
 //
 
 #import "YLDetailHeaderView.h"
-#import "YLCondition.h"
 
 // 375:360
 @interface YLDetailHeaderView ()
@@ -17,7 +16,7 @@
 @property (nonatomic, strong) UIView *tagView; // 标签集合视图
 @property (nonatomic, strong) UILabel *secondPrice; // 二手价
 @property (nonatomic, strong) UILabel *price;// 新车含税价
-@property (nonatomic, strong) YLCondition *bargain;// 砍价
+
 
 @end
 
@@ -27,6 +26,7 @@
     
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         
         [self setupUI];
     }
@@ -89,6 +89,11 @@
     self.bargain = [[YLCondition alloc] initWithFrame:CGRectMake(self.frame.size.width - YLLeftMargin - 56, CGRectGetMaxY(self.tagView.frame) + 20, 56, 24)];
     self.bargain.type = YLConditionTypeBlue;
     [self.bargain setTitle:@"砍价" forState:UIControlStateNormal];
+    [self.bargain addTarget:self action:@selector(bargainClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.bargain.frame) + YLLeftMargin, self.frame.size.width, 1)];
+    line.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    [self addSubview:line];
     
     [self addSubview:self.icon];
     [self addSubview:self.text];
@@ -99,7 +104,14 @@
     [self addSubview:button];
     [self addSubview:self.bargain];
     [self addSubview:label3];
+}
+
+-  (void)bargainClick {
     
+//    NSLog(@"点击砍价");
+    if (self.bargain.delegate && [self.bargain.delegate respondsToSelector:@selector(bargainPrice)]) {
+        [self.bargain.delegate bargainPrice];
+    }
 }
 
 - (YLCondition *)setBtn:(NSString *)title {

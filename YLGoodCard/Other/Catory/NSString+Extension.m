@@ -23,4 +23,16 @@
     return [self getSizeWithFont:font maxWidth:MAXFLOAT];
 }
 
+
+- (NSMutableAttributedString *)changeString:(NSString *)changeString color:(UIColor *)color {
+    
+    // 获取字符串
+    NSMutableAttributedString *contentStr = [[NSMutableAttributedString alloc] initWithString:self];
+    // 找出特定字符串在整个字符串中的位置
+    NSRange range = NSMakeRange([[contentStr string] rangeOfString:changeString].location, [[contentStr string] rangeOfString:changeString].length);
+    // 修改特定字符的颜色
+    [contentStr addAttribute:NSForegroundColorAttributeName value:color range:range];
+    return contentStr;
+}
+
 @end

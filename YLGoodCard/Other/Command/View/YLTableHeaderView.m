@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UILabel *title;
 
 
+
 @end
 
 @implementation YLTableHeaderView
@@ -23,6 +24,10 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+//        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height, self.frame.size.width, 1)];
+//        line.backgroundColor = YLColor(233.f, 233.f, 233.f);
+//        [self addSubview:line];
+//        self.backgroundColor = [UIColor yellowColor];
         [self addSubview:self.icon];
         [self addSubview:self.title];
         [self addSubview:self.subTitle];
@@ -70,7 +75,7 @@
 - (UIImageView *)icon {
     if (!_icon) {
         _icon = [[UIImageView alloc] init];
-        _icon.backgroundColor = [UIColor redColor];
+//        _icon.backgroundColor = [UIColor redColor];
     }
     return _icon;
 }
@@ -98,6 +103,7 @@
     
     self.icon.image = [UIImage imageNamed:tableHeaderModel.icon];
     self.title.text = tableHeaderModel.title;
+//    self.title.text = @"基本测试";
     [self.subTitle setTitle:tableHeaderModel.subtitle forState:UIControlStateNormal];
 }
 

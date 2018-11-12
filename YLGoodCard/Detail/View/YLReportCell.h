@@ -10,4 +10,8 @@
 
 @interface YLReportCell : UITableViewCell
 
+@property (nonatomic, assign) float height;
+
++ (instancetype)cellWithTable:(UITableView *)tableView;
+
 @end

@@ -127,6 +127,9 @@
 - (void)choiceBtn:(UIButton *)sender {
     
     NSLog(@"%@", sender.titleLabel.text);
+    if (self.delegate && [self.delegate respondsToSelector:@selector(choiceBrand:)]) {
+        [self.delegate choiceBrand:sender];
+    }
 }
 
 #pragma mark -懒加载

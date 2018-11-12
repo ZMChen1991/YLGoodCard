@@ -12,12 +12,14 @@
 
 @protocol YLLinkageViewDelegate <NSObject>
 
-- (void)pushController:(YLLinkageView *)linkageView;
+@optional
+- (void)pushController:(YLLinkageView *)linkageView; // 跳转控制器
+- (void)pushCoverView:(UIButton *)sender;// 弹出蒙版;
 
 @end
 
 @interface YLLinkageView : UIView
 
-@property (nonatomic, copy) id<YLLinkageViewDelegate> delegate;
+@property (nonatomic, weak) id<YLLinkageViewDelegate> delegate;
 
 @end

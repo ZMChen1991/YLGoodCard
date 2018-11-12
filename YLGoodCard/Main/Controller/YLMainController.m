@@ -16,12 +16,13 @@
 #import "YLDetailController.h"
 #import "YLButton.h"
 
-
+/* 搜索页面，广告轮播
+ */
 
 #define screenW self.view.frame.size.width
 #define screenH self.view.frame.size.height
 
-@interface YLMainController ()<UITableViewDelegate, UITableViewDataSource, YLButtonDelegate>
+@interface YLMainController ()<UITableViewDelegate, UITableViewDataSource, YLButtonDelegate, YLHeaderViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -49,13 +50,9 @@
     YLHeaderView *headerView = [[YLHeaderView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 344)];
     headerView.pictureRotate.images = images;
     headerView.pictureRotate.timeInterval = 1.0;
-
+    headerView.menuView.subTitle.delegate = self;
+    headerView.delegate = self;
     self.tableView.tableHeaderView = headerView;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark UITableViewDataSource/UITableViewDelegate
@@ -88,21 +85,29 @@
     return 110;
 }
 
+
+#pragma mark 代理方法
+- (void)choiceBrand:(UIButton *)sender {
+    
+    NSLog(@"YLMainController:%@", sender.titleLabel.text);
+}
+
 - (void)checkMore {
     
-    NSLog(@"checkMore");
+    NSLog(@"YLMainController:checkMore");
     YLSearchController *searchVc = [[YLSearchController alloc] init];
     [self.navigationController pushViewController:searchVc animated:YES];
 }
 
+#pragma mark Private
 - (void)setNav {
     
     // 设置导航栏透明
-//    [self.navigationController.navigationBar setTranslucent:YES];
-//    // 设置导航栏背景为空
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    // 设置导航栏底部线条为空
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationController.navigationBar setTranslucent:YES];
+    // 设置导航栏背景为空
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    // 设置导航栏底部线条为空
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
     // 添加左右导航栏按钮
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"阳江" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonItemClick)];

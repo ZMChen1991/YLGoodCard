@@ -18,7 +18,7 @@
 
 + (instancetype)cellWithTable:(UITableView *)tableView {
     
-    static NSString *ID = @"cellID";
+    static NSString *ID = @"YLInformationCell";
     YLInformationCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
         cell = [[YLInformationCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
@@ -41,7 +41,6 @@
     
     NSArray *array = @[@"表显里程", @"上牌时间", @"车牌所在地", @"看车地点", @"排放量", @"迁入地为准", @"变速箱", @"登记证为准", @"年检到期", @"商业险到期", @"交强险到期"];
     NSArray *array1 = @[@"12.8公里", @"2015-10-10", @"阳江", @"阳东", @"1.8", @"国五", @"自动", @"0次过户", @"2019.08", @"2019.08", @"2019.08"];
-    
     NSUInteger count = array.count;
     for (int i = 0 ; i < count; i++) {
         int row = i / 2;
@@ -52,14 +51,21 @@
         UIView *view = [self setupTitle:array[i] subtitle:array1[i] frame:frame];
         [self.labelView addSubview:view];
     }
+    
+    UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 211)];
+//    bg.backgroundColor = [UIColor redColor];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(bg.frame), self.frame.size.width, 1)];
+    line.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    [bg addSubview:line];
+    [bg addSubview:self.labelView];
+    [self addSubview:bg];
+    
 }
 
 - (UIView *)labelView {
     if (!_labelView) {
-        CGRect frame = CGRectMake(YLLeftMargin, 0, self.frame.size.width - 2 * YLLeftMargin, 180);
+        CGRect frame = CGRectMake(YLLeftMargin, YLLeftMargin, self.frame.size.width - 2 * YLLeftMargin, 180);
         _labelView = [[UIView alloc] initWithFrame:frame];
-//        _labelView.backgroundColor = [UIColor redColor];
-        [self addSubview:_labelView];
     }
     return _labelView;
 }

@@ -10,7 +10,8 @@
 
 @interface YLCarInformationCell : UITableViewCell
 
-@property (nonatomic, strong) UIImageView *icon;// 照片
-@property (nonatomic, strong) UILabel *detail;// 详情
+
 @property (nonatomic, assign) float height;// cell高
+
++ (instancetype)cellWithTable:(UITableView *)tableView;
 @end
