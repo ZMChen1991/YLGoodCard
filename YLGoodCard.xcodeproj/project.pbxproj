@@ -64,6 +64,11 @@
 		8AC3554321955F8A00D16503 /* YLTimePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC3554221955F8A00D16503 /* YLTimePickView.m */; };
 		8AC75B9821994AF100D159C9 /* UITextView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75B9721994AF100D159C9 /* UITextView+Extension.m */; };
 		8AC75B9B2199544900D159C9 /* YLLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75B9A2199544900D159C9 /* YLLoginController.m */; };
+		8AC75BAD21996F8100D159C9 /* YLFunctionBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BAC21996F8100D159C9 /* YLFunctionBaseController.m */; };
+		8AC75BB62199719300D159C9 /* YLSoldOutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BB52199719300D159C9 /* YLSoldOutController.m */; };
+		8AC75BB9219971B200D159C9 /* YLSoldInController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BB8219971B200D159C9 /* YLSoldInController.m */; };
+		8AC75BBC2199753D00D159C9 /* YLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BBB2199753D00D159C9 /* YLSwitchView.m */; };
+		8AC75BBF219996BB00D159C9 /* YLSkipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BBE219996BB00D159C9 /* YLSkipView.m */; };
 		8ACDC9BE2193FF3B00B5EF41 /* huo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACDC9BD2193FF3B00B5EF41 /* huo.png */; };
 		8ACDC9C321942C4700B5EF41 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACDC9C221942C4700B5EF41 /* NSString+Extension.m */; };
 		8AF0DB112196C74400A3A11F /* YLSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF0DB102196C74400A3A11F /* YLSelectView.m */; };
@@ -190,6 +195,16 @@
 		8AC75B9721994AF100D159C9 /* UITextView+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Extension.m"; sourceTree = "<group>"; };
 		8AC75B992199544900D159C9 /* YLLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLLoginController.h; sourceTree = "<group>"; };
 		8AC75B9A2199544900D159C9 /* YLLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLLoginController.m; sourceTree = "<group>"; };
+		8AC75BAB21996F8100D159C9 /* YLFunctionBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFunctionBaseController.h; sourceTree = "<group>"; };
+		8AC75BAC21996F8100D159C9 /* YLFunctionBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFunctionBaseController.m; sourceTree = "<group>"; };
+		8AC75BB42199719300D159C9 /* YLSoldOutController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSoldOutController.h; sourceTree = "<group>"; };
+		8AC75BB52199719300D159C9 /* YLSoldOutController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSoldOutController.m; sourceTree = "<group>"; };
+		8AC75BB7219971B200D159C9 /* YLSoldInController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSoldInController.h; sourceTree = "<group>"; };
+		8AC75BB8219971B200D159C9 /* YLSoldInController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSoldInController.m; sourceTree = "<group>"; };
+		8AC75BBA2199753D00D159C9 /* YLSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSwitchView.h; sourceTree = "<group>"; };
+		8AC75BBB2199753D00D159C9 /* YLSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSwitchView.m; sourceTree = "<group>"; };
+		8AC75BBD219996BB00D159C9 /* YLSkipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSkipView.h; sourceTree = "<group>"; };
+		8AC75BBE219996BB00D159C9 /* YLSkipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSkipView.m; sourceTree = "<group>"; };
 		8ACDC9BD2193FF3B00B5EF41 /* huo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = huo.png; sourceTree = "<group>"; };
 		8ACDC9C121942C4700B5EF41 /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		8ACDC9C221942C4700B5EF41 /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
@@ -441,6 +456,12 @@
 				8AB874512199462C00FB0A93 /* YLSuggestionController.m */,
 				8AC75B992199544900D159C9 /* YLLoginController.h */,
 				8AC75B9A2199544900D159C9 /* YLLoginController.m */,
+				8AC75BAB21996F8100D159C9 /* YLFunctionBaseController.h */,
+				8AC75BAC21996F8100D159C9 /* YLFunctionBaseController.m */,
+				8AC75BB42199719300D159C9 /* YLSoldOutController.h */,
+				8AC75BB52199719300D159C9 /* YLSoldOutController.m */,
+				8AC75BB7219971B200D159C9 /* YLSoldInController.h */,
+				8AC75BB8219971B200D159C9 /* YLSoldInController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -454,6 +475,10 @@
 				8AB8744B219918E100FB0A93 /* YLFunctionView.m */,
 				8AB8744D219924C600FB0A93 /* YLMineHeader.h */,
 				8AB8744E219924C600FB0A93 /* YLMineHeader.m */,
+				8AC75BBA2199753D00D159C9 /* YLSwitchView.h */,
+				8AC75BBB2199753D00D159C9 /* YLSwitchView.m */,
+				8AC75BBD219996BB00D159C9 /* YLSkipView.h */,
+				8AC75BBE219996BB00D159C9 /* YLSkipView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -730,8 +755,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A35F8FB218D70CF00BDBC9E /* YLDetectionController.m in Sources */,
+				8AC75BB9219971B200D159C9 /* YLSoldInController.m in Sources */,
 				8A0E3F45218A942D00275131 /* YLNavigationController.m in Sources */,
 				8AB874492199149500FB0A93 /* YLLoginHeader.m in Sources */,
+				8AC75BB62199719300D159C9 /* YLSoldOutController.m in Sources */,
 				8A0E3F3A218A927100275131 /* main.m in Sources */,
 				8A35F8D6218D2B6800BDBC9E /* YLManager.m in Sources */,
 				8AC75B9821994AF100D159C9 /* UITextView+Extension.m in Sources */,
@@ -754,6 +781,7 @@
 				8A37DEFB218C0D88003A18F0 /* YLSaleView.m in Sources */,
 				8A35F8D9218D2B9400BDBC9E /* YLManagerInfo.m in Sources */,
 				8A0E3F75218AEA8600275131 /* YLHeaderView.m in Sources */,
+				8AC75BBC2199753D00D159C9 /* YLSwitchView.m in Sources */,
 				8A35F8F2218D4D3B00BDBC9E /* YLSaleButton.m in Sources */,
 				8A35F8E6218D35E800BDBC9E /* YLSearchBar.m in Sources */,
 				8A37DF04218C3536003A18F0 /* YLMessageCell.m in Sources */,
@@ -769,6 +797,7 @@
 				8A0E3F79218AEC8400275131 /* UIView+Extension.m in Sources */,
 				8A35F8EF218D3E9C00BDBC9E /* YLOrderCell.m in Sources */,
 				8A35F8F8218D5F9F00BDBC9E /* YLReservationController.m in Sources */,
+				8AC75BAD21996F8100D159C9 /* YLFunctionBaseController.m in Sources */,
 				8A21113C219168880014132C /* YLDetailHeaderView.m in Sources */,
 				8AF0DB112196C74400A3A11F /* YLSelectView.m in Sources */,
 				8AB8744F219924C600FB0A93 /* YLMineHeader.m in Sources */,
@@ -787,6 +816,7 @@
 				8AF0DB1A2196DD6D00A3A11F /* YLSortView.m in Sources */,
 				8A0E3F51218A95F300275131 /* YLMineController.m in Sources */,
 				8A2111232191581F0014132C /* YLChoiceController.m in Sources */,
+				8AC75BBF219996BB00D159C9 /* YLSkipView.m in Sources */,
 				8AF0DB172196C93C00A3A11F /* YLCollectHeader.m in Sources */,
 				8A21112A219163880014132C /* YLDetailController.m in Sources */,
 			);

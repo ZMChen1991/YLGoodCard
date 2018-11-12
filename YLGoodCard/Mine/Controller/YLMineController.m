@@ -13,6 +13,7 @@
 #import "YLFunctionView.h"
 #import "YLSuggestionController.h"
 #import "YLLoginController.h"
+#import "YLFunctionBaseController.h"
 
 @interface YLMineController () <UITableViewDelegate, UITableViewDataSource, YLFunctionViewDelegate, YLLoginHeaderDelegate>
 
@@ -98,37 +99,42 @@
 
 - (void)btnClickToController:(UIButton *)sender {
     
-//    NSLog(@"%@",sender.titleLabel.text);
-    NSInteger tag = sender.tag;
-    switch (tag) {
-        case 100:
-            NSLog(@"即将看车");
-            break;
-        case 101:
-            NSLog(@"我的收藏");
-            break;
-        case 102:
-            NSLog(@"浏览记录");
-            break;
-        case 103:
-            NSLog(@"我的订阅");
-            break;
-        case 104:
-            NSLog(@"卖车订单");
-            break;
-        case 105:
-            NSLog(@"买车订单");
-            break;
-        case 106:
-            NSLog(@"砍价记录");
-            break;
-        case 107:
-            NSLog(@"降价提醒");
-            break;
-            
-        default:
-            break;
-    }
+    NSLog(@"%@",sender.titleLabel.text);
+    YLFunctionBaseController *baseVc = [[YLFunctionBaseController alloc] init];
+    [self.navigationController pushViewController:baseVc animated:YES];
+    
+//    NSInteger tag = sender.tag;
+//    switch (tag) {
+//        case 100:
+//            NSLog(@"即将看车");
+////            YLFunctionBaseController *baseVc = [[YLFunctionBaseController alloc] init];
+////            [self.navigationController pushViewController:baseVc animated:YES];
+//            break;
+//        case 101:
+//            NSLog(@"我的收藏");
+//            break;
+//        case 102:
+//            NSLog(@"浏览记录");
+//            break;
+//        case 103:
+//            NSLog(@"我的订阅");
+//            break;
+//        case 104:
+//            NSLog(@"卖车订单");
+//            break;
+//        case 105:
+//            NSLog(@"买车订单");
+//            break;
+//        case 106:
+//            NSLog(@"砍价记录");
+//            break;
+//        case 107:
+//            NSLog(@"降价提醒");
+//            break;
+//
+//        default:
+//            break;
+//    }
     
 }
 
