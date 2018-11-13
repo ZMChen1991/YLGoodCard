@@ -55,6 +55,8 @@
 - (void)layoutSubviews {
     
     [super layoutSubviews];
+    
+    
 }
 
 - (void)createMenu {
@@ -116,6 +118,10 @@
         [choiceBtn setTitleColor:YLColor(116.f, 116.f, 116.f) forState:UIControlStateNormal];
         choiceBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         [choiceBtn addTarget:self action:@selector(choiceBtn:) forControlEvents:UIControlEventTouchUpInside];
+//        CGPoint point = choiceBtn.center;
+//        int center_x = floor(point.x);
+//        int center_y = floor(point.y);
+//        choiceBtn.center = CGPointMake(center_x, center_y);
         [self.btnView addSubview:choiceBtn];
     }
     

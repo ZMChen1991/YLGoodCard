@@ -11,6 +11,6 @@
 @interface YLSkipView : UIView
 
 @property (nonatomic, strong) NSArray *titles;
-@property (nonatomic, strong) NSArray *controllers;
+@property (nonatomic, strong) NSMutableArray *controllers;
 
 @end

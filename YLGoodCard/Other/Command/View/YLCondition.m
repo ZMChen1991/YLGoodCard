@@ -15,7 +15,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.layer.cornerRadius = 5;
+        self.layer.cornerRadius = 4;
         self.layer.masksToBounds = YES;
 //        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 //        CGColorRef borderColorRef = CGColorCreate(colorSpace, (CGFloat[]){0, 0, 0, 1});

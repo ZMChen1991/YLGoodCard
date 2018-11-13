@@ -27,7 +27,7 @@
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
     
-    static NSString *ID = @"cellID";
+    static NSString *ID = @"YLTableViewCell";
     YLTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
         cell = [[YLTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];

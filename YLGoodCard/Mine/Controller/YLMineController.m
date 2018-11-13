@@ -13,7 +13,9 @@
 #import "YLFunctionView.h"
 #import "YLSuggestionController.h"
 #import "YLLoginController.h"
-#import "YLFunctionBaseController.h"
+#import "YLSettingController.h"
+#import "YLFunctionController.h"
+#import "YLSubController.h"
 
 @interface YLMineController () <UITableViewDelegate, UITableViewDataSource, YLFunctionViewDelegate, YLLoginHeaderDelegate>
 
@@ -81,6 +83,9 @@
 
 - (void)rightBarButtonItemClick {
     NSLog(@"消息被点击了");
+    
+    YLSettingController *setting = [[YLSettingController alloc] init];
+    [self.navigationController pushViewController:setting animated:YES];
 }
 
 #pragma mark 代理
@@ -100,42 +105,75 @@
 - (void)btnClickToController:(UIButton *)sender {
     
     NSLog(@"%@",sender.titleLabel.text);
-    YLFunctionBaseController *baseVc = [[YLFunctionBaseController alloc] init];
-    [self.navigationController pushViewController:baseVc animated:YES];
     
-//    NSInteger tag = sender.tag;
-//    switch (tag) {
-//        case 100:
-//            NSLog(@"即将看车");
-////            YLFunctionBaseController *baseVc = [[YLFunctionBaseController alloc] init];
-////            [self.navigationController pushViewController:baseVc animated:YES];
-//            break;
-//        case 101:
-//            NSLog(@"我的收藏");
-//            break;
-//        case 102:
-//            NSLog(@"浏览记录");
-//            break;
-//        case 103:
-//            NSLog(@"我的订阅");
-//            break;
-//        case 104:
-//            NSLog(@"卖车订单");
-//            break;
-//        case 105:
-//            NSLog(@"买车订单");
-//            break;
-//        case 106:
-//            NSLog(@"砍价记录");
-//            break;
-//        case 107:
-//            NSLog(@"降价提醒");
-//            break;
-//
-//        default:
-//            break;
-//    }
-    
+//    NSString *title = sender.titleLabel.text;
+    if (sender.tag == 100) {
+        NSLog(@"即将看车");
+        NSString *title = sender.titleLabel.text;
+        YLFunctionController *lookCar = [[YLFunctionController alloc] init];
+        NSArray *titles = @[@"在售", @"已下架"];
+        lookCar.skip.titles = titles;
+        NSMutableArray *ctrs = [NSMutableArray array];
+        for (NSInteger i = 0; i < titles.count; i++) {
+            YLSubController *ctr1 = [[YLSubController alloc] init];
+            ctr1.cellType = YLCellTypeNormal;
+            [ctrs addObject:ctr1];
+        }
+        lookCar.skip.controllers = ctrs;
+        lookCar.navigationItem.title = title;
+        [self.navigationController pushViewController:lookCar animated:YES];
+    }
+    if (sender.tag == 101) {
+        NSLog(@"我的收藏");
+        NSString *title = sender.titleLabel.text;
+        YLFunctionController *lookCar = [[YLFunctionController alloc] init];
+        NSArray *titles = @[@"在售", @"已下架"];
+        lookCar.skip.titles = titles;
+        NSMutableArray *ctrs = [NSMutableArray array];
+        for (NSInteger i = 0; i < titles.count; i++) {
+            YLSubController *ctr1 = [[YLSubController alloc] init];
+            ctr1.cellType = YLCellTypeNormal;
+            [ctrs addObject:ctr1];
+        }
+        lookCar.skip.controllers = ctrs;
+        lookCar.navigationItem.title = title;
+        [self.navigationController pushViewController:lookCar animated:YES];
+    }
+    if (sender.tag == 102) {
+        NSLog(@"浏览记录");
+        NSString *title = sender.titleLabel.text;
+        YLFunctionController *lookCar = [[YLFunctionController alloc] init];
+        NSArray *titles = @[@"在售", @"已下架"];
+        lookCar.skip.titles = titles;
+        NSMutableArray *ctrs = [NSMutableArray array];
+        for (NSInteger i = 0; i < titles.count; i++) {
+            YLSubController *ctr1 = [[YLSubController alloc] init];
+            ctr1.cellType = YLCellTypeNormal;
+            [ctrs addObject:ctr1];
+        }
+        lookCar.skip.controllers = ctrs;
+        lookCar.navigationItem.title = title;
+        [self.navigationController pushViewController:lookCar animated:YES];
+    }
+    if (sender.tag == 103) {
+        NSLog(@"我的订阅暂不支持");
+    }
+    if (sender.tag == 104) {
+        NSLog(@"卖车订单");
+    }
+    if (sender.tag == 105) {
+        NSLog(@"买车订单");
+    }
+    if (sender.tag == 106) {
+        NSLog(@"砍价记录");
+        NSString *title = sender.titleLabel.text;
+        YLFunctionController *lookCar = [[YLFunctionController alloc] init];
+        lookCar.navigationItem.title = title;
+        [self.navigationController pushViewController:lookCar animated:YES];
+    }
+    if (sender.tag == 107) {
+        NSLog(@"降价提醒");
+    }
 }
 
 - (void)suggestions {

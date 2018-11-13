@@ -10,7 +10,7 @@
 #import "YLOrderView.h"
 #import "YLReservationController.h"
 
-@interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLSaleButtonDelegate>
+@interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *array;
@@ -24,8 +24,6 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.navigationItem.title = @"预约卖车";
-    
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, YLScreenHeight)];
     tableView.delegate = self;
     tableView.dataSource = self;
@@ -33,7 +31,6 @@
     self.tableView = tableView;
     
     YLOrderView *orderView = [[YLOrderView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 130)];
-//    orderView.backgroundColor = [UIColor redColor];
     self.tableView.tableFooterView = orderView;
    
     orderView.saleBtn.delegate = self;
@@ -63,10 +60,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSLog(@"%@", self.array[indexPath.row]);
+    if (indexPath.row == 1) {
+        NSLog(@"打开弹窗,显示检测中心列表");
+    }
 }
 
 #pragma mark YLSaleButtonDelegate
-- (void)pushController {
+- (void)pushController:(UIButton *)sender {
     
     NSLog(@"跳转另一个控制器");
     YLReservationController *reservationVc = [[YLReservationController alloc] init];

@@ -10,7 +10,7 @@
 #import "YLSaleView.h"
 #import "YLOrderController.h"
 
-@interface YLSaleViewController () <YLSaleButtonDelegate>
+@interface YLSaleViewController () <YLConditionDelegate>
 
 @end
 
@@ -27,6 +27,8 @@
     [self.view addSubview:saleView];
     
     saleView.saleBtn.delegate = self;
+    saleView.consultBtn.delegate = self;
+    saleView.appraiseBtn.delegate = self;
 }
 
 - (void)setupNav {
@@ -42,10 +44,17 @@
 }
 
 #pragma mark YLSaleButton代理方法
-- (void)pushController:(YLSaleButton *)sender {
-    
+- (void)pushController:(UIButton *)sender {
+   
+    NSLog(@"%@", sender.titleLabel.text);
     YLOrderController *orderVc = [[YLOrderController alloc] init];
+    orderVc.navigationItem.title = sender.titleLabel.text;
     [self.navigationController pushViewController:orderVc animated:YES];
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    
+    [self resignFirstResponder];
 }
 
 @end

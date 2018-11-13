@@ -21,18 +21,16 @@
 
 - (void)setupOriginal {
     
-    self.saleBtn = [YLSaleButton buttonWithType:UIButtonTypeCustom];
+    self.saleBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
     [self.saleBtn setTitle:@"预约卖车" forState:UIControlStateNormal];
-    [self.saleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.saleBtn.type = YLConditionTypeBlue;
     [self.saleBtn addTarget:self action:@selector(sale:) forControlEvents:UIControlEventTouchUpInside];
-    [self.saleBtn setBackgroundColor:YLColor(44.f, 172.f, 63.f)];
     [self addSubview:self.saleBtn];
     
-    self.consultBtn = [YLSaleButton buttonWithType:UIButtonTypeCustom];
+    self.consultBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
     [self.consultBtn setTitle:@"免费咨询" forState:UIControlStateNormal];
-    [self.consultBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.consultBtn.type = YLConditionTypeWhite;
     [self.consultBtn addTarget:self action:@selector(consult:) forControlEvents:UIControlEventTouchUpInside];
-    [self.consultBtn setBackgroundColor:YLColor(44.f, 172.f, 63.f)];
     [self addSubview:self.consultBtn];
 }
 
@@ -53,7 +51,7 @@
     self.consultBtn.frame = CGRectMake(consultBtnX, consultBtnY, consultBtnW, consultBtnH);
 }
 
-- (void)sale:(YLSaleButton *)sender {
+- (void)sale:(UIButton *)sender {
     
     NSLog(@"预约卖车:%@", sender.titleLabel.text);
     if (self.saleBtn.delegate && [self.saleBtn.delegate respondsToSelector:@selector(pushController:)]) {
@@ -61,7 +59,7 @@
     }
 }
 
-- (void)consult:(YLSaleButton *)sender {
+- (void)consult:(UIButton *)sender {
     
     NSLog(@"免费咨询:%@", sender.titleLabel.text);
 }

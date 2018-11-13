@@ -34,6 +34,8 @@
 		8A21113C219168880014132C /* YLDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21113B219168880014132C /* YLDetailHeaderView.m */; };
 		8A21113F219169CD0014132C /* YLInformationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21113E219169CD0014132C /* YLInformationView.m */; };
 		8A21114221916C900014132C /* YLDetailFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21114121916C900014132C /* YLDetailFooterView.m */; };
+		8A265C6F219A5B6300FB58A3 /* YLSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A265C6E219A5B6300FB58A3 /* YLSettingController.m */; };
+		8A265C72219A629700FB58A3 /* YLAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A265C71219A629700FB58A3 /* YLAboutController.m */; };
 		8A35F8D6218D2B6800BDBC9E /* YLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8D5218D2B6800BDBC9E /* YLManager.m */; };
 		8A35F8D9218D2B9400BDBC9E /* YLManagerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8D8218D2B9400BDBC9E /* YLManagerInfo.m */; };
 		8A35F8DD218D34F800BDBC9E /* YLSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8DC218D34F800BDBC9E /* YLSearchController.m */; };
@@ -41,7 +43,6 @@
 		8A35F8E9218D36CC00BDBC9E /* UIImage+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8E7218D36CC00BDBC9E /* UIImage+Extension.m */; };
 		8A35F8EC218D3DAF00BDBC9E /* YLOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8EB218D3DAF00BDBC9E /* YLOrderController.m */; };
 		8A35F8EF218D3E9C00BDBC9E /* YLOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8EE218D3E9C00BDBC9E /* YLOrderCell.m */; };
-		8A35F8F2218D4D3B00BDBC9E /* YLSaleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8F1218D4D3B00BDBC9E /* YLSaleButton.m */; };
 		8A35F8F5218D541400BDBC9E /* YLOrderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8F4218D541400BDBC9E /* YLOrderView.m */; };
 		8A35F8F8218D5F9F00BDBC9E /* YLReservationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8F7218D5F9F00BDBC9E /* YLReservationController.m */; };
 		8A35F8FB218D70CF00BDBC9E /* YLDetectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A35F8FA218D70CF00BDBC9E /* YLDetectionController.m */; };
@@ -51,6 +52,9 @@
 		8A37DF01218C2E77003A18F0 /* YLMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A37DF00218C2E77003A18F0 /* YLMessageController.m */; };
 		8A37DF04218C3536003A18F0 /* YLMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A37DF03218C3536003A18F0 /* YLMessageCell.m */; };
 		8A37DF07218C4236003A18F0 /* YLMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A37DF06218C4236003A18F0 /* YLMessageModel.m */; };
+		8A444E07219A9C030028422F /* YLBargainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E06219A9C030028422F /* YLBargainCell.m */; };
+		8A444E0A219AA1DB0028422F /* YLFunctionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E09219AA1DB0028422F /* YLFunctionController.m */; };
+		8A444E10219AA4C40028422F /* YLSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E0F219AA4C40028422F /* YLSubController.m */; };
 		8A69139C218FCF86003B0EE2 /* pic_3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8A691398218FCF86003B0EE2 /* pic_3.jpeg */; };
 		8A69139D218FCF86003B0EE2 /* pic_2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8A691399218FCF86003B0EE2 /* pic_2.jpeg */; };
 		8A69139E218FCF86003B0EE2 /* pic_4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8A69139A218FCF86003B0EE2 /* pic_4.jpeg */; };
@@ -64,10 +68,6 @@
 		8AC3554321955F8A00D16503 /* YLTimePickView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC3554221955F8A00D16503 /* YLTimePickView.m */; };
 		8AC75B9821994AF100D159C9 /* UITextView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75B9721994AF100D159C9 /* UITextView+Extension.m */; };
 		8AC75B9B2199544900D159C9 /* YLLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75B9A2199544900D159C9 /* YLLoginController.m */; };
-		8AC75BAD21996F8100D159C9 /* YLFunctionBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BAC21996F8100D159C9 /* YLFunctionBaseController.m */; };
-		8AC75BB62199719300D159C9 /* YLSoldOutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BB52199719300D159C9 /* YLSoldOutController.m */; };
-		8AC75BB9219971B200D159C9 /* YLSoldInController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BB8219971B200D159C9 /* YLSoldInController.m */; };
-		8AC75BBC2199753D00D159C9 /* YLSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BBB2199753D00D159C9 /* YLSwitchView.m */; };
 		8AC75BBF219996BB00D159C9 /* YLSkipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC75BBE219996BB00D159C9 /* YLSkipView.m */; };
 		8ACDC9BE2193FF3B00B5EF41 /* huo.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ACDC9BD2193FF3B00B5EF41 /* huo.png */; };
 		8ACDC9C321942C4700B5EF41 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACDC9C221942C4700B5EF41 /* NSString+Extension.m */; };
@@ -138,6 +138,10 @@
 		8A21113E219169CD0014132C /* YLInformationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLInformationView.m; sourceTree = "<group>"; };
 		8A21114021916C900014132C /* YLDetailFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLDetailFooterView.h; sourceTree = "<group>"; };
 		8A21114121916C900014132C /* YLDetailFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLDetailFooterView.m; sourceTree = "<group>"; };
+		8A265C6D219A5B6300FB58A3 /* YLSettingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSettingController.h; sourceTree = "<group>"; };
+		8A265C6E219A5B6300FB58A3 /* YLSettingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSettingController.m; sourceTree = "<group>"; };
+		8A265C70219A629700FB58A3 /* YLAboutController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLAboutController.h; sourceTree = "<group>"; };
+		8A265C71219A629700FB58A3 /* YLAboutController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLAboutController.m; sourceTree = "<group>"; };
 		8A35F8D2218D2AAA00BDBC9E /* YLSingleton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSingleton.h; sourceTree = "<group>"; };
 		8A35F8D4218D2B6800BDBC9E /* YLManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLManager.h; sourceTree = "<group>"; };
 		8A35F8D5218D2B6800BDBC9E /* YLManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLManager.m; sourceTree = "<group>"; };
@@ -153,8 +157,6 @@
 		8A35F8EB218D3DAF00BDBC9E /* YLOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLOrderController.m; sourceTree = "<group>"; };
 		8A35F8ED218D3E9C00BDBC9E /* YLOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLOrderCell.h; sourceTree = "<group>"; };
 		8A35F8EE218D3E9C00BDBC9E /* YLOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLOrderCell.m; sourceTree = "<group>"; };
-		8A35F8F0218D4D3B00BDBC9E /* YLSaleButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSaleButton.h; sourceTree = "<group>"; };
-		8A35F8F1218D4D3B00BDBC9E /* YLSaleButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSaleButton.m; sourceTree = "<group>"; };
 		8A35F8F3218D541400BDBC9E /* YLOrderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLOrderView.h; sourceTree = "<group>"; };
 		8A35F8F4218D541400BDBC9E /* YLOrderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLOrderView.m; sourceTree = "<group>"; };
 		8A35F8F6218D5F9F00BDBC9E /* YLReservationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLReservationController.h; sourceTree = "<group>"; };
@@ -173,6 +175,12 @@
 		8A37DF03218C3536003A18F0 /* YLMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLMessageCell.m; sourceTree = "<group>"; };
 		8A37DF05218C4236003A18F0 /* YLMessageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLMessageModel.h; sourceTree = "<group>"; };
 		8A37DF06218C4236003A18F0 /* YLMessageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLMessageModel.m; sourceTree = "<group>"; };
+		8A444E05219A9C030028422F /* YLBargainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBargainCell.h; sourceTree = "<group>"; };
+		8A444E06219A9C030028422F /* YLBargainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBargainCell.m; sourceTree = "<group>"; };
+		8A444E08219AA1DB0028422F /* YLFunctionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFunctionController.h; sourceTree = "<group>"; };
+		8A444E09219AA1DB0028422F /* YLFunctionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFunctionController.m; sourceTree = "<group>"; };
+		8A444E0E219AA4C30028422F /* YLSubController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubController.h; sourceTree = "<group>"; };
+		8A444E0F219AA4C40028422F /* YLSubController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubController.m; sourceTree = "<group>"; };
 		8A691398218FCF86003B0EE2 /* pic_3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic_3.jpeg; sourceTree = "<group>"; };
 		8A691399218FCF86003B0EE2 /* pic_2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic_2.jpeg; sourceTree = "<group>"; };
 		8A69139A218FCF86003B0EE2 /* pic_4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic_4.jpeg; sourceTree = "<group>"; };
@@ -195,14 +203,6 @@
 		8AC75B9721994AF100D159C9 /* UITextView+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Extension.m"; sourceTree = "<group>"; };
 		8AC75B992199544900D159C9 /* YLLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLLoginController.h; sourceTree = "<group>"; };
 		8AC75B9A2199544900D159C9 /* YLLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLLoginController.m; sourceTree = "<group>"; };
-		8AC75BAB21996F8100D159C9 /* YLFunctionBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFunctionBaseController.h; sourceTree = "<group>"; };
-		8AC75BAC21996F8100D159C9 /* YLFunctionBaseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFunctionBaseController.m; sourceTree = "<group>"; };
-		8AC75BB42199719300D159C9 /* YLSoldOutController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSoldOutController.h; sourceTree = "<group>"; };
-		8AC75BB52199719300D159C9 /* YLSoldOutController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSoldOutController.m; sourceTree = "<group>"; };
-		8AC75BB7219971B200D159C9 /* YLSoldInController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSoldInController.h; sourceTree = "<group>"; };
-		8AC75BB8219971B200D159C9 /* YLSoldInController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSoldInController.m; sourceTree = "<group>"; };
-		8AC75BBA2199753D00D159C9 /* YLSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSwitchView.h; sourceTree = "<group>"; };
-		8AC75BBB2199753D00D159C9 /* YLSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSwitchView.m; sourceTree = "<group>"; };
 		8AC75BBD219996BB00D159C9 /* YLSkipView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSkipView.h; sourceTree = "<group>"; };
 		8AC75BBE219996BB00D159C9 /* YLSkipView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSkipView.m; sourceTree = "<group>"; };
 		8ACDC9BD2193FF3B00B5EF41 /* huo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = huo.png; sourceTree = "<group>"; };
@@ -428,8 +428,6 @@
 				8A37DEFA218C0D88003A18F0 /* YLSaleView.m */,
 				8A35F8ED218D3E9C00BDBC9E /* YLOrderCell.h */,
 				8A35F8EE218D3E9C00BDBC9E /* YLOrderCell.m */,
-				8A35F8F0218D4D3B00BDBC9E /* YLSaleButton.h */,
-				8A35F8F1218D4D3B00BDBC9E /* YLSaleButton.m */,
 				8A35F8F3218D541400BDBC9E /* YLOrderView.h */,
 				8A35F8F4218D541400BDBC9E /* YLOrderView.m */,
 				8A35F8FC218D713E00BDBC9E /* YLDetectionCell.h */,
@@ -450,18 +448,16 @@
 		8A0E3F61218A9B5900275131 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8A444E04219A9B2A0028422F /* Login */,
+				8A444E03219A9ADA0028422F /* Setting */,
 				8A0E3F4F218A95F300275131 /* YLMineController.h */,
 				8A0E3F50218A95F300275131 /* YLMineController.m */,
 				8AB874502199462C00FB0A93 /* YLSuggestionController.h */,
 				8AB874512199462C00FB0A93 /* YLSuggestionController.m */,
-				8AC75B992199544900D159C9 /* YLLoginController.h */,
-				8AC75B9A2199544900D159C9 /* YLLoginController.m */,
-				8AC75BAB21996F8100D159C9 /* YLFunctionBaseController.h */,
-				8AC75BAC21996F8100D159C9 /* YLFunctionBaseController.m */,
-				8AC75BB42199719300D159C9 /* YLSoldOutController.h */,
-				8AC75BB52199719300D159C9 /* YLSoldOutController.m */,
-				8AC75BB7219971B200D159C9 /* YLSoldInController.h */,
-				8AC75BB8219971B200D159C9 /* YLSoldInController.m */,
+				8A444E08219AA1DB0028422F /* YLFunctionController.h */,
+				8A444E09219AA1DB0028422F /* YLFunctionController.m */,
+				8A444E0E219AA4C30028422F /* YLSubController.h */,
+				8A444E0F219AA4C40028422F /* YLSubController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -475,10 +471,10 @@
 				8AB8744B219918E100FB0A93 /* YLFunctionView.m */,
 				8AB8744D219924C600FB0A93 /* YLMineHeader.h */,
 				8AB8744E219924C600FB0A93 /* YLMineHeader.m */,
-				8AC75BBA2199753D00D159C9 /* YLSwitchView.h */,
-				8AC75BBB2199753D00D159C9 /* YLSwitchView.m */,
 				8AC75BBD219996BB00D159C9 /* YLSkipView.h */,
 				8AC75BBE219996BB00D159C9 /* YLSkipView.m */,
+				8A444E05219A9C030028422F /* YLBargainCell.h */,
+				8A444E06219A9C030028422F /* YLBargainCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -635,6 +631,26 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		8A444E03219A9ADA0028422F /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				8A265C6D219A5B6300FB58A3 /* YLSettingController.h */,
+				8A265C6E219A5B6300FB58A3 /* YLSettingController.m */,
+				8A265C70219A629700FB58A3 /* YLAboutController.h */,
+				8A265C71219A629700FB58A3 /* YLAboutController.m */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		8A444E04219A9B2A0028422F /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				8AC75B992199544900D159C9 /* YLLoginController.h */,
+				8AC75B9A2199544900D159C9 /* YLLoginController.m */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		8A691397218FCF73003B0EE2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -754,11 +770,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A444E0A219AA1DB0028422F /* YLFunctionController.m in Sources */,
 				8A35F8FB218D70CF00BDBC9E /* YLDetectionController.m in Sources */,
-				8AC75BB9219971B200D159C9 /* YLSoldInController.m in Sources */,
 				8A0E3F45218A942D00275131 /* YLNavigationController.m in Sources */,
 				8AB874492199149500FB0A93 /* YLLoginHeader.m in Sources */,
-				8AC75BB62199719300D159C9 /* YLSoldOutController.m in Sources */,
 				8A0E3F3A218A927100275131 /* main.m in Sources */,
 				8A35F8D6218D2B6800BDBC9E /* YLManager.m in Sources */,
 				8AC75B9821994AF100D159C9 /* UITextView+Extension.m in Sources */,
@@ -767,6 +782,7 @@
 				8A21114221916C900014132C /* YLDetailFooterView.m in Sources */,
 				8A35F8FE218D713E00BDBC9E /* YLDetectionCell.m in Sources */,
 				8A0E3F70218AA85400275131 /* YLCellModel.m in Sources */,
+				8A265C72219A629700FB58A3 /* YLAboutController.m in Sources */,
 				8A211130219163F20014132C /* YLSafeguardCell.m in Sources */,
 				8A0E3F67218AA14200275131 /* YLTitleBar.m in Sources */,
 				8AF43E4B21925D7A003E2D5B /* YLButton.m in Sources */,
@@ -777,12 +793,12 @@
 				8AB8744C219918E100FB0A93 /* YLFunctionView.m in Sources */,
 				8AC35540219537B600D16503 /* YLCoverView.m in Sources */,
 				8A21113F219169CD0014132C /* YLInformationView.m in Sources */,
+				8A444E07219A9C030028422F /* YLBargainCell.m in Sources */,
 				8A37DF01218C2E77003A18F0 /* YLMessageController.m in Sources */,
 				8A37DEFB218C0D88003A18F0 /* YLSaleView.m in Sources */,
+				8A265C6F219A5B6300FB58A3 /* YLSettingController.m in Sources */,
 				8A35F8D9218D2B9400BDBC9E /* YLManagerInfo.m in Sources */,
 				8A0E3F75218AEA8600275131 /* YLHeaderView.m in Sources */,
-				8AC75BBC2199753D00D159C9 /* YLSwitchView.m in Sources */,
-				8A35F8F2218D4D3B00BDBC9E /* YLSaleButton.m in Sources */,
 				8A35F8E6218D35E800BDBC9E /* YLSearchBar.m in Sources */,
 				8A37DF04218C3536003A18F0 /* YLMessageCell.m in Sources */,
 				8A0E3F42218A940800275131 /* YLTabBarController.m in Sources */,
@@ -797,7 +813,7 @@
 				8A0E3F79218AEC8400275131 /* UIView+Extension.m in Sources */,
 				8A35F8EF218D3E9C00BDBC9E /* YLOrderCell.m in Sources */,
 				8A35F8F8218D5F9F00BDBC9E /* YLReservationController.m in Sources */,
-				8AC75BAD21996F8100D159C9 /* YLFunctionBaseController.m in Sources */,
+				8A444E10219AA4C40028422F /* YLSubController.m in Sources */,
 				8A21113C219168880014132C /* YLDetailHeaderView.m in Sources */,
 				8AF0DB112196C74400A3A11F /* YLSelectView.m in Sources */,
 				8AB8744F219924C600FB0A93 /* YLMineHeader.m in Sources */,
