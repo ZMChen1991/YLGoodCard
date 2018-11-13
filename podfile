@@ -4,5 +4,6 @@ target 'YLGoodCard' do
 
 pod 'SDWebImage'
 pod 'Masonry'
+pod 'AFNetwork'
 
 end

@@ -55,6 +55,8 @@
 		8A444E07219A9C030028422F /* YLBargainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E06219A9C030028422F /* YLBargainCell.m */; };
 		8A444E0A219AA1DB0028422F /* YLFunctionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E09219AA1DB0028422F /* YLFunctionController.m */; };
 		8A444E10219AA4C40028422F /* YLSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E0F219AA4C40028422F /* YLSubController.m */; };
+		8A444E14219AC4F60028422F /* YLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E13219AC4F60028422F /* YLRequest.m */; };
+		8A444E17219ACC830028422F /* YLPictureRotateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E16219ACC830028422F /* YLPictureRotateModel.m */; };
 		8A69139C218FCF86003B0EE2 /* pic_3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8A691398218FCF86003B0EE2 /* pic_3.jpeg */; };
 		8A69139D218FCF86003B0EE2 /* pic_2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8A691399218FCF86003B0EE2 /* pic_2.jpeg */; };
 		8A69139E218FCF86003B0EE2 /* pic_4.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8A69139A218FCF86003B0EE2 /* pic_4.jpeg */; };
@@ -181,6 +183,10 @@
 		8A444E09219AA1DB0028422F /* YLFunctionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFunctionController.m; sourceTree = "<group>"; };
 		8A444E0E219AA4C30028422F /* YLSubController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubController.h; sourceTree = "<group>"; };
 		8A444E0F219AA4C40028422F /* YLSubController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubController.m; sourceTree = "<group>"; };
+		8A444E12219AC4F60028422F /* YLRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLRequest.h; sourceTree = "<group>"; };
+		8A444E13219AC4F60028422F /* YLRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLRequest.m; sourceTree = "<group>"; };
+		8A444E15219ACC830028422F /* YLPictureRotateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLPictureRotateModel.h; sourceTree = "<group>"; };
+		8A444E16219ACC830028422F /* YLPictureRotateModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLPictureRotateModel.m; sourceTree = "<group>"; };
 		8A691398218FCF86003B0EE2 /* pic_3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic_3.jpeg; sourceTree = "<group>"; };
 		8A691399218FCF86003B0EE2 /* pic_2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic_2.jpeg; sourceTree = "<group>"; };
 		8A69139A218FCF86003B0EE2 /* pic_4.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic_4.jpeg; sourceTree = "<group>"; };
@@ -346,6 +352,8 @@
 				8A0E3F6F218AA85400275131 /* YLCellModel.m */,
 				8A37DF05218C4236003A18F0 /* YLMessageModel.h */,
 				8A37DF06218C4236003A18F0 /* YLMessageModel.m */,
+				8A444E15219ACC830028422F /* YLPictureRotateModel.h */,
+				8A444E16219ACC830028422F /* YLPictureRotateModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -500,6 +508,7 @@
 		8A0E3F71218AE5E700275131 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				8A444E11219AC4BD0028422F /* Request */,
 				8A691397218FCF73003B0EE2 /* Resource */,
 				8A35F8DA218D34C100BDBC9E /* Command */,
 				8A0E3F64218A9B8E00275131 /* TabBarController */,
@@ -651,6 +660,15 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		8A444E11219AC4BD0028422F /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				8A444E12219AC4F60028422F /* YLRequest.h */,
+				8A444E13219AC4F60028422F /* YLRequest.m */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		8A691397218FCF73003B0EE2 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -779,6 +797,7 @@
 				8AC75B9821994AF100D159C9 /* UITextView+Extension.m in Sources */,
 				8AF43E512192CB83003E2D5B /* YLCondition.m in Sources */,
 				8A37DEFE218C0F22003A18F0 /* YLSaleViewModel.m in Sources */,
+				8A444E17219ACC830028422F /* YLPictureRotateModel.m in Sources */,
 				8A21114221916C900014132C /* YLDetailFooterView.m in Sources */,
 				8A35F8FE218D713E00BDBC9E /* YLDetectionCell.m in Sources */,
 				8A0E3F70218AA85400275131 /* YLCellModel.m in Sources */,
@@ -786,6 +805,7 @@
 				8A211130219163F20014132C /* YLSafeguardCell.m in Sources */,
 				8A0E3F67218AA14200275131 /* YLTitleBar.m in Sources */,
 				8AF43E4B21925D7A003E2D5B /* YLButton.m in Sources */,
+				8A444E14219AC4F60028422F /* YLRequest.m in Sources */,
 				8A0E3F48218A944F00275131 /* YLMainController.m in Sources */,
 				8ACDC9C321942C4700B5EF41 /* NSString+Extension.m in Sources */,
 				8A0E3F4B218A949B00275131 /* YLBuyController.m in Sources */,

@@ -50,6 +50,8 @@
 #import "NSString+Extension.h"
 #import "UITextView+Extension.h"
 
+#import "AFNetworking.h"
+
 //1. 对于约束参数可以省去"mas_"
 #define MAS_SHORTHAND
 //2. 对于默认的约束参数自动装箱

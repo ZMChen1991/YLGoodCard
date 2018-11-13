@@ -16,6 +16,8 @@
 #import "YLDetailController.h"
 #import "YLButton.h"
 
+#import "YLRequest.h"
+
 /* 搜索页面，广告轮播
  */
 
@@ -32,12 +34,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    // 不自动调节滚动区域
-    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO; // 不自动调节滚动区域
     
     [self setNav];
+    [self setupTableView];
+    [self load];
+}
+
+- (void)load {
+    
+    NSString *str = @"http://ucarjava.bceapp.com/play?method=play";
+    [YLRequest GET:str parameters:nil responseCache:nil success:^(id  _Nonnull responseObject) {
+        NSLog(@"获取成功:%@", responseObject);
+        NSArray *data = responseObject[@"data"];
+        NSLog(@"data:%@",data);
+    } failed:^(NSError * _Nonnull error) {
+        NSLog(@"获取失败");
+    }];
+}
+
+
+- (void)setupTableView {
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -44, YLScreenWidth, YLScreenHeight)];
     [self.view addSubview:self.tableView];
@@ -45,7 +63,7 @@
     self.tableView.dataSource = self;
     self.tableView.bounces = NO; // 禁止弹跳
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    
     NSArray *images = @[@"pic_1.jpeg", @"pic_2.jpeg", @"pic_3.jpeg", @"pic_4.jpeg"];
     YLHeaderView *headerView = [[YLHeaderView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 344)];
     headerView.pictureRotate.images = images;
