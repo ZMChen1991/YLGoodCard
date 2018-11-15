@@ -12,4 +12,14 @@
 
 YLSingletonM;
 
+- (void)loginWithUser:(YLUser *)user {
+    
+    
+}
+
+- (void)logout {
+    
+    
+}
+
 @end

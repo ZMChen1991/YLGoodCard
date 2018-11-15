@@ -13,10 +13,10 @@
 #import "YLInformationCell.h"
 #import "YLCarInformationCell.h"
 #import "YLReportCell.h"
-#import "YLTableHeaderView.h"
 #import "YLCondition.h"
 #import "YLDetailFooterView.h"
 #import "YLCoverView.h"
+#import "YLTableGroupHeader.h"
 
 @interface YLDetailController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate>
 
@@ -74,16 +74,10 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    YLTableHeaderModel *model = [[YLTableHeaderModel alloc] init];
-    model.title = @"热门二手车";
-    model.subtitle = @"查看更多";
-    YLTableHeaderView *view = [[YLTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 44)];
-    view.tableHeadertype = YLTableHeaderTypeSubtitle;
-    view.tableHeaderModel = model;
-    view.backgroundColor = [UIColor whiteColor];
-//    view.backgroundColor = [UIColor greenColor];
-    return view;
+
+    CGRect headerRect = CGRectMake(0, 0, YLScreenWidth, 44);
+    YLTableGroupHeader *header = [[YLTableGroupHeader alloc] initWithFrame:headerRect image:@"热门二手车" title:@"热门二手车" detailTitle:@"查看更多" arrowImage:@"更多"];
+    return header;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {

@@ -66,16 +66,6 @@ static NSString * const leftIdentifier = @"LeftCellIdentifier";
         line.backgroundColor = YLColor(237.0, 237.0, 237.0);
         [self addSubview:line];
     }
-//    [self.background addSubview:self.leftTableView];
-//    [self.background addSubview:self.customPrice];
-//    [self.background addSubview:self.selectView];
-//    [self addSubview:self.background];
-//    
-//    self.background.hidden = YES;
-//    self.leftTableView.hidden = YES;
-//    self.customPrice.hidden = YES;
-//    self.selectView.hidden = YES;
-//    self.selectState = NO;
 }
 
 // 选中状态时，如果点击的是排序按钮，则显示列表，否则隐藏
@@ -84,81 +74,8 @@ static NSString * const leftIdentifier = @"LeftCellIdentifier";
     if (self.delegate && [self.delegate respondsToSelector:@selector(pushCoverView:)]) {
         [self.delegate pushCoverView:sender];
     }
-
-//    self.selectState = !self.selectState;
-//    if (self.selectState) {
-//        switch (sender.tag) {
-//            case 100:
-//                NSLog(@"排序");
-//                self.background.hidden = NO;
-//                self.leftTableView.hidden = NO;
-//                self.customPrice.hidden = YES;
-//                self.selectView.hidden = YES;
-//                break;
-//            case 101:
-//                NSLog(@"品牌");
-//                self.background.hidden = YES;
-//                self.leftTableView.hidden = YES;
-//                self.customPrice.hidden = YES;
-//                self.selectView.hidden = YES;
-//                self.selectState = NO;
-//                break;
-//            case 102:
-//                NSLog(@"价格");
-//                self.background.hidden = NO;
-//                self.leftTableView.hidden = YES;
-//                self.customPrice.hidden = NO;
-//                self.selectView.hidden = YES;
-//                break;
-//            case 103:
-//                NSLog(@"筛选");
-//                self.background.hidden = NO;
-//                self.leftTableView.hidden = YES;
-//                self.customPrice.hidden = YES;
-//                self.selectView.hidden = NO;
-//                break;
-//            default:
-//                break;
-//        }
-//    } else {
-//        self.background.hidden = YES;
-//        self.leftTableView.hidden = YES;
-//        self.customPrice.hidden = YES;
-//        self.selectView.hidden = YES;
-//    }
     NSLog(@"%@--%d", sender.titleLabel.text, self.selectState);
 }
-
-//#pragma mark UItableViewDelegate/UITableViewDataSource
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    
-//        return 1;
-//}
-//
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    
-//    return self.dataArray.count;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"leftTableViewCellID"];
-//    cell.textLabel.text = [NSString stringWithFormat:@"%@", self.dataArray[indexPath.row]];
-//    return cell;
-//}
-//
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//    // 具体逻辑还需依照数据来修改
-//    self.background.hidden = YES; //点击cell之后去获取筛选后的数据，刷新控制器里面的数据
-//    self.selectState = NO;
-//    NSLog(@"%@", self.dataArray[indexPath.row]);
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    
-//        return 35;
-//}
 
 - (UITableView *)leftTableView {
 
@@ -174,33 +91,5 @@ static NSString * const leftIdentifier = @"LeftCellIdentifier";
     }
     return _leftTableView;
 }
-//
-//- (UIView *)background {
-//    if (!_background) {
-//        _background = [[UIView alloc] initWithFrame:CGRectMake(0, btnH+1, YLScreenWidth, YLScreenHeight)];
-//        _background.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.5];
-////        _background.backgroundColor = [UIColor redColor];
-////        [_background addSubview:self.leftTableView];
-//        [self addSubview:_background];
-//    }
-//    return _background;
-//}
-//
-//- (YLCustomPrice *)customPrice {
-//    if (!_customPrice) {
-//        _customPrice = [[YLCustomPrice alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 226)];
-//        _customPrice.backgroundColor = [UIColor whiteColor];
-////        [self.background addSubview:_customPrice];
-//    }
-//    return _customPrice;
-//}
-//
-//- (YLSelectView *)selectView {
-//    if (!_selectView) {
-//        _selectView = [[YLSelectView alloc] initWithFrame:CGRectMake(self.background.frame.size.width - 328, 0, 328, self.background.frame.size.height)];
-//        _selectView.backgroundColor = [UIColor redColor];
-//    }
-//    return _selectView;
-//}
 
 @end

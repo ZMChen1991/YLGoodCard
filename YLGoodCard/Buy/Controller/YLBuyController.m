@@ -15,6 +15,7 @@
 #import "YLCustomPrice.h"
 #import "YLSelectView.h"
 #import "YLSortView.h"
+#import "YLRequest.h"
 
 /*
  品牌列表
@@ -170,8 +171,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
         YLTableViewCell *cell = [YLTableViewCell cellWithTableView:tableView];
-        cell.cellModel = nil;
-        cell.type = YLTableViewCellTypeSmallImage;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
 }

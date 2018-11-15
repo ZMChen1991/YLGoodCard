@@ -1,24 +1,23 @@
 //
 //  YLTableViewCell.h
-//  YLGoodCard
+//  YLYouka
 //
-//  Created by lm on 2018/11/1.
+//  Created by lm on 2018/11/14.
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "YLCellModel.h"
+#import "YLTableViewModel.h"
 
-typedef NS_ENUM(NSInteger, YLTableViewCellType) {
-    YLTableViewCellTypeSmallImage,
-    YLTableViewCellTypeLargeImage,
-};
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface YLTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) YLCellModel *cellModel;
-@property (nonatomic, assign) YLTableViewCellType type;
+@property (nonatomic, strong) YLTableViewModel *model;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 
 @end
+
+NS_ASSUME_NONNULL_END

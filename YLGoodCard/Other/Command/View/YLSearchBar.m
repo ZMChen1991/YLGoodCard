@@ -16,11 +16,13 @@
     if (self) {
         // 设置背景
 //        self.background = [UIImage resizedImage:@"searchbar_textfield_background"];
-        self.backgroundColor = [UIColor redColor];
+//        self.backgroundColor = [UIColor redColor];
         
         // 设置圆角
         self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
+        self.layer.borderWidth = 0.5;
+        self.layer.borderColor = YLColor(155.f, 155.f, 155.f).CGColor;
         
         // 设置内容 -- 垂直居中
         self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;

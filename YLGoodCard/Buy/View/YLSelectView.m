@@ -97,7 +97,7 @@ static NSString *HeaderID = @"YLCollectHeader";
     //    };
     //
     //    cell.delegate = self;
-    NSLog(@"cellWidth:%f",cell.frame.size.width);
+//    NSLog(@"cellWidth:%f",cell.frame.size.width);
     return cell;
 }
 

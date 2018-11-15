@@ -7,6 +7,8 @@
 //
 
 #import "YLSafeguardCell.h"
+#import "YLCustomButton.h"
+
 
 @interface YLSafeguardCell ()
 
@@ -39,15 +41,19 @@
 
 - (void)setupUI {
     
-    NSArray *array = @[@"售后保障", @"30天可退", @"调表车赔付", @"禁售抢盗车"];
+    NSArray *array = @[@"售后保障", @"30天可退", @"调表车赔付", @"服务费低"];
+    NSArray *images = @[@"售后保障", @"30天可退", @"专业检测", @"服务费低"];
     float width = (self.frame.size.width - 2 * YLLeftMargin) / array.count;
     float height = 80;
     for (int i = 0; i < array.count; i++) {
-        UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(i * width + YLLeftMargin, 0, width, height)];
+        YLCustomButton *btn = [[YLCustomButton alloc] initWithFrame:CGRectMake(i * width + YLLeftMargin, 0, width, height)];
         [btn setTitle:array[i] forState:UIControlStateNormal];
-        [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
-        [btn addTarget:self action:@selector(btnClick) forControlEvents:UIControlEventTouchUpInside];
-        [btn setBackgroundColor:YLRandomColor];
+//        [btn.titleLabel setFont:[UIFont systemFontOfSize:16]];
+        // 图片显大，需修改
+        [btn setImage:[UIImage imageNamed:images[i]] forState:UIControlStateNormal];
+        btn.tag = 100 + i;
+        [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+//        [btn setBackgroundColor:YLRandomColor];
         [self addSubview:btn];
     }
     UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(YLLeftMargin, height, self.frame.size.width - 2 * YLLeftMargin, height)];
@@ -60,7 +66,7 @@
     [self addSubview:line];
 }
 
-- (void)btnClick {
+- (void)btnClick:(YLCustomButton *)sender {
     NSLog(@"click");
     self.provideView.backgroundColor = YLRandomColor;
 }

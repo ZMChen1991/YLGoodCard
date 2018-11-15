@@ -35,13 +35,11 @@
     
     if (self.cellType == YLCellTypeNormal) {
         YLTableViewCell *cell = [YLTableViewCell cellWithTableView:tableView];
-        cell.cellModel = nil;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
         
         YLBargainCell *cell = [YLBargainCell cellWithTableView:tableView];
-        cell.cellModel = nil;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     }

@@ -57,7 +57,7 @@
         float width = size.width;
         float height = self.tagView.frame.size.height;
         YLCondition *btn = [[YLCondition alloc] initWithFrame:CGRectMake(i * (width + YLTopMargin), 0, width, height)];
-        btn.type = YLConditionTypeBlue;
+        btn.type = YLConditionTypeWhite;
         [btn setTitle:tags[i] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:12];
         [self.tagView addSubview:btn];
@@ -84,10 +84,11 @@
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(CGRectGetMaxX(self.price.frame), CGRectGetMaxY(self.tagView.frame) + 22, 14, 14);
-    [button setBackgroundColor:[UIColor grayColor]];
+    [button setImage:[UIImage imageNamed:@"提醒"] forState:UIControlStateNormal];
+//    [button setBackgroundColor:[UIColor grayColor]];
     
     self.bargain = [[YLCondition alloc] initWithFrame:CGRectMake(self.frame.size.width - YLLeftMargin - 56, CGRectGetMaxY(self.tagView.frame) + 20, 56, 24)];
-    self.bargain.type = YLConditionTypeBlue;
+    self.bargain.type = YLConditionTypeWhite;
     [self.bargain setTitle:@"砍价" forState:UIControlStateNormal];
     [self.bargain addTarget:self action:@selector(bargainClick) forControlEvents:UIControlEventTouchUpInside];
     

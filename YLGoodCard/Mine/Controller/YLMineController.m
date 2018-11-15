@@ -65,7 +65,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YLTableViewCell *cell = [YLTableViewCell cellWithTableView:tableView];
-    cell.cellModel = nil;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

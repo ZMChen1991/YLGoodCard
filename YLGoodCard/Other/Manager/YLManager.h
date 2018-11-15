@@ -7,15 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "YLManagerInfo.h"
+#import "YLUser.h"
 
 @interface YLManager : NSObject
 
 YLSingletonH;
 
-@property (nonatomic, strong) YLManagerInfo *managerInfo; // 用户信息
+@property (nonatomic, readonly) YLUser *user; // 用户信息
 @property (nonatomic, assign) BOOL isLogin; // 是否登录
 
-
+// 用户登录
+- (void)loginWithUser:(YLUser *)user;
+// 用户退出
+- (void)logout;
 
 @end

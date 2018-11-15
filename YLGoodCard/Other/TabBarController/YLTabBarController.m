@@ -23,16 +23,16 @@
     [super viewDidLoad];
     
     YLMainController *mainVc = [[YLMainController alloc] init];
-    [self addChildViewController:mainVc title:@"首页" image:nil selectImage:nil];
+    [self addChildViewController:mainVc title:@"首页" image:@"首页" selectImage:nil];
     
     YLBuyController *buyVc = [[YLBuyController alloc] init];
-    [self addChildViewController:buyVc title:@"买车" image:nil selectImage:nil];
+    [self addChildViewController:buyVc title:@"买车" image:@"买车" selectImage:nil];
     
     YLSaleViewController *saleVc = [[YLSaleViewController alloc] init];
-    [self addChildViewController:saleVc title:@"卖车" image:nil selectImage:nil];
+    [self addChildViewController:saleVc title:@"卖车" image:@"卖车" selectImage:nil];
     
     YLMineController *mineVc = [[YLMineController alloc] init];
-    [self addChildViewController:mineVc title:@"我的" image:nil selectImage:nil];
+    [self addChildViewController:mineVc title:@"我的" image:@"我的" selectImage:nil];
 }
 
 - (void)didReceiveMemoryWarning {
