@@ -92,12 +92,6 @@ static NSString *HeaderID = @"YLCollectHeader";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     YLConditionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellID forIndexPath:indexPath];
-    //    cell.myBlock = ^(NSString *string) {
-    //        NSLog(@"cell:%@",string);
-    //    };
-    //
-    //    cell.delegate = self;
-//    NSLog(@"cellWidth:%f",cell.frame.size.width);
     return cell;
 }
 

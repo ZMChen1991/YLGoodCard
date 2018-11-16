@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, YLTableViewCellStatus) {
 
 @interface YLTableViewModel : NSObject
 
+@property (nonatomic, strong) NSString *carID;
 @property (nonatomic, strong) NSString *displayImg;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *course;

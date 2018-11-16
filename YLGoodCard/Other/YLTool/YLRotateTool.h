@@ -35,6 +35,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)notableWithParam:(id)param success:(void(^)(NSArray<YLNotableModel *> *result))success failure:(void (^)(NSError *error))failure;
 
 
+/**
+ 推荐列表数据
+
+ @param param 请求参数
+ @param success 请求成功后的回调
+ @param failure 请求失败后的回调
+ */
 + (void)recommendWithParam:(id)param success:(void(^)(NSArray<YLTableViewModel *> *result))success failure:(void (^)(NSError *error))failure;
 
 @end

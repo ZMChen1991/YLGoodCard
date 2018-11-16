@@ -22,10 +22,11 @@
 
 @implementation YLSkipView
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame titles:(NSArray *)title controllers:(NSArray *)controllers {
     
     self = [super initWithFrame:frame];
     if (self) {
+        
     }
     return self;
 }
@@ -71,12 +72,6 @@
 - (void)layoutSubviews {
     
     [super layoutSubviews];
-    
-//    for (NSInteger i = 0; i < self.titles.count; i++) {
-//        NSInteger width = self.frame.size.width / 2;
-//        UIButton *btn = self.btns[i];
-//        btn.frame = CGRectMake(width * i, 0, width, TITLEHEIGHT);
-//    }
 }
 
 - (void)selectBtn:(UIButton *)sender {

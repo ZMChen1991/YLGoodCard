@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YLBanner : UIView
 
+//@property (nonatomic, strong) NSMutableArray *images;
+
 /**
  初始化
 

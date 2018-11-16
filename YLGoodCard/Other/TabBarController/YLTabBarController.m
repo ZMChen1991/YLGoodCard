@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
     YLMainController *mainVc = [[YLMainController alloc] init];
-    [self addChildViewController:mainVc title:@"首页" image:@"首页" selectImage:nil];
+    [self addChildViewController:mainVc title:@"首页" image:@"首页点击" selectImage:nil];
     
     YLBuyController *buyVc = [[YLBuyController alloc] init];
     [self addChildViewController:buyVc title:@"买车" image:@"买车" selectImage:nil];
@@ -52,7 +52,7 @@
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     textAttrs[NSForegroundColorAttributeName] = [UIColor blackColor];
     NSMutableDictionary *selectTextAttrs = [NSMutableDictionary dictionary];
-    selectTextAttrs[NSForegroundColorAttributeName] = [UIColor redColor];
+    selectTextAttrs[NSForegroundColorAttributeName] = YLColor(21.f, 126.f, 251.f);
     [nav.tabBarItem setTitleTextAttributes:textAttrs forState:UIControlStateNormal];
     [nav.tabBarItem setTitleTextAttributes:selectTextAttrs forState:UIControlStateSelected];
     

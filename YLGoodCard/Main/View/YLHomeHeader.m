@@ -21,6 +21,7 @@
         float width = frame.size.width;
         CGRect bannerRect = CGRectMake(0, 0, width, 220);
         YLBanner *banner = [[YLBanner alloc] initWithFrame:bannerRect Images:bannerTitles isRunning:YES];
+//        banner.images = bannerTitles;
 //        banner.backgroundColor = YLRandomColor;
         [self addSubview:banner];
         

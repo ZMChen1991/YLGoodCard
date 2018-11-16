@@ -18,12 +18,16 @@
 #import "YLCoverView.h"
 #import "YLTableGroupHeader.h"
 
+#import "YLMainController.h"
+
 @interface YLDetailController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate>
 
 @property (nonatomic, strong) UIImageView *bg;
 @property (nonatomic, strong) UIView *labelView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) YLCoverView *cover;
+
+@property (nonatomic, strong) YLMainController *mainVc;
 
 @end
 
@@ -34,6 +38,13 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self setupNav];
     [self addTableView];
+    
+//    YLMainController *mainVc = [[YLMainController alloc] init];
+//    __weak typeof(self) weakSelf = self;
+//    weakSelf.
+//    mainVc.block = ^(NSString *title) {
+//        NSLog(@"%@", title);
+//    };
 }
 
 #pragma mark UITableViewDelegate
@@ -53,22 +64,18 @@
     if (indexPath.section == 0) {
         YLSafeguardCell *cell = [YLSafeguardCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.backgroundColor = YLRandomColor;
         return cell;
     } if (indexPath.section == 1) {
         YLInformationCell *cell = [YLInformationCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.backgroundColor = YLRandomColor;
         return cell;
     } if (indexPath.section == 2) {
         YLReportCell *cell = [YLReportCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.backgroundColor = YLRandomColor;
         return cell;
     } else {
         YLCarInformationCell *cell = [YLCarInformationCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.backgroundColor = YLRandomColor;
         return cell;
     }
 }

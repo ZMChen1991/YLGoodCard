@@ -29,7 +29,9 @@
 #define textMargin 5
 
 
-#define weakSelf __weak typeof(self) weakSelf = self
+// 强弱引用
+//#define YLWeakSelf(type) __weak typeof(type) weak##type = type;
+//#define YLStrongSelf(type) __strong typeof(type) type = weak##type;
 
 // 用户信息路径
 #define YLUserPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"userInfo.archive"]

@@ -10,4 +10,9 @@
 
 @implementation YLTableViewModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    
+    return @{@"carID":@"id"};
+}
+
 @end

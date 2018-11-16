@@ -1,8 +1,8 @@
 //
-//  YLBrandView.h
+//  YLBrandCell.h
 //  YLGoodCard
 //
-//  Created by lm on 2018/11/15.
+//  Created by lm on 2018/11/16.
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YLBrandView : UIView
+@interface YLBrandCell : UITableViewCell
 
 @end
 

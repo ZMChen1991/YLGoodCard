@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef void(^myBlock)(NSString *title);
 @interface YLMainController : UIViewController
+
+@property (nonatomic, copy) myBlock block;
 
 @end

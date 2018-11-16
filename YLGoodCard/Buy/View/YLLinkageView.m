@@ -18,7 +18,7 @@
 
 
 
-@interface YLLinkageView () <UITableViewDelegate, UITableViewDataSource>
+@interface YLLinkageView ()
 
 @property (nonatomic, strong) NSArray *dataArray;// 数据
 @property (nonatomic, assign) BOOL selectState;// 默认不选中
@@ -74,22 +74,7 @@ static NSString * const leftIdentifier = @"LeftCellIdentifier";
     if (self.delegate && [self.delegate respondsToSelector:@selector(pushCoverView:)]) {
         [self.delegate pushCoverView:sender];
     }
-    NSLog(@"%@--%d", sender.titleLabel.text, self.selectState);
 }
 
-- (UITableView *)leftTableView {
-
-    if (!_leftTableView) {
-        _leftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, YLScreenHeight) style:UITableViewStylePlain];
-        _leftTableView.delegate = self;
-        _leftTableView.dataSource = self;
-        [_leftTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"leftTableViewCellID"];
-        _leftTableView.tableFooterView = [[UIView alloc] init];
-        _leftTableView.backgroundColor =[UIColor clearColor];
-        _leftTableView.backgroundView = [[UIView alloc] init];
-        _leftTableView.bounces = NO;// 禁止弹跳
-    }
-    return _leftTableView;
-}
 
 @end

@@ -25,6 +25,7 @@
 @property (nonatomic, strong) UIButton *bargain;// 砍价数量
 
 @property (nonatomic, strong) UIView *line;// 底线
+//@property (nonatomic, assign) BOOL isSmallImage;
 
 @end
 

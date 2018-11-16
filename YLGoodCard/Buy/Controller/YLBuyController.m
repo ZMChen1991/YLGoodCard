@@ -16,6 +16,8 @@
 #import "YLSelectView.h"
 #import "YLSortView.h"
 #import "YLRequest.h"
+#import "YLRotateTool.h"
+#import "YLBrandController.h"
 
 /*
  品牌列表
@@ -35,6 +37,8 @@
 @property (nonatomic, assign) BOOL isSelect;// 是否选中
 @property (nonatomic, strong) UIView  *coverView;// 蒙板
 
+@property (nonatomic, strong) NSMutableArray *recommends;
+
 @end
 
 @implementation YLBuyController
@@ -42,8 +46,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self load];
     [self setNav];
     [self setUI];
+}
+
+- (void)load {
+    
+    // 获取推荐列表数组
+    [YLRotateTool recommendWithParam:nil success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+        
+        for (YLTableViewModel *model in result) {
+            [self.recommends addObject:model];
+            NSLog(@"model%@", model);
+        }
+        NSLog(@"recommend:%@", self.recommends);
+        [self.tableView reloadData]; // 获取到数据刷新表格
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
 }
 
 #pragma mark 私有方法
@@ -109,39 +130,37 @@
     
     self.isSelect = !self.isSelect;
     if (self.isSelect) {
-        switch (sender.tag) {
-            case 100:
-                NSLog(@"排序");
-                self.coverView.hidden = NO;
-                self.sortView.hidden = NO;
-                self.customPrice.hidden = YES;
-                self.selectView.hidden = YES;
-                break;
-            case 101:
-                NSLog(@"品牌");
-                self.coverView.hidden = YES;
-                self.sortView.hidden = YES;
-                self.customPrice.hidden = YES;
-                self.selectView.hidden = YES;
-                self.isSelect = NO;
-                break;
-            case 102:
-                NSLog(@"价格");
-                self.coverView.hidden = NO;
-                self.sortView.hidden = YES;
-                self.customPrice.hidden = NO;
-                self.selectView.hidden = YES;
-                break;
-            case 103:
-                NSLog(@"筛选");
-                self.coverView.hidden = NO;
-                self.sortView.hidden = YES;
-                self.customPrice.hidden = YES;
-                self.selectView.hidden = NO;
-                break;
-            default:
-                break;
+        if (sender.tag == 100) {
+            NSLog(@"排序");
+            self.coverView.hidden = NO;
+            self.sortView.hidden = NO;
+            self.customPrice.hidden = YES;
+            self.selectView.hidden = YES;
+        } else if (sender.tag == 101) {
+            NSLog(@"品牌");
+            
+            self.coverView.hidden = YES;
+            self.sortView.hidden = YES;
+            self.customPrice.hidden = YES;
+            self.selectView.hidden = YES;
+            self.isSelect = NO;
+            YLBrandController *brand = [[YLBrandController alloc] init];
+            [self.navigationController pushViewController:brand animated:YES];
+            
+        }else if (sender.tag == 102) {
+            NSLog(@"价格");
+            self.coverView.hidden = NO;
+            self.sortView.hidden = YES;
+            self.customPrice.hidden = NO;
+            self.selectView.hidden = YES;
+        }else {
+            NSLog(@"筛选");
+            self.coverView.hidden = NO;
+            self.sortView.hidden = YES;
+            self.customPrice.hidden = YES;
+            self.selectView.hidden = NO;
         }
+        
     } else {
         self.coverView.hidden = YES;
         self.sortView.hidden = YES;
@@ -165,14 +184,17 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-        return 10;
+        return self.recommends.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-        YLTableViewCell *cell = [YLTableViewCell cellWithTableView:tableView];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
+    
+    YLTableViewCell *cell = [YLTableViewCell cellWithTableView:tableView];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    YLTableViewModel *model = self.recommends[indexPath.row];
+    cell.model = model;
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -183,7 +205,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    YLTableViewModel *model = self.recommends[indexPath.row];
+    if (model.type == YLTableViewCellTypeLargeImage) {
+        return 338;
+    } else {
         return 110; // 大图：338  小图：110
+    }
+    
 }
 
 #pragma mark 懒加载
@@ -227,5 +255,13 @@
         _selectView.backgroundColor = [UIColor redColor];
     }
     return _selectView;
+}
+
+- (NSMutableArray *)recommends {
+    
+    if (!_recommends) {
+        _recommends = [NSMutableArray array];
+    }
+    return _recommends;
 }
 @end
