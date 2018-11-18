@@ -12,15 +12,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class YLButtonView;
 @protocol YLButtonViewDelegate <NSObject>
-
 @optional
 - (void)selectBtnTitle:(NSString *)title;
-
 @end
+
+typedef void(^tapClickBlock)(NSString *string);
 
 @interface YLButtonView : UIView
 
 @property (nonatomic, weak) id<YLButtonViewDelegate> delegate;
+@property (nonatomic, copy) tapClickBlock tapClickBlock;
 
 - (instancetype)initWithFrame:(CGRect)frame btnTitles:(NSArray *)btnTitles;
 

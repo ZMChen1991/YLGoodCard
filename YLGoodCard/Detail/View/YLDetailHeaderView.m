@@ -11,7 +11,7 @@
 // 375:360
 @interface YLDetailHeaderView ()
 
-@property (nonatomic, strong) UIImageView *icon;// 图片--375:220
+@property (nonatomic, strong) UIImageView *icon;// 图片--375:220:滚动图
 @property (nonatomic, strong) UILabel *text;// 信息
 @property (nonatomic, strong) UIView *tagView; // 标签集合视图
 @property (nonatomic, strong) UILabel *secondPrice; // 二手价
@@ -85,6 +85,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.frame = CGRectMake(CGRectGetMaxX(self.price.frame), CGRectGetMaxY(self.tagView.frame) + 22, 14, 14);
     [button setImage:[UIImage imageNamed:@"提醒"] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(remind) forControlEvents:UIControlEventTouchUpInside];
 //    [button setBackgroundColor:[UIColor grayColor]];
     
     self.bargain = [[YLCondition alloc] initWithFrame:CGRectMake(self.frame.size.width - YLLeftMargin - 56, CGRectGetMaxY(self.tagView.frame) + 20, 56, 24)];
@@ -113,6 +114,13 @@
     if (self.bargain.delegate && [self.bargain.delegate respondsToSelector:@selector(bargainPrice)]) {
         [self.bargain.delegate bargainPrice];
     }
+}
+
+- (void)remind {
+    
+    NSLog(@"提醒");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"新车含税价=厂商公布的j指导价+购置税费，改价格仅供参考" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (YLCondition *)setBtn:(NSString *)title {

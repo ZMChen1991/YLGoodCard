@@ -14,7 +14,7 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *detailTitleLabel;
 @property (nonatomic, strong) UIImageView *arrowIcon;
-@property (nonatomic, strong) UIView *line;
+//@property (nonatomic, strong) UIView *line;
 
 @end
 
@@ -40,6 +40,9 @@
         detailTitleLabel.text = detailTitle;
         detailTitleLabel.textAlignment = NSTextAlignmentRight;
         detailTitleLabel.font = [UIFont systemFontOfSize:12];
+        detailTitleLabel.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(labelClick:)];
+        [detailTitleLabel addGestureRecognizer:tap];
         [self addSubview:detailTitleLabel];
         self.detailTitleLabel = detailTitleLabel;
         
@@ -48,12 +51,34 @@
         [self addSubview:arrowIcon];
         self.arrowIcon = arrowIcon;
         
-        UIView *line = [[UIView alloc] init];
-        line.backgroundColor = YLColor(233.f, 233.f, 233.f);
-        [self addSubview:line];
-        self.line = line;
+//        UIView *line = [[UIView alloc] init];
+//        line.backgroundColor = YLColor(233.f, 233.f, 233.f);
+//        [self addSubview:line];
+//        self.line = line;
     }
     return self;
+}
+
+- (void)labelClick:(UITapGestureRecognizer *)tap {
+    
+    UILabel *label = (UILabel *)tap.view;
+    if (![self isBlankString:label.text]) {
+        self.labelBlock(label.text);
+    }
+}
+
+// 判断字符串是否为空或者空格符
+-  (BOOL) isBlankString:(NSString *)string {
+    if (string == nil || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)layoutSubviews {
@@ -68,7 +93,7 @@
     self.titleLabel.frame = CGRectMake(CGRectGetMaxX(self.icon.frame) + 5, YLTopMargin, titleW, iconH);
     self.arrowIcon.frame = CGRectMake(width - YLTopMargin - 8, YLTopMargin  + 4, 8, iconH / 2);
     self.detailTitleLabel.frame = CGRectMake(CGRectGetMidX(self.arrowIcon.frame) - titleW - 5, YLTopMargin, titleW, iconH);
-    self.line.frame = CGRectMake(0, CGRectGetMaxY(self.icon.frame) + YLTopMargin, width, 1);
+//    self.line.frame = CGRectMake(0, CGRectGetMaxY(self.icon.frame) + YLTopMargin, width, 1);
 }
 
 @end

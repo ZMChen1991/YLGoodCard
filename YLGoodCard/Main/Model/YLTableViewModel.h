@@ -31,9 +31,10 @@ typedef NS_ENUM(NSInteger, YLTableViewCellStatus) {
 @property (nonatomic, strong) NSString *originalPrice;
 @property (nonatomic, strong) NSString *downPrice;
 @property (nonatomic, strong) NSString *bargain;
+@property (nonatomic, strong) NSString *status;
 
-@property (nonatomic, assign) YLTableViewCellStatus status;
-@property (nonatomic, assign) YLTableViewCellType type;
+@property (nonatomic, assign) YLTableViewCellStatus cellStatus;
+@property (nonatomic, assign) YLTableViewCellType cellType;
 
 @end
 

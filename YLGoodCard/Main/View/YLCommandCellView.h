@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) YLTableViewModel *model;
 
+@property (nonatomic, assign) BOOL isSmallImage; //默认是No
 @end
 
 NS_ASSUME_NONNULL_END

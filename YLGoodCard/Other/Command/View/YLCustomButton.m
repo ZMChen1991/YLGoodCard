@@ -28,7 +28,8 @@
     CGFloat titleY = contentRect.size.height * 0.7;
     CGFloat titleW = contentRect.size.width;
     CGFloat titleH = contentRect.size.height - titleY;
-    return CGRectMake(titleX, titleY, titleW, titleH);
+    CGRect rect = CGRectMake(titleX, titleY, titleW, titleH);
+    return rect;
     
 }
 
@@ -38,7 +39,8 @@
     CGFloat imgY = 15;
     CGFloat imgW = contentRect.size.width/2;
     CGFloat imgH = contentRect.size.height * 0.5;
-    return CGRectMake(imgX, imgY, imgW, imgH);
+    CGRect rect = CGRectMake(imgX, imgY, imgW, imgH);
+    return rect;
 }
 
 @end

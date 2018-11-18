@@ -18,10 +18,11 @@
         self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
         self.layer.cornerRadius = 5.0;
         self.layer.masksToBounds = YES;
+        self.layer.borderWidth = 0.5;
+        self.layer.borderColor = YLColor(155.f, 155.f, 155.f).CGColor;
         [self setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
         [self setImage:[UIImage imageNamed:@""] forState:UIControlStateSelected];
         self.alpha = 0.5;
-        self.backgroundColor = YLColor(255.f, 255.f, 255.f);
     }
     return self;
 }

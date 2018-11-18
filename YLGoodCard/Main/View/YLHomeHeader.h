@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "YLButtonView.h"
+#import "YLTableGroupHeader.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YLHomeHeader : UIView
 
 @property (nonatomic, strong) YLButtonView *buttonView;
+@property (nonatomic, strong) YLTableGroupHeader *groupHeader;
 
 - (instancetype)initWithFrame:(CGRect)frame bannerTitles:(NSMutableArray *)bannerTitles notabletitles:(NSMutableArray *)notabletitles;
 

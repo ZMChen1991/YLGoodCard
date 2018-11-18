@@ -10,7 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^labelBlock)(NSString *string);
+
 @interface YLTableGroupHeader : UIView
+
+@property (nonatomic, copy) labelBlock labelBlock;
 
 /**
  初始化
@@ -20,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param title t标题
  @param detailTitle 更多详情
  @param arrow 箭头图片
- @return <#return value description#>
+ @return self
  */
 - (instancetype)initWithFrame:(CGRect)frame image:(NSString *)image title:(NSString *)title detailTitle:(NSString *)detailTitle arrowImage:(NSString *)arrowImage;
 

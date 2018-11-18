@@ -8,6 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+
+typedef void(^customPriceBlock)(NSString *string);
+@class YLCustomPrice;
+@protocol YLCustomPriceDelegate <NSObject>
+@optional
+- (void)pushLowPrice:(NSString *)lowPrice highPrice:(NSString *)highPrice;
+@end
+
+
 @interface YLCustomPrice : UIView
+
+@property (nonatomic, copy) customPriceBlock customPriceBlock;
+@property (nonatomic, weak) id<YLCustomPriceDelegate> delegate;
+
 
 @end

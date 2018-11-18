@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YLTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) YLTableViewModel *model;
+@property (nonatomic, assign) BOOL islargeImage;
 
 + (instancetype)cellWithTableView:(UITableView *)tableView;
 

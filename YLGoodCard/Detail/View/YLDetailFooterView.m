@@ -31,18 +31,24 @@
 - (void)setupUI {
     
     self.favorite = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.favorite setTitle:@"收藏" forState:UIControlStateNormal];
-    self.favorite.titleLabel.font = [UIFont systemFontOfSize:11];
+//    self.favorite.backgroundColor = [UIColor redColor];
+//    [self.favorite setTitle:@"收藏" forState:UIControlStateNormal];
+//    self.favorite.titleLabel.font = [UIFont systemFontOfSize:11];
+//    self.favorite.imageView.backgroundColor = [UIColor redColor];
+    [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+    self.favorite.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.favorite setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.favorite.frame = CGRectMake(YLLeftMargin, YLTopMargin, 27, self.frame.size.height - 2 * YLTopMargin);
     [self.favorite addTarget:self action:@selector(clickFavorite) forControlEvents:UIControlEventTouchUpInside];
     
     
     self.customer = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.customer setTitle:@"客服" forState:UIControlStateNormal];
-    self.customer.titleLabel.font = [UIFont systemFontOfSize:11];
+//    self.customer.backgroundColor = [UIColor greenColor];
+//    [self.customer setTitle:@"客服" forState:UIControlStateNormal];
+//    self.customer.titleLabel.font = [UIFont systemFontOfSize:11];
+    [self.customer setImage:[UIImage imageNamed:@"客服"] forState:UIControlStateNormal];
     [self.customer setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.customer.frame = CGRectMake(CGRectGetMaxX(self.favorite.frame), YLTopMargin, 27, self.frame.size.height - 2 * YLTopMargin);
+    self.customer.frame = CGRectMake(CGRectGetMaxX(self.favorite.frame) + 5, YLTopMargin, 27, self.frame.size.height - 2 * YLTopMargin);
     [self.customer addTarget:self action:@selector(clickCustomer) forControlEvents:UIControlEventTouchUpInside];
     
     self.bargain = [YLCondition buttonWithType:UIButtonTypeCustom];

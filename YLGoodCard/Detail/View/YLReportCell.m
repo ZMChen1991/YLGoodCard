@@ -42,7 +42,8 @@
 - (void)setupUI {
     
     UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(YLLeftMargin, 5, 40, 40)];
-    icon.backgroundColor = [UIColor redColor];
+//    icon.backgroundColor = [UIColor redColor];
+    icon.image = [UIImage imageNamed:@"评估师"];
     [self addSubview:icon];
     
     UILabel *text = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(icon.frame) + 5, 5, 100, 40)];

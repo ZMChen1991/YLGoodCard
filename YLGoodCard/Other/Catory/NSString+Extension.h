@@ -24,4 +24,6 @@
  */
 - (NSMutableAttributedString *)changeString:(NSString *)changeString color:(UIColor *)color;
 
++ (BOOL) isBlankString:(NSString *)string;
+
 @end

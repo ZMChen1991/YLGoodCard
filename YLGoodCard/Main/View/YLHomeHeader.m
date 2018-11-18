@@ -9,7 +9,7 @@
 #import "YLHomeHeader.h"
 #import "YLBanner.h"
 #import "YLNotable.h"
-#import "YLTableGroupHeader.h"
+#import "SDCycleScrollView.h"
 
 
 @implementation YLHomeHeader
@@ -20,12 +20,14 @@
     if (self) {
         float width = frame.size.width;
         CGRect bannerRect = CGRectMake(0, 0, width, 220);
-        YLBanner *banner = [[YLBanner alloc] initWithFrame:bannerRect Images:bannerTitles isRunning:YES];
-//        banner.images = bannerTitles;
-//        banner.backgroundColor = YLRandomColor;
-        [self addSubview:banner];
+        SDCycleScrollView *scrollView = [SDCycleScrollView cycleScrollViewWithFrame:bannerRect imageURLStringsGroup:bannerTitles];
+        [self addSubview:scrollView];
+//        YLBanner *banner = [[YLBanner alloc] initWithFrame:bannerRect Images:bannerTitles isRunning:YES];
+////        banner.images = bannerTitles;
+////        banner.backgroundColor = YLRandomColor;
+//        [self addSubview:banner];
         
-        CGRect notableRect = CGRectMake(0, CGRectGetMaxY(banner.frame), width, 60);
+        CGRect notableRect = CGRectMake(0, CGRectGetMaxY(scrollView.frame), width, 60);
         YLNotable *notable = [[YLNotable alloc] initWithWithFrame:notableRect titles:notabletitles];
 //        notable.backgroundColor = YLRandomColor;
         [self addSubview:notable];
@@ -33,7 +35,11 @@
         CGRect goupHeaderRect = CGRectMake(0, CGRectGetMaxY(notable.frame), width, 44);
         YLTableGroupHeader *groupHeader = [[YLTableGroupHeader alloc] initWithFrame:goupHeaderRect image:@"热门二手车" title:@"热门二手车" detailTitle:@"查看更多" arrowImage:@"更多"];
 //        groupHeader.backgroundColor = YLRandomColor;
+        groupHeader.labelBlock = ^(NSString * _Nonnull string) {
+            NSLog(@"string%@",string);
+        };
         [self addSubview:groupHeader];
+        self.groupHeader = groupHeader;
         
         NSArray *btnTitles = [NSArray arrayWithObjects:@"5万以下", @"5-10万", @"10-15万", @"15万以上", @"哈弗", @"丰田",@"大众", @"本田", @"力帆", @"日产", @"雪佛兰", @"更多", nil];
         CGRect buttonRect = CGRectMake(0, CGRectGetMaxY(groupHeader.frame), width, 99);

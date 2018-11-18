@@ -9,12 +9,9 @@
 #import "YLTableViewCell.h"
 #import "YLCommandCellView.h"
 
-#define YLScreenWidth [UIScreen mainScreen].bounds.size.width
 
 @interface YLTableViewCell ()
-
 @property (nonatomic, strong) YLCommandCellView *cellView;
-
 @end
 
 @implementation YLTableViewCell
@@ -34,6 +31,11 @@
     if (self) {
         YLCommandCellView *cellView = [[YLCommandCellView alloc] init];
         cellView.frame = self.bounds;
+        if (self.islargeImage) {
+            cellView.isSmallImage = NO;
+        } else {
+            cellView.isSmallImage = YES;
+        }
         [self addSubview:cellView];
         self.cellView = cellView;
     }

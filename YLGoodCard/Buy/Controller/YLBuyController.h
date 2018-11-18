@@ -10,4 +10,6 @@
 
 @interface YLBuyController : UIViewController
 
+@property (nonatomic, strong) NSString *searchTitle;
+
 @end

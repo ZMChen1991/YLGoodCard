@@ -10,7 +10,6 @@
 
 #define YLLeftSpace 15
 #define YLTopSpace 12
-#define YLScreenWidth [UIScreen mainScreen].bounds.size.width
 
 
 @interface YLCommandCellView ()
@@ -25,7 +24,8 @@
 @property (nonatomic, strong) UIButton *bargain;// 砍价数量
 
 @property (nonatomic, strong) UIView *line;// 底线
-//@property (nonatomic, assign) BOOL isSmallImage;
+
+
 
 @end
 
@@ -36,6 +36,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupUI];
+        self.isSmallImage = NO;
     }
     return self;
 }
@@ -105,7 +106,7 @@
     
     float width = self.frame.size.width;
     
-    if (self.model.type == YLTableViewCellTypeLargeImage) { // 大图模式
+    if (!self.isSmallImage) { // 大图模式
         self.icon.frame = CGRectMake(YLLeftSpace, YLLeftSpace, width - 2 * YLLeftSpace, 228);
         self.title.frame = CGRectMake(YLLeftSpace, CGRectGetMaxY(self.icon.frame)+YLLeftSpace, width - 2* YLLeftSpace, 17);
         self.course.frame = CGRectMake(YLLeftSpace, CGRectGetMaxY(self.title.frame) + 5, width - 2* YLLeftSpace, 17);
@@ -120,7 +121,7 @@
         self.course.frame = CGRectMake(titleX, CGRectGetMaxY(self.title.frame) + 5, titleW, 17);
         self.price.frame = CGRectMake(titleX, CGRectGetMaxY(self.course.frame) + 5, titleW/3, 25);
         self.line.frame = CGRectMake(0, CGRectGetMaxY(self.icon.frame)+YLTopSpace-1, width, 1);
-        switch (self.model.status) {
+        switch (self.model.cellStatus) {
             case YLTableViewCellStatusSold:
                 self.originalPrice.frame = CGRectMake(CGRectGetMaxX(self.price.frame), CGRectGetMaxY(self.course.frame) + 5, titleW / 2, 25);
                 break;

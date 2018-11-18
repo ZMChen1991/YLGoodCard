@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableArray *images; // 存放转播图的数组
 @property (nonatomic, strong) NSMutableArray *recommends; // 存放推荐类别
 @property (nonatomic, strong) NSMutableArray *notableTitles; // 存放走马灯广告
-@property (nonatomic, strong) UIImageView *barImageView; // 导航栏图片背景
+//@property (nonatomic, strong) UIImageView *barImageView; // 导航栏图片背景
 
 @end
 
@@ -32,7 +32,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO; // 不自动调节滚动区域
-    self.barImageView = self.navigationController.navigationBar.subviews.firstObject;
+//    self.barImageView = self.navigationController.navigationBar.subviews.firstObject;
     [self load];
     [self setNav];
     [self setupTableView];
@@ -68,7 +68,7 @@
 
 - (void)setupTableView {
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, -64, YLScreenWidth, YLScreenHeight)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, YLScreenHeight)];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -78,7 +78,17 @@
     NSMutableArray *bannerTitles = [NSMutableArray arrayWithObjects:@"http://image-public.gz.bcebos.com/vehicle.jpg", @"http://image-public.gz.bcebos.com/vehicle2.jpg", @"http://image-public.gz.bcebos.com/vehicle3.jpg", nil];
     CGRect frame = CGRectMake(0, 100, YLScreenWidth, 424);
     YLHomeHeader *homeHeader = [[YLHomeHeader alloc] initWithFrame:frame bannerTitles:bannerTitles notabletitles:self.notableTitles];
-    homeHeader.buttonView.delegate = self;
+    // 代理
+//    homeHeader.buttonView.delegate = self;
+    
+    // block
+    homeHeader.buttonView.tapClickBlock = ^(NSString * _Nonnull string) {
+        NSLog(@"YLMainController:%@", string);
+        // 点击列表，跳转控制器
+        YLSearchController *search = [[YLSearchController alloc] init];
+        search.searchTitle = string;
+        [self.navigationController pushViewController:search animated:YES];
+    };
     self.tableView.tableHeaderView = homeHeader;
 }
 
@@ -141,7 +151,7 @@
 //    // 设置导航栏底部线条为空
 //    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     
-    self.barImageView.alpha = 0;
+//    self.barImageView.alpha = 0;
     
     // 添加左右导航栏按钮
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"阳江" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonItemClick)];
@@ -176,14 +186,14 @@
     [self.navigationController pushViewController:messageVc animated:YES];
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
-    CGFloat offset = scrollView.contentOffset.y;
-    CGFloat minAlphaOffset = -64;
-    CGFloat maxAlphaOffset = 72;
-    CGFloat alpha = (offset - minAlphaOffset)/(maxAlphaOffset - minAlphaOffset);
-    self.barImageView.alpha = alpha;
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//
+//    CGFloat offset = scrollView.contentOffset.y;
+//    CGFloat minAlphaOffset = -64;
+//    CGFloat maxAlphaOffset = 72;
+//    CGFloat alpha = (offset - minAlphaOffset)/(maxAlphaOffset - minAlphaOffset);
+//    self.barImageView.alpha = alpha;
+//}
 
 #pragma mark 懒加载
 - (NSMutableArray *)recommends {

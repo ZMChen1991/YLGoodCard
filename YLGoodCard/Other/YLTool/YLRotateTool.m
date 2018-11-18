@@ -29,4 +29,10 @@
     [self getWithUrl:url param:param resultClass:[YLTableViewModel class] success:success failure:failure];
 }
 
++ (void)buyWithParam:(id)param success:(void (^)(NSArray<YLTableViewModel *> * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
+    
+    NSString *url = @"http://ucarjava.bceapp.com/detail?method=search";
+    [self getWithUrl:url param:param resultClass:[YLTableViewModel class] success:success failure:failure];
+}
+
 @end
