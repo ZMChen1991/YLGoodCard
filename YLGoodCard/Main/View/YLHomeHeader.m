@@ -36,12 +36,12 @@
         YLTableGroupHeader *groupHeader = [[YLTableGroupHeader alloc] initWithFrame:goupHeaderRect image:@"热门二手车" title:@"热门二手车" detailTitle:@"查看更多" arrowImage:@"更多"];
 //        groupHeader.backgroundColor = YLRandomColor;
         groupHeader.labelBlock = ^(NSString * _Nonnull string) {
-            NSLog(@"string%@",string);
+//            NSLog(@"string%@",string);
         };
         [self addSubview:groupHeader];
         self.groupHeader = groupHeader;
         
-        NSArray *btnTitles = [NSArray arrayWithObjects:@"5万以下", @"5-10万", @"10-15万", @"15万以上", @"哈弗", @"丰田",@"大众", @"本田", @"力帆", @"日产", @"雪佛兰", @"更多", nil];
+        NSArray *btnTitles = [NSArray arrayWithObjects:@"5万以下", @"5-10万", @"10-15万", @"15万以上", @"哈弗", @"丰田",@"大众", @"本田", @"力帆", @"日产", @"雪佛兰", @"现代", nil];
         CGRect buttonRect = CGRectMake(0, CGRectGetMaxY(groupHeader.frame), width, 99);
         YLButtonView *buttonView = [[YLButtonView alloc] initWithFrame:buttonRect btnTitles:btnTitles];
 //        buttonView.backgroundColor = YLRandomColor;

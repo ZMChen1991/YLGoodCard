@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "YLCondition.h"
 
+typedef void(^DetailFooterBlock)(UIButton *sender);
+
 @interface YLDetailFooterView : UIView
 
 @property (nonatomic, strong) YLCondition *bargain;
 @property (nonatomic, strong) YLCondition *order;
+@property (nonatomic, copy) DetailFooterBlock detailFooterBlock;
+@property (nonatomic, assign) BOOL isFavorite;
 
 @end

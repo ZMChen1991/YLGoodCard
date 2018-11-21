@@ -7,8 +7,11 @@
 // 预约成功界面
 
 #import "YLReservationController.h"
+#import "YLReservationView.h"
 
 @interface YLReservationController ()
+
+
 
 @end
 
@@ -19,13 +22,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"我要卖车";
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, YLScreenWidth, 100)];
-    label.text = @"预约成功";
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont systemFontOfSize:30];
-    label.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:label];
+    YLReservationView *reservationView = [[YLReservationView alloc] initWithFrame:CGRectMake(0, 64, YLScreenWidth, YLScreenHeight)];
+    [self.view addSubview:reservationView];
 }
-
 
 @end

@@ -38,6 +38,8 @@
 
 // 历史搜索记录路径
 #define YLSearchHistoryPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"searchHistory.plist"]
+// 用户预约卖车和估价信息路径
+#define YLOrderAndAppraisePath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"orderAndAppraise.plist"]
 
 
 // RGB颜色
@@ -57,6 +59,7 @@
 #import "UITextView+Extension.h"
 #import "MJExtension.h"
 #import "UIImageView+WebCache.h"
+#import "UIBarButtonItem+Extension.h"
 
 #import "AFNetworking.h"
 

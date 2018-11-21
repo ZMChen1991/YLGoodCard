@@ -159,7 +159,6 @@
     
     float count = [number floatValue] / 10000;
     return [NSString stringWithFormat:@"%.2f万",count];
-    
 }
 
 @end

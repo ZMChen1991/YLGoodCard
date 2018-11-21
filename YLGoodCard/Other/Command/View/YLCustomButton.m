@@ -25,20 +25,19 @@
 - (CGRect)titleRectForContentRect:(CGRect)contentRect {
     
     CGFloat titleX = 0;
-    CGFloat titleY = contentRect.size.height * 0.7;
+    CGFloat titleY = contentRect.size.height * 0.6;
     CGFloat titleW = contentRect.size.width;
     CGFloat titleH = contentRect.size.height - titleY;
     CGRect rect = CGRectMake(titleX, titleY, titleW, titleH);
     return rect;
-    
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)contentRect {
     
-    CGFloat imgX = contentRect.size.width/4;
+    CGFloat imgX = contentRect.size.width/3;
     CGFloat imgY = 15;
-    CGFloat imgW = contentRect.size.width/2;
-    CGFloat imgH = contentRect.size.height * 0.5;
+    CGFloat imgW = contentRect.size.width/3;
+    CGFloat imgH = contentRect.size.height * 0.4;
     CGRect rect = CGRectMake(imgX, imgY, imgW, imgH);
     return rect;
 }

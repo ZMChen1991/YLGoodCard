@@ -17,8 +17,15 @@
 #import "YLDetailFooterView.h"
 #import "YLCoverView.h"
 #import "YLTableGroupHeader.h"
-
-#import "YLMainController.h"
+#import "YLDetailTool.h"
+#import "YLDetailModel.h"
+#import "YLDetailHeaderModel.h"
+#import "YLDetailInfoModel.h"
+#import "YLDetailHeaderModel.h"
+#import "YLConfigController.h"
+#import "YLLoginController.h"
+#import "YLAccount.h"
+#import "YLAccountTool.h"
 
 @interface YLDetailController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate>
 
@@ -26,8 +33,9 @@
 @property (nonatomic, strong) UIView *labelView;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) YLCoverView *cover;
+@property (nonatomic, strong) YLDetailModel *detailModel;
+@property (nonatomic, strong) YLDetailHeaderView *header;
 
-@property (nonatomic, strong) YLMainController *mainVc;
 
 @end
 
@@ -36,15 +44,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self loadData];
     [self setupNav];
     [self addTableView];
     
-//    YLMainController *mainVc = [[YLMainController alloc] init];
-//    __weak typeof(self) weakSelf = self;
-//    weakSelf.
-//    mainVc.block = ^(NSString *title) {
-//        NSLog(@"%@", title);
-//    };
+}
+
+- (void)loadData {
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"id"] = self.carID;
+    __weak typeof(self) weakSelf = self;
+    [YLDetailTool detailWithParam:param success:^(YLDetailModel *result) {
+        self.detailModel = result;
+//        YLDetailHeaderModel *headerModel = [YLDetailHeaderModel mj_objectWithKeyValues:self.detailModel];
+//        NSLog(@"%@---%@--", result, headerModel);
+        YLDetailHeaderModel *headerModel = [YLDetailHeaderModel mj_objectWithKeyValues:weakSelf.detailModel];
+        weakSelf.header.model = headerModel;
+        [weakSelf.tableView reloadData];
+    } failure:^(NSError *error) {
+
+    }];
 }
 
 #pragma mark UITableViewDelegate
@@ -68,6 +88,10 @@
     } if (indexPath.section == 1) {
         YLInformationCell *cell = [YLInformationCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        YLDetailInfoModel *infoModel = [YLDetailInfoModel mj_objectWithKeyValues:self.detailModel];
+        if (infoModel) {
+            cell.model = infoModel;
+        }
         return cell;
     } if (indexPath.section == 2) {
         YLReportCell *cell = [YLReportCell cellWithTable:tableView];
@@ -85,10 +109,23 @@
     CGRect headerRect = CGRectMake(0, 0, YLScreenWidth, 44);
     NSArray *titles = @[@"服务保障",@"基本信息",@"检测报告",@"车辆图文"];
     NSArray *images = @[@"服务保障", @"基本信息", @"检测报告", @"车辆图文"];
-    NSArray *details = @[@"", @"查看更多配置", @"查看详细检测报告", @""];
+    NSArray *details = @[@"", @"查看更多配置", @"", @""];
     YLTableGroupHeader *header = [[YLTableGroupHeader alloc] initWithFrame:headerRect image:images[section] title:titles[section] detailTitle:details[section] arrowImage:@"更多"];
     header.labelBlock = ^(NSString * _Nonnull string) {
         NSLog(@"string:%@",string);
+        BOOL success = [string isEqualToString:@"查看更多配置1"];
+        NSLog(@"success:%d", success);
+        if ([string isEqualToString:@"查看更多配置"]) {
+            NSLog(@"跳转更多配置界面");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"此功能以后开放" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+            [alert show];
+//            YLConfigController *config = [[YLConfigController alloc] init];
+//            config.carID = self.carID;
+//            [self.navigationController pushViewController:config animated:YES];
+        }
+//        if ([string isEqualToString:@"查看详细检测报告"]) {
+//            NSLog(@"跳转查看详细检测报告界面");
+//        }
     };
     header.backgroundColor = [UIColor whiteColor];
     return header;
@@ -117,19 +154,19 @@
         return 211;
     }
     if (indexPath.section == 2) {
-        return 473 + 265 - YLLeftMargin;
+        return 473 + 1;
     } else {
         return 230;
     }
 }
 
 #pragma mark YLConditionDelegate
-- (void)bargainPrice {
-    
-    NSLog(@"bargainPrice");
-    self.cover.hidden = NO;
-    
-}
+//- (void)bargainPrice {
+//
+//    NSLog(@"bargainPrice");
+//    self.cover.hidden = NO;
+//
+//}
 
 #pragma mark PrivateMethod
 - (void)addTableView {
@@ -144,8 +181,28 @@
     header.bargain.delegate = self;
     self.tableView.tableHeaderView = header;
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.header = header;
     
     YLDetailFooterView *footer = [[YLDetailFooterView alloc] initWithFrame:CGRectMake(0, YLScreenHeight - 60, YLScreenWidth, 60)];
+    footer.detailFooterBlock = ^(UIButton *sender) {
+        // 判断用户是否登录，如果没有登录，则跳转到登录界面登录
+        if (sender.tag == 101) {
+            YLAccount *account = [YLAccountTool account];
+            if (account) {
+                [sender setImage:[UIImage imageNamed:@"已收藏"] forState:UIControlStateNormal];
+                [self showMessage:@"已收藏"];
+            } else {
+                YLLoginController *login = [[YLLoginController alloc] init];
+                [self.navigationController pushViewController:login animated:YES];
+            }
+            
+        }
+        if (sender.tag == 102) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"联系方式" message:@"0662-88888888" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+    };
     [footer.bargain addTarget:self action:@selector(bargainClick) forControlEvents:UIControlEventTouchUpInside];
     [footer.order addTarget:self action:@selector(orderCarClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:footer];
@@ -153,10 +210,10 @@
 
 - (void)setupNav {
     
-    self.navigationItem.title = @"详情";
-    UIBarButtonItem *down = [[UIBarButtonItem alloc] initWithTitle:@"降价通知" style:UIBarButtonItemStylePlain target:self action:@selector(priceDown)];
-    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(share)];
-    self.navigationItem.rightBarButtonItems = @[share, down];
+//    self.navigationItem.title = @"详情";
+//    UIBarButtonItem *down = [[UIBarButtonItem alloc] initWithTitle:@"降价通知" style:UIBarButtonItemStylePlain target:self action:@selector(priceDown)];
+//    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(share)];
+//    self.navigationItem.rightBarButtonItems = @[share, down];
 }
 
 - (void)priceDown {
@@ -202,4 +259,28 @@
     }
     return _labelView;
 }
+
+// 提示弹窗
+- (void)showMessage:(NSString *)message {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
+    
+    UILabel *messageLabel = [[UILabel alloc] init];
+    CGSize messageSize = CGSizeMake([message getSizeWithFont:[UIFont systemFontOfSize:12]].width + 30, 30);
+    messageLabel.frame = CGRectMake((YLScreenWidth - messageSize.width) / 2, YLScreenHeight/2, messageSize.width, messageSize.height);
+    messageLabel.text = message;
+    messageLabel.font = [UIFont systemFontOfSize:12];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    messageLabel.layer.cornerRadius = 5.0f;
+    messageLabel.layer.masksToBounds = YES;
+    [window addSubview:messageLabel];
+    
+    [UIView animateWithDuration:1 animations:^{
+        messageLabel.alpha = 0;
+    } completion:^(BOOL finished) {
+        [messageLabel removeFromSuperview];
+    }];
+}
+
 @end

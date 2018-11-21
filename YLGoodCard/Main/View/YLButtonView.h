@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)selectBtnTitle:(NSString *)title;
 @end
 
-typedef void(^tapClickBlock)(NSString *string);
+typedef void(^tapClickBlock)(UILabel *label);
 
 @interface YLButtonView : UIView
 

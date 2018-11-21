@@ -40,7 +40,7 @@
             searchL.textAlignment = NSTextAlignmentCenter;
             searchL.font = [UIFont systemFontOfSize:14];
             searchL.textColor = YLColor(116.f, 116.f, 116.f);
-//            searchL.tag = 100 + i;
+            searchL.tag = 100 + i;
             searchL.userInteractionEnabled = YES;
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLabelClick:)];
             [searchL addGestureRecognizer:tap];
@@ -54,7 +54,7 @@
     
     UILabel *label = (UILabel *)tap.view;
     if (self.tapClickBlock) {
-        self.tapClickBlock(label.text);
+        self.tapClickBlock(label);
     }
 }
 

@@ -60,6 +60,8 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
     }
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
     cell.textLabel.text = self.titles[indexPath.row];
     cell.detailTextLabel.text = self.detailTitles[indexPath.row];
     return cell;

@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) UIImageView *icon;
 @property (nonatomic, strong) UILabel *numberL;
-@property (nonatomic, strong) UITextField *telephone;
+
 @property (nonatomic, strong) UILabel *label1; // 位车主提交卖车申请
 
 @end
@@ -31,7 +31,8 @@
 - (void)setupOriginal {
     
     UIImageView *icon = [[UIImageView alloc] init];
-    icon.backgroundColor = YLRandomColor;
+//    icon.backgroundColor = YLRandomColor;
+    icon.image = [UIImage imageNamed:@"汽车"];
     [self addSubview:icon];
     self.icon = icon;
     
@@ -53,18 +54,24 @@
     self.saleBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
     [self.saleBtn setTitle:@"预约卖车" forState:UIControlStateNormal];
     self.saleBtn.type = YLConditionTypeBlue;
+    self.saleBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    self.saleBtn.tag = 101;
     [self.saleBtn addTarget:self action:@selector(sale:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.saleBtn];
     
     self.consultBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
     [self.consultBtn setTitle:@"免费咨询" forState:UIControlStateNormal];
     self.consultBtn.type = YLConditionTypeWhite;
+    self.consultBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    self.consultBtn.tag = 102;
     [self.consultBtn addTarget:self action:@selector(consult:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.consultBtn];
     
     self.appraiseBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
     [self.appraiseBtn setTitle:@"爱车估价" forState:UIControlStateNormal];
     self.appraiseBtn.type = YLConditionTypeWhite;
+    self.appraiseBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    self.appraiseBtn.tag = 103;
     [self.appraiseBtn addTarget:self action:@selector(appraise:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.appraiseBtn];
     
@@ -126,37 +133,43 @@
     
 }
 
-- (void)setModel:(YLSaleViewModel *)model {
-    
-    _model = model;
-}
+//- (void)setModel:(YLSaleViewModel *)model {
+//    
+//    _model = model;
+//}
 
+
+// 估价
 - (void)appraise:(UIButton *)sender {
     
-//    NSLog(@"点击了爱车估价:%@", sender.titleLabel.text);
     [self.telephone resignFirstResponder];
     if (self.appraiseBtn.delegate && [self.appraiseBtn.delegate respondsToSelector:@selector(pushController:)]) {
         [self.appraiseBtn.delegate pushController:sender];
     }
+    if (self.saleTelBlock) {
+        self.saleTelBlock(self.telephone.text);
+    }
 }
-
+// 咨询
 - (void)consult:(UIButton *)sender {
     
-//    NSLog(@"点击了免费咨询:%@", sender.titleLabel.text);
     [self.telephone resignFirstResponder];
     if (self.consultBtn.delegate && [self.consultBtn.delegate respondsToSelector:@selector(pushController:)]) {
         [self.consultBtn.delegate pushController:sender];
     }
 }
-
+// 预约卖车
 - (void)sale:(UIButton *)sender {
     
-//    NSLog(@"点击了预约卖车:%@", sender.titleLabel.text);
     [self.telephone resignFirstResponder];
     if (self.saleBtn.delegate && [self.saleBtn.delegate respondsToSelector:@selector(pushController:)]) {
         [self.saleBtn.delegate pushController:sender];
     }
-
+    
+    if (self.saleTelBlock) {
+        self.saleTelBlock(self.telephone.text);
+    }
+    
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

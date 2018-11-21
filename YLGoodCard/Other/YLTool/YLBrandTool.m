@@ -14,7 +14,7 @@
 + (void)brandWithParam:(id)param success:(void (^)(NSArray<YLBrandModel *> *result))success failure:(void (^)(NSError * error))failure {
     
     NSString *url = @"http://ucarjava.bceapp.com/vehicle?method=brand";
-    [self getWithUrl:url param:param resultClass:[YLBrandModel class] success:success failure:failure];
+    [self getWithUrl:url param:param arrayForResultClass:[YLBrandModel class] success:success failure:failure];
     
 }
 

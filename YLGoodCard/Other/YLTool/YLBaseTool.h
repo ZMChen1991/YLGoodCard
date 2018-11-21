@@ -12,9 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YLBaseTool : NSObject
 
-+ (void)getWithUrl:(NSString *)url param:(id)param resultClass:(Class)resultClass success:(void (^)(id))success failure:(void (^)(NSError *))failure;
++ (void)getWithUrl:(NSString *)url param:(id)param arrayForResultClass:(Class)resultClass success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
 
-+ (void)postWithUrl:(NSString *)url param:(id)param resultClass:(Class)resultClass success:(void (^)(id))success failure:(void (^)(NSError *))failure;
++ (void)postWithUrl:(NSString *)url param:(id)param resultClass:(Class)resultClass success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
++ (void)getWithUrl:(NSString *)url param:(id)param dictForResultClass:(Class)resultClass success:(void (^)(id result))success failure:(void (^)(NSError * error))failure;
 
 @end
 

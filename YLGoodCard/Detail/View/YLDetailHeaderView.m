@@ -72,12 +72,12 @@
     self.secondPrice = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label1.frame) + 5, CGRectGetMaxY(self.tagView.frame) + 10, 80, 37)];
     self.secondPrice.font = [UIFont systemFontOfSize:26];
     [self.secondPrice setTextColor:[UIColor redColor]];
-    self.secondPrice.text = @"23.6万";
+    self.secondPrice.text = @"0.0万";
     
     self.price = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.secondPrice.frame) + 5, CGRectGetMaxY(self.tagView.frame) + 20, 100, 17)];
     self.price.font = [UIFont systemFontOfSize:12];
     // 添加中划线
-    NSString *str = @"新车含税价42.8万";
+    NSString *str = @"新车含税价0.0万";
     NSDictionary *attri = @{NSStrikethroughStyleAttributeName:[NSNumber numberWithInteger:NSUnderlineStyleSingle]};
     NSMutableAttributedString *attriStr = [[NSMutableAttributedString alloc] initWithString:str attributes:attri];
     self.price.attributedText = attriStr;
@@ -132,5 +132,20 @@
     return btn;
 }
 
+- (void)setModel:(YLDetailHeaderModel *)model {
+    
+    _model = model;
+    
+    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.displayImg] placeholderImage:nil];;
+    self.text.text = model.title;
+    self.price.text = [NSString stringWithFormat:@"新车含税价%@", [self stringToNumber:model.originalPrice]];
+    self.secondPrice.text = [self stringToNumber:model.price];
+}
+
+- (NSString *)stringToNumber:(NSString *)number {
+    
+    float count = [number floatValue] / 10000;
+    return [NSString stringWithFormat:@"%.1f万",count];
+}
 
 @end

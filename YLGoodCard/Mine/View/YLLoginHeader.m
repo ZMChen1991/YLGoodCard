@@ -14,7 +14,6 @@
 @property (nonatomic, strong) UIImageView *icon;// 头像
 @property (nonatomic, strong) YLCondition *loginBtn;// 登录按钮
 @property (nonatomic, strong) UILabel *detailTitle;// 登录详情
-@property (nonatomic, strong) UILabel *name;// 登录名：一般是电话号码
 
 
 @end
@@ -33,27 +32,22 @@
 - (void)setupUI {
     
     self.icon = [[UIImageView alloc] init];
-    self.icon.backgroundColor = [UIColor redColor];
+    self.icon.image = [UIImage imageNamed:@"评估师"];
     [self addSubview:self.icon];
-//    if (self.status == YLLoginStatusUp) {
-//        self.name = [[UILabel alloc] init];
-//        self.name.text = @"13800138000";
-//        self.name.font = [UIFont systemFontOfSize:18];
-//        [self addSubview:self.name];
-//    } else {
-        self.loginBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
-        self.loginBtn.type = YLConditionTypeBlue;
-        self.loginBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-        [self.loginBtn setTitle:@"立即登录" forState:UIControlStateNormal];
-        [self.loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:self.loginBtn];
-        
-        self.detailTitle = [[UILabel alloc] init];
-        self.detailTitle.font = [UIFont systemFontOfSize:14];
-        self.detailTitle.textAlignment = NSTextAlignmentLeft;
-        self.detailTitle.text = @"登录后可查看更多车辆信息";
-        [self addSubview:self.detailTitle];
-//    }
+    self.loginBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
+    self.loginBtn.type = YLConditionTypeBlue;
+    self.loginBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [self.loginBtn setTitle:@"立即登录" forState:UIControlStateNormal];
+    [self.loginBtn addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.loginBtn];
+    
+    self.detailTitle = [[UILabel alloc] init];
+    self.detailTitle.font = [UIFont systemFontOfSize:14];
+    self.detailTitle.textAlignment = NSTextAlignmentLeft;
+    self.detailTitle.text = @"登录后可查看更多车辆信息";
+    self.detailTitle.textColor = [UIColor whiteColor];
+    [self addSubview:self.detailTitle];
+
 }
 
 - (void)login {
@@ -69,22 +63,8 @@
     [super layoutSubviews];
     
     self.icon.frame = CGRectMake(YLLeftMargin, YLLeftMargin, 60, 60);
-    self.name.frame = CGRectMake(CGRectGetMaxX(self.icon.frame) + YLLeftMargin, 22, 120, 25);
     self.loginBtn.frame = CGRectMake(CGRectGetMaxX(self.icon.frame) + YLLeftMargin, 22, 75, 25);
     self.detailTitle.frame = CGRectMake(CGRectGetMaxX(self.icon.frame) + YLLeftMargin, CGRectGetMaxY(self.loginBtn.frame), 200, 20);
 }
 
-- (void)setModel {
-    
-    // 这里通过赋值的时候判断登录状态
-    if (self.status == YLLoginStatusDown) {
-        self.loginBtn.hidden = YES;
-        self.detailTitle.hidden = YES;
-        self.name.hidden = NO;
-    } else {
-        self.name.hidden = YES;
-        self.loginBtn.hidden = NO;
-        self.detailTitle.hidden = NO;
-    }
-}
 @end

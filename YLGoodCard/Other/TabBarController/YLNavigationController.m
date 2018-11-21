@@ -35,15 +35,21 @@
         /* 自动显示和隐藏tabbar */
         viewController.hidesBottomBarWhenPushed = YES;
         
-        //        /* 设置导航栏上面的内容 */
-        //        // 设置左边的返回按钮
-        //        viewController.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"navigationbar_back" highImage:@"navigationbar_back_highlighted"];
-        //
-        //        // 设置右边的更多按钮
-        //        viewController.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(more) image:@"navigationbar_more" highImage:@"navigationbar_more_highlighted"];
+        /* 设置导航栏上面的内容 */
+        // 设置左边的返回按钮
+        viewController.navigationItem.leftBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(back) image:@"返回" highImage:@""];
+//
+//        // 设置右边的更多按钮
+//        viewController.navigationItem.rightBarButtonItem = [UIBarButtonItem itemWithTarget:self action:@selector(more) image:@"navigationbar_more" highImage:@"navigationbar_more_highlighted"];
     }
     
     [super pushViewController:viewController animated:animated];
+}
+
+- (void)back {
+    
+    // 因为self本来就是一个导航控制器，self.navigationController这里是nil的
+    [self popViewControllerAnimated:YES];
 }
 
 @end

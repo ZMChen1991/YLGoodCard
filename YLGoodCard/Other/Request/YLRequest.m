@@ -60,8 +60,10 @@ YLSingletonM
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager POST:URL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        
         if (success) {
-            success(responseObject);
+            success(dict);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failed) {

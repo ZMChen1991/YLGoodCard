@@ -26,4 +26,6 @@
 
 + (BOOL) isBlankString:(NSString *)string;
 
++ (NSString *)stringByDate:(NSDate *)date;
+
 @end

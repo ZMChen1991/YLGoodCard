@@ -16,11 +16,15 @@
 #import "YLSettingController.h"
 #import "YLFunctionController.h"
 #import "YLSubController.h"
+#import "YLTableGroupHeader.h"
+#import "YLAccount.h"
+#import "YLAccountTool.h"
 
-@interface YLMineController () <UITableViewDelegate, UITableViewDataSource, YLFunctionViewDelegate, YLLoginHeaderDelegate>
+@interface YLMineController () <YLFunctionViewDelegate, YLLoginHeaderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-
+@property (nonatomic, strong) YLMineHeader *header;
+@property (nonatomic, strong) YLLoginController *loginVc;
 
 @end
 
@@ -28,60 +32,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    
     [self setupNav];
     
-    YLMineHeader *header = [[YLMineHeader alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 96+88*3)];
-    header.fun.delegate = self;
-    header.header.delegate = self;
+    YLAccount *account = [YLAccountTool account];
+    if (account) { // 登录过
+        self.header.status = YLLoginStatusUp;
+    } else {
+        self.header.status = YLLoginStatusDown;
+    }
 
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, YLScreenHeight)];
-    [self.view addSubview:self.tableView];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.bounces = NO; // 禁止弹跳
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.tableHeaderView = header;
 }
 
 - (void)setupNav {
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+    [self.navigationItem.rightBarButtonItem setImage:[[UIImage imageNamed:@"设置"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [self.navigationController.navigationBar setBackgroundColor:YLColor(8.f, 169.f, 255.f)];
+    // 设置导航栏背景为空
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    // 设置导航栏底部线条为空
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    // 修改导航标题
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    // 创建一个假状态栏
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, YLScreenWidth, 20)];
+    statusBarView.backgroundColor = YLColor(8.f, 169.f, 255.f);
+    [self.navigationController.navigationBar addSubview:statusBarView];
 }
 
-
-#pragma mark UITableViewDataSource/UITableViewDelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return 10;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    YLTableViewCell *cell = [YLTableViewCell cellWithTableView:tableView];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 110;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    YLDetailController *detailVc = [[YLDetailController alloc] init];
-    [self.navigationController pushViewController:detailVc animated:YES];
-}
 
 - (void)rightBarButtonItemClick {
-    NSLog(@"消息被点击了");
+    NSLog(@"点击了设置按钮");
     
     YLSettingController *setting = [[YLSettingController alloc] init];
     [self.navigationController pushViewController:setting animated:YES];
@@ -91,8 +74,13 @@
 - (void)skipToLogin {
     
     NSLog(@"点击了登录按钮");
-    YLLoginController *loginVc = [[YLLoginController alloc] init];
-    [self.navigationController pushViewController:loginVc animated:YES];
+    self.loginVc = [[YLLoginController alloc] init];
+    [self.navigationController pushViewController:self.loginVc animated:YES];
+    __weak typeof(self) weakSelf = self;
+    self.loginVc.loginBlock = ^(NSString *string) {
+        NSLog(@"%@", string);
+        weakSelf.header.status = YLLoginStatusUp;
+    };
 }
 
 - (void)callTelephone {
@@ -104,55 +92,22 @@
 - (void)btnClickToController:(UIButton *)sender {
     
     NSLog(@"%@",sender.titleLabel.text);
-    
-//    NSString *title = sender.titleLabel.text;
+    NSString *title = sender.titleLabel.text;
     if (sender.tag == 100) {
         NSLog(@"即将看车");
-        NSString *title = sender.titleLabel.text;
-        YLFunctionController *lookCar = [[YLFunctionController alloc] init];
         NSArray *titles = @[@"在售", @"已下架"];
-        lookCar.skip.titles = titles;
-        NSMutableArray *ctrs = [NSMutableArray array];
-        for (NSInteger i = 0; i < titles.count; i++) {
-            YLSubController *ctr1 = [[YLSubController alloc] init];
-            ctr1.cellType = YLCellTypeNormal;
-            [ctrs addObject:ctr1];
-        }
-        lookCar.skip.controllers = ctrs;
-        lookCar.navigationItem.title = title;
-        [self.navigationController pushViewController:lookCar animated:YES];
+        [self setTitles:titles title:title];
+
     }
     if (sender.tag == 101) {
         NSLog(@"我的收藏");
-        NSString *title = sender.titleLabel.text;
-        YLFunctionController *lookCar = [[YLFunctionController alloc] init];
         NSArray *titles = @[@"在售", @"已下架"];
-        lookCar.skip.titles = titles;
-        NSMutableArray *ctrs = [NSMutableArray array];
-        for (NSInteger i = 0; i < titles.count; i++) {
-            YLSubController *ctr1 = [[YLSubController alloc] init];
-            ctr1.cellType = YLCellTypeNormal;
-            [ctrs addObject:ctr1];
-        }
-        lookCar.skip.controllers = ctrs;
-        lookCar.navigationItem.title = title;
-        [self.navigationController pushViewController:lookCar animated:YES];
+        [self setTitles:titles title:title];
     }
     if (sender.tag == 102) {
         NSLog(@"浏览记录");
-        NSString *title = sender.titleLabel.text;
-        YLFunctionController *lookCar = [[YLFunctionController alloc] init];
         NSArray *titles = @[@"在售", @"已下架"];
-        lookCar.skip.titles = titles;
-        NSMutableArray *ctrs = [NSMutableArray array];
-        for (NSInteger i = 0; i < titles.count; i++) {
-            YLSubController *ctr1 = [[YLSubController alloc] init];
-            ctr1.cellType = YLCellTypeNormal;
-            [ctrs addObject:ctr1];
-        }
-        lookCar.skip.controllers = ctrs;
-        lookCar.navigationItem.title = title;
-        [self.navigationController pushViewController:lookCar animated:YES];
+        [self setTitles:titles title:title];
     }
     if (sender.tag == 103) {
         NSLog(@"我的订阅暂不支持");
@@ -165,7 +120,6 @@
     }
     if (sender.tag == 106) {
         NSLog(@"砍价记录");
-        NSString *title = sender.titleLabel.text;
         YLFunctionController *lookCar = [[YLFunctionController alloc] init];
         lookCar.navigationItem.title = title;
         [self.navigationController pushViewController:lookCar animated:YES];
@@ -175,11 +129,38 @@
     }
 }
 
+- (void)setTitles:(NSArray *)titles title:(NSString *)title {
+    
+    YLFunctionController *lookCar = [[YLFunctionController alloc] init];
+    lookCar.skip.titles = titles;
+    NSMutableArray *ctrs = [NSMutableArray array];
+    for (NSInteger i = 0; i < titles.count; i++) {
+        YLSubController *ctr1 = [[YLSubController alloc] init];
+        ctr1.cellType = YLCellTypeNormal;
+        [ctrs addObject:ctr1];
+    }
+    lookCar.skip.controllers = ctrs;
+    lookCar.navigationItem.title = title;
+    [self.navigationController pushViewController:lookCar animated:YES];
+}
+
+
 - (void)suggestions {
     
     NSLog(@"弹出意见反馈页面");
     YLSuggestionController *suggestionVc = [[YLSuggestionController alloc] init];
     [self.navigationController pushViewController:suggestionVc animated:YES];
+}
+
+- (YLMineHeader *)header {
+    
+    if (!_header) {
+        _header = [[YLMineHeader alloc] initWithFrame:CGRectMake(0, 64, YLScreenWidth, 96+88*3)];
+        _header.fun.delegate = self;
+        _header.loginHeader.delegate = self;
+        [self.view addSubview:_header];
+    }
+    return _header;
 }
 
 @end

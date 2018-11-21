@@ -47,11 +47,25 @@
         __weak typeof(self) weakSelf = self;
         self.searchView.tapClick = ^(NSString * _Nonnull string) {
             NSLog(@"%@", string);
+            
             weakSelf.searchBar.text = string;
+            [weakSelf saveSearchHistory:string];
             // 这里跳转到买车控制器
             YLBuyController *buy = [[YLBuyController alloc] init];
-            // 将搜索条件传到买车控制器
-            buy.searchTitle = string;
+            if ([string isEqualToString:@"5万以下"]) {
+                buy.price = @"0fgf50000";
+            }
+            if ([string isEqualToString:@"5-10万"]) {
+                buy.price = @"50000fgf100000";
+            }
+            if ([string isEqualToString:@"10-15万"]) {
+                buy.price = @"100000fgf150000";
+            }
+            if ([string isEqualToString:@"15万以上"]) {
+                buy.price = @"150000fgf9999999999";
+            }
+            buy.brand = string;
+            [buy.titleBar setTitle:string forState:UIControlStateNormal];
             [weakSelf.navigationController pushViewController:buy animated:YES];
         };
     }
@@ -90,30 +104,46 @@
 - (void)setTitleBar {
 
     YLSearchBar *searchBar = [YLSearchBar searchBar];
-    searchBar.width = 200;
-    searchBar.height = 30;
+    searchBar.width = 260;
+    searchBar.height = 36;
     searchBar.placeholder = @"请搜索您想要的车";
+    searchBar.backgroundColor = YLColor(239.f, 242.f, 247.f);;
     [searchBar setValue:[UIFont boldSystemFontOfSize:12] forKeyPath:@"_placeholderLabel.font"];
     self.navigationItem.titleView = searchBar;
     self.searchBar = searchBar;
 
     UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStyleDone target:self action:@selector(search)];
     self.navigationItem.rightBarButtonItem = rightBar;
-    self.navigationController.navigationBar.backgroundColor = [UIColor lightGrayColor];
+    [self.navigationController.navigationBar setBackgroundColor:YLColor(8.f, 169.f, 255.f)];
+    // 设置导航栏背景为空
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    // 设置导航栏底部线条为空
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    // 修改导航标题
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    // 创建一个假状态栏
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, YLScreenWidth, 20)];
+    statusBarView.backgroundColor = YLColor(8.f, 169.f, 255.f);
+    [self.navigationController.navigationBar addSubview:statusBarView];
 }
 
 #pragma mark 私有方法
+// 点击搜索
 - (void)search {
 
+    // 如果点击是搜索，就以title搜索为主
     if (![self isBlankString:self.searchBar.text]) {
         // 跳转m到买车控制器
         YLBuyController *buy = [[YLBuyController alloc] init];
+        buy.searchTitle = self.searchBar.text;
         [self.navigationController pushViewController:buy animated:YES];
         
         // 保存搜索记录
         [self saveSearchHistory:self.searchBar.text];
     } else {
         NSLog(@"搜索栏为空");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"搜索栏为空" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alert show];
     }
 }
 

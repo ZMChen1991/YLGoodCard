@@ -15,14 +15,17 @@
 #import "YLHomeHeader.h"
 #import "YLRotateTool.h"
 #import "YLTableViewModel.h"
+#import "YLBuyController.h"
+#import "YLTabBarController.h"
 
-@interface YLMainController ()<UITableViewDelegate, UITableViewDataSource, YLButtonViewDelegate>
+@interface YLMainController ()<UITableViewDelegate, UITableViewDataSource, YLButtonViewDelegate, YLTableGroupHeaderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *images; // 存放转播图的数组
 @property (nonatomic, strong) NSMutableArray *recommends; // 存放推荐类别
 @property (nonatomic, strong) NSMutableArray *notableTitles; // 存放走马灯广告
 //@property (nonatomic, strong) UIImageView *barImageView; // 导航栏图片背景
+@property (nonatomic, strong) YLTabBarController *tabBarVc;
 
 @end
 
@@ -41,27 +44,30 @@
 - (void)load {
     
     // 获取轮播图数组
-    [YLRotateTool bannerWithParam:nil success:^(NSArray<YLBannerModel *> * _Nonnull result) {
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [YLRotateTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
         for (YLBannerModel *model in result) {
             [self.images addObject:model.img];
         }
-        NSLog(@"self.images:%@",self.images);
+//        NSLog(@"加载数据成功:self.images:%@",self.images);
     } failure:^(NSError * _Nonnull error) {
     }];
 
     // 获取走马灯广告数组
-    [YLRotateTool notableWithParam:nil success:^(NSArray<YLNotableModel *> *result) {
+    [YLRotateTool notableWithParam:param success:^(NSArray<YLNotableModel *> *result) {
         for (YLNotableModel *model in result) {
             [self.notableTitles addObject:model.text];
         }
+        NSLog(@"加载走马灯广告成功");
     } failure:^(NSError * _Nonnull error) {
     }];
     // 获取推荐列表数组
-    [YLRotateTool recommendWithParam:nil success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+    [YLRotateTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
         for (YLTableViewModel *model in result) {
             [self.recommends addObject:model];
         }
         [self.tableView reloadData]; // 获取到数据刷新表格
+        NSLog(@"加载推荐列表成功");
     } failure:^(NSError * _Nonnull error) {
     }];
 }
@@ -80,14 +86,21 @@
     YLHomeHeader *homeHeader = [[YLHomeHeader alloc] initWithFrame:frame bannerTitles:bannerTitles notabletitles:self.notableTitles];
     // 代理
 //    homeHeader.buttonView.delegate = self;
+    homeHeader.groupHeader.delegate = self;
     
+    __weak typeof(self) weakSelf = self;
     // block
-    homeHeader.buttonView.tapClickBlock = ^(NSString * _Nonnull string) {
-        NSLog(@"YLMainController:%@", string);
+    homeHeader.buttonView.tapClickBlock = ^(UILabel *label) {
+        NSLog(@"YLMainController:%@", label);
         // 点击列表，跳转控制器
         YLSearchController *search = [[YLSearchController alloc] init];
-        search.searchTitle = string;
-        [self.navigationController pushViewController:search animated:YES];
+        if (label.tag >= 100  && label.tag < 104) {
+            search.price = label.text;
+        } else {
+            search.brand = label.text;
+        }
+        search.searchTitle = label.text;
+        [weakSelf.navigationController pushViewController:search animated:YES];
     };
     self.tableView.tableHeaderView = homeHeader;
 }
@@ -114,8 +127,10 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    YLTableViewModel *model = self.recommends[indexPath.row];
     YLDetailController *detail = [[YLDetailController alloc] init];
+    detail.carID = model.carID;
+    NSLog(@"%@", model.carID);
     [self.navigationController pushViewController:detail animated:YES];
 }
 
@@ -129,6 +144,7 @@
 // 这里是条件搜索框里的按钮代理方法，根据标题跳转到搜索框搜索相关的车辆
 - (void)selectBtnTitle:(NSString *)title {
 
+    NSLog(@"%@", title);
     YLSearchController *search = [[YLSearchController alloc] init];
     search.searchTitle = title;
     [self.navigationController pushViewController:search animated:YES];
@@ -141,6 +157,14 @@
     [self.navigationController pushViewController:searchVc animated:YES];
 }
 
+- (void)pushBuyControl {
+    
+    // 点击了查看更多
+//    self.tabBarVc.selectedIndex = 1;
+    YLBuyController *buy = [[YLBuyController alloc] init];
+    [self.navigationController pushViewController:buy animated:YES];
+}
+
 #pragma mark Private
 - (void)setNav {
     
@@ -150,16 +174,26 @@
 //    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 //    // 设置导航栏底部线条为空
 //    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    
-//    self.barImageView.alpha = 0;
-    
     // 添加左右导航栏按钮
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"阳江" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonItemClick)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"..." style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+    [self.navigationController.navigationBar setBackgroundColor:YLColor(8.f, 169.f, 255.f)];
+    // 设置导航栏背景为空
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    // 设置导航栏底部线条为空
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    // 修改导航标题
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    // 创建一个假状态栏
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, YLScreenWidth, 20)];
+    statusBarView.backgroundColor = YLColor(8.f, 169.f, 255.f);
+    [self.navigationController.navigationBar addSubview:statusBarView];
     
     // 设置导航栏搜索框按钮
-    YLTitleBar *titleBtn = [[YLTitleBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
-    [titleBtn setTitle:@"    搜索您想要的车   " forState:UIControlStateNormal];
+    YLTitleBar *titleBtn = [[YLTitleBar alloc] initWithFrame:CGRectMake(0, 0, 260, 36)];
+    [titleBtn setTitle:@"搜索您想要的车" forState:UIControlStateNormal];
+    titleBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleBtn.backgroundColor = YLColor(239.f, 242.f, 247.f);
     [titleBtn addTarget:self action:@selector(titleClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.titleView = titleBtn;
 }
@@ -186,15 +220,6 @@
     [self.navigationController pushViewController:messageVc animated:YES];
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//
-//    CGFloat offset = scrollView.contentOffset.y;
-//    CGFloat minAlphaOffset = -64;
-//    CGFloat maxAlphaOffset = 72;
-//    CGFloat alpha = (offset - minAlphaOffset)/(maxAlphaOffset - minAlphaOffset);
-//    self.barImageView.alpha = alpha;
-//}
-
 #pragma mark 懒加载
 - (NSMutableArray *)recommends {
     
@@ -218,5 +243,12 @@
         _notableTitles = [NSMutableArray array];
     }
     return _notableTitles;
+}
+
+- (YLTabBarController *)tabBarVc {
+    if (!_tabBarVc) {
+        _tabBarVc = [[YLTabBarController alloc] init];
+    }
+    return _tabBarVc;
 }
 @end

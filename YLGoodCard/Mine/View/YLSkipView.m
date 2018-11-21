@@ -22,10 +22,8 @@
 
 @implementation YLSkipView
 
-- (instancetype)initWithFrame:(CGRect)frame titles:(NSArray *)title controllers:(NSArray *)controllers {
-    
-    self = [super initWithFrame:frame];
-    if (self) {
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
         
     }
     return self;
@@ -38,6 +36,7 @@
     NSInteger width = self.frame.size.width / titles.count;
     for (NSInteger i = 0; i < titles.count; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14];
         btn.frame = CGRectMake(width * i, 0, width, TITLEHEIGHT);
         [btn setTitleColor:YLColor(51.f, 51.f, 51.f) forState:UIControlStateNormal];
         btn.tag = 100 + i;

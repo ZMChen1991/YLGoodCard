@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLOrderView.h"
 
 @interface YLOrderController : UIViewController
+
+@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSString *telephone;// 电话
+@property (nonatomic, strong) YLOrderView *orderView;
 
 @end

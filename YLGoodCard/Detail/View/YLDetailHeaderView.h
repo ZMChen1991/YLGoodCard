@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "YLCondition.h"
+#import "YLDetailHeaderModel.h"
 
 @interface YLDetailHeaderView : UIView
 
 @property (nonatomic, strong) YLCondition *bargain;// 砍价
+@property (nonatomic, strong) YLDetailHeaderModel *model;
 
 @end

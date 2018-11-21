@@ -9,7 +9,6 @@
 #import "YLBuyController.h"
 #import "YLSearchController.h"
 #import "YLDetailController.h"
-#import "YLTitleBar.h"
 #import "YLTableViewCell.h"
 #import "YLLinkageView.h"
 #import "YLCustomPrice.h"
@@ -37,7 +36,7 @@
 @property (nonatomic, assign) BOOL isSelect;// 是否选中t标题
 @property (nonatomic, strong) UIView  *coverView;// 蒙板
 
-@property (nonatomic, strong) YLTitleBar *titleBar;
+
 @property (nonatomic, strong) NSMutableArray *recommends;// 推荐列表或者搜索列表
 @property (nonatomic, strong) YLTableViewCell *cell;
 
@@ -61,6 +60,21 @@
 - (void)load {
     // 获取推荐列表数组
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
+//    param[@"title"] = self.searchTitle;
+    if ([self.price isEqualToString:@"5万以下"]) {
+        param[@"price"] = @"0fgf50000";
+    }
+    if ([self.price isEqualToString:@"5-10万"]) {
+        param[@"price"] = @"50000fgf100000";
+    }
+    if ([self.price isEqualToString:@"10-15万"]) {
+        param[@"price"] = @"100000fgf150000";
+    }
+    if ([self.price isEqualToString:@"15万以上"]) {
+        param[@"price"] = @"150000fgf9999999999";
+    }
+    param[@"brand"] = self.brand;
+    param[@"title"] = self.searchTitle;
     [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
         
         for (YLTableViewModel *model in result) {
@@ -83,14 +97,20 @@
     
 //    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"阳江" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarButtonItemClick)];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"大图" style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
-    
-    YLTitleBar *titleBtn = [[YLTitleBar alloc] initWithFrame:CGRectMake(0, 0, 200, 30)];
-    [titleBtn setTitle:@"    搜索您想要的车   " forState:UIControlStateNormal];
-    [titleBtn addTarget:self action:@selector(titleClick) forControlEvents:UIControlEventTouchUpInside];
-    titleBtn.backgroundColor = YLColor(239.f, 242.f, 247.f);
-    self.navigationItem.titleView = titleBtn;
-    self.titleBar = titleBtn;
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(rightBarButtonItemClick)];
+    [self.navigationItem.rightBarButtonItem setImage:[[UIImage imageNamed:@"看图模式"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [self.navigationController.navigationBar setBackgroundColor:YLColor(8.f, 169.f, 255.f)];
+    // 设置导航栏背景为空
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    // 设置导航栏底部线条为空
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    // 修改导航标题
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18], NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    // 创建一个假状态栏
+    UIView *statusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -20, YLScreenWidth, 20)];
+    statusBarView.backgroundColor = YLColor(8.f, 169.f, 255.f);
+    [self.navigationController.navigationBar addSubview:statusBarView];
+    self.navigationItem.titleView = self.titleBar;
 }
 
 - (void)setUI {
@@ -169,10 +189,13 @@
             self.selectView.hidden = YES;
         }else {
             NSLog(@"筛选");
-            self.coverView.hidden = NO;
-            self.sortView.hidden = YES;
-            self.customPrice.hidden = YES;
-            self.selectView.hidden = NO;
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"此功能以后再开放" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+            [alert show];
+            self.isSelect = NO;
+//            self.coverView.hidden = NO;
+//            self.sortView.hidden = YES;
+//            self.customPrice.hidden = YES;
+//            self.selectView.hidden = NO;
         }
         
     } else {
@@ -183,11 +206,26 @@
     }
 }
 
+// 价格视图里面的高价和低价代理
 - (void)pushLowPrice:(NSString *)lowPrice highPrice:(NSString *)highPrice {
     
     self.coverView.hidden = YES;
     self.isSelect = NO;
     // 根据价格视图传过来的低价和高价，重新加载数据，刷新列表
+    NSLog(@"%@--%@", lowPrice, highPrice);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    NSString *tempStr = [NSString stringWithFormat:@"%@fgf%@", lowPrice, highPrice];
+    param[@"price"] = tempStr;
+    [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+        [self.recommends removeAllObjects];
+        for (YLTableViewModel *model in result) {
+            [self.recommends addObject:model];
+        }
+        NSLog(@"recommend:%lu", self.recommends.count);
+        [self.tableView reloadData]; // 获取到数据刷新表格
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
 }
 
 - (void)didSelectSort:(NSString *)string {
@@ -204,7 +242,7 @@
         param[@"sort"] = @"1";
         // 获取推荐列表数组
         [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            
+            [self.recommends removeAllObjects];
             for (YLTableViewModel *model in result) {
                 [self.recommends addObject:model];
             }
@@ -222,7 +260,7 @@
         param[@"sort"] = @"2";
         // 获取推荐列表数组
         [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            
+            [self.recommends removeAllObjects];
             for (YLTableViewModel *model in result) {
                 [self.recommends addObject:model];
             }
@@ -239,7 +277,7 @@
         param[@"sort"] = @"3";
         // 获取推荐列表数组
         [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            
+            [self.recommends removeAllObjects];
             for (YLTableViewModel *model in result) {
                 [self.recommends addObject:model];
             }
@@ -255,7 +293,7 @@
         param[@"sort"] = @"4";
         // 获取推荐列表数组
         [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            
+            [self.recommends removeAllObjects];
             for (YLTableViewModel *model in result) {
                 [self.recommends addObject:model];
             }
@@ -271,7 +309,7 @@
         param[@"sort"] = @"5";
         // 获取推荐列表数组
         [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            
+            [self.recommends removeAllObjects];
             for (YLTableViewModel *model in result) {
                 [self.recommends addObject:model];
             }
@@ -281,8 +319,6 @@
             NSLog(@"请求失败!");
         }];
     }
-    
-    
     NSLog(@"YLBuyController:%@", string);
     self.coverView.hidden = YES;
     self.isSelect = NO;
@@ -311,7 +347,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    YLTableViewModel *model = self.recommends[indexPath.row];
     YLDetailController *detailVc = [[YLDetailController alloc] init];
+    detailVc.carID = model.carID;
     [self.navigationController pushViewController:detailVc animated:YES];
 }
 
@@ -394,12 +432,26 @@
         _customPrice.backgroundColor = [UIColor whiteColor];
         _customPrice.delegate = self;
         __weak typeof(self) weakSelf = self;
-        self.customPrice.customPriceBlock = ^(NSString *string) {
-            NSLog(@"价格视图中的价格按钮被点击点击了%@", string);
-            [weakSelf.titleBar setTitle:string forState:UIControlStateNormal];
+        self.customPrice.customPriceBlock = ^(UIButton *sender) {
+            NSLog(@"价格视图中的价格按钮被点击点击了%@", sender.titleLabel.text);
+            [weakSelf.titleBar setTitle:sender.titleLabel.text forState:UIControlStateNormal];
             weakSelf.coverView.hidden = YES;
             weakSelf.isSelect = NO;
             // 重新加载数据，刷新表格
+            NSInteger tag = sender.tag - 100;
+            NSArray *array = @[@"0fgf9999999", @"0fgf30000", @"30000fgf50000", @"50000fgf70000", @"70000fgf90000", @"90000fgf120000", @"120000fgf160000", @"160000fgf200000", @"200000fgf99999999"];
+            NSMutableDictionary *param = [NSMutableDictionary dictionary];
+            param[@"price"] = array[tag];
+            [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+                [weakSelf.recommends removeAllObjects];
+                for (YLTableViewModel *model in result) {
+                    [weakSelf.recommends addObject:model];
+                }
+                NSLog(@"recommend:%lu", weakSelf.recommends.count);
+                [weakSelf.tableView reloadData]; // 获取到数据刷新表格
+            } failure:^(NSError * _Nonnull error) {
+                
+            }];
             
             [weakSelf.tableView reloadData];
         };
@@ -421,5 +473,16 @@
         _recommends = [NSMutableArray array];
     }
     return _recommends;
+}
+
+- (YLTitleBar *)titleBar {
+    if (!_titleBar) {
+        _titleBar = [[YLTitleBar alloc] initWithFrame:CGRectMake(0, 0, 260, 36)];
+        [_titleBar setTitle:@"    搜索您想要的车   " forState:UIControlStateNormal];
+        [_titleBar addTarget:self action:@selector(titleClick) forControlEvents:UIControlEventTouchUpInside];
+        _titleBar.backgroundColor = YLColor(239.f, 242.f, 247.f);
+        
+    }
+    return _titleBar;
 }
 @end

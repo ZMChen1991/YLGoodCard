@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^LoginBlock)(NSString *string);
+@class YLLoginController;
+@protocol YLLoginControllerDelegate <NSObject>
+@optional
+- (void)switchView;
+@end
+
 @interface YLLoginController : UIViewController
+
+@property (nonatomic, weak) id<YLLoginControllerDelegate> delegate;
+@property (nonatomic, copy) LoginBlock loginBlock;
+
 
 @end

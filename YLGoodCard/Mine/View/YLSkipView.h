@@ -13,6 +13,5 @@
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSMutableArray *controllers;
 
-- (instancetype)initWithFrame:(CGRect)frame titles:(NSArray *)title controllers:(NSArray *)controllers;
 
 @end

@@ -11,5 +11,7 @@
 @interface YLSearchController : UIViewController
 
 @property (nonatomic, strong) NSString *searchTitle;
+@property (nonatomic, strong) NSString *brand;
+@property (nonatomic, strong) NSString *price;
 
 @end

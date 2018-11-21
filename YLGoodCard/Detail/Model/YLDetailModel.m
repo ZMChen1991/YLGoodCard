@@ -10,4 +10,26 @@
 
 @implementation YLDetailModel
 
++ (NSDictionary *)mj_replacedKeyFromPropertyName {
+    return @{@"carID":@"id"};
+}
+
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    
+}
+
+- (instancetype)initWithDict:(NSDictionary *)dict {
+    
+    if (self = [super init]) {
+        [self setValuesForKeysWithDictionary:dict];
+    }
+    return self;
+}
+
++ (instancetype)initWithDict:(NSDictionary *)dict {
+    return [[YLDetailModel alloc] initWithDict:dict];
+}
+
+
+
 @end

@@ -21,15 +21,30 @@
 
 - (void)setupUI {
     
-    self.header = [[YLLoginHeader alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 96)];
-    self.header.status = YLLoginStatusDown;
-    self.header.backgroundColor = [UIColor greenColor];
-    [self addSubview:self.header];
+    self.mineIcon = [[YLMineIcon alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 96)];
+    self.mineIcon.backgroundColor = YLColor(8.f, 169.f, 255.f);
+    [self addSubview:self.mineIcon];
+    self.loginHeader = [[YLLoginHeader alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 96)];
+    self.loginHeader.backgroundColor = YLColor(8.f, 169.f, 255.f);
+    [self addSubview:self.loginHeader];
     
-    self.fun = [[YLFunctionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.header.frame), YLScreenWidth, 176 + 88)];
+    
+    self.fun = [[YLFunctionView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.loginHeader.frame), YLScreenWidth, 176 + 88)];
     //    fun.backgroundColor = [UIColor redColor];
     [self addSubview:self.fun];
 }
 
+- (void)setStatus:(YLLoginStatus)status {
+    
+    _status = status;
+    if (status == YLLoginStatusUp) {
+        self.mineIcon.hidden = NO;
+        self.loginHeader.hidden = YES;
+    } else {
+        self.mineIcon.hidden = YES;
+        self.loginHeader.hidden = NO;
+    }
+    
+}
 
 @end

@@ -42,6 +42,7 @@
         [btn setTitle:prices[i] forState:UIControlStateNormal];
         [btn setTitleColor:YLColor(116.f, 116.f, 116.f) forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
+        btn.tag = 100 + i;
         [btn addTarget:self action:@selector(clickPrice:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
     }
@@ -79,7 +80,7 @@
     self.highPrice = highPrice;
     
     YLCondition *sureBtn = [[YLCondition alloc] initWithFrame:CGRectMake(self.frame.size.width - 80 - YLLeftMargin, CGRectGetMaxY(customPrice.frame)+YLTopMargin, 80, 30)];
-    sureBtn.type = YLConditionTypeGray;
+    sureBtn.type = YLConditionTypeBlue;
     [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
     [sureBtn addTarget:self action:@selector(sureClick) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:sureBtn];
@@ -88,48 +89,18 @@
 
 - (void)sureClick {
     
-    if (self.sureBtn.type == YLConditionTypeGray) {
-        self.sureBtn.userInteractionEnabled = NO;
-    } else {
-        NSLog(@"点击确定");
-        self.sureBtn.userInteractionEnabled = YES;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(pushLowPrice:highPrice:)]) {
-            [self.delegate pushLowPrice:self.lowPrice.text highPrice:self.highPrice.text];
-        }
+    NSLog(@"点击确定");
+    self.sureBtn.userInteractionEnabled = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pushLowPrice:highPrice:)]) {
+        [self.delegate pushLowPrice:self.lowPrice.text highPrice:self.highPrice.text];
     }
-    
 }
 
 - (void)clickPrice:(UIButton *)sender {
     
     NSLog(@"%@", sender.titleLabel.text);
     if (self.customPriceBlock) {
-        self.customPriceBlock(sender.titleLabel.text);
-    }
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    
-    if (self.lowPrice == textField) {
-        // 判断低价输入框是否o有填写价格
-        if (![NSString isBlankString:self.lowPrice.text]) {
-            self.sureBtn.type = YLConditionTypeBlue;
-            NSLog(@"低价");
-        } else {
-            self.sureBtn.type = YLConditionTypeBlue;
-        }
-    }
-    
-    if (self.highPrice == textField) {
-        [self.lowPrice becomeFirstResponder];
-        if (![NSString isBlankString:self.highPrice.text]) {
-            self.sureBtn.type = YLConditionTypeBlue;
-            NSLog(@"高价价");
-        }
+        self.customPriceBlock(sender);
     }
 }
 

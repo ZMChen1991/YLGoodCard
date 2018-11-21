@@ -12,8 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^labelBlock)(NSString *string);
 
+@class YLTableGroupHeader;
+@protocol YLTableGroupHeaderDelegate <NSObject>
+@optional
+- (void)pushBuyControl;
+@end
+
 @interface YLTableGroupHeader : UIView
 
+@property (nonatomic, weak) id<YLTableGroupHeaderDelegate> delegate;
 @property (nonatomic, copy) labelBlock labelBlock;
 
 /**
@@ -23,7 +30,7 @@ typedef void(^labelBlock)(NSString *string);
  @param image 标题图片
  @param title t标题
  @param detailTitle 更多详情
- @param arrow 箭头图片
+ @param arrowImage 箭头图片
  @return self
  */
 - (instancetype)initWithFrame:(CGRect)frame image:(NSString *)image title:(NSString *)title detailTitle:(NSString *)detailTitle arrowImage:(NSString *)arrowImage;

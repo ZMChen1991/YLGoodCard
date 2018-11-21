@@ -51,6 +51,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = self.dataArray[indexPath.row];
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     return cell;
 }
 

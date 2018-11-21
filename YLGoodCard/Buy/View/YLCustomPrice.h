@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-typedef void(^customPriceBlock)(NSString *string);
+typedef void(^customPriceBlock)(UIButton *sender);
 @class YLCustomPrice;
 @protocol YLCustomPriceDelegate <NSObject>
 @optional

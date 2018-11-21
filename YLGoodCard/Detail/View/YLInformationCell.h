@@ -9,10 +9,12 @@
 // 基本信息
 
 #import <UIKit/UIKit.h>
+#import "YLDetailInfoModel.h"
 
 @interface YLInformationCell : UITableViewCell
 
 @property (nonatomic, assign) float height;
+@property (nonatomic, strong) YLDetailInfoModel *model;
 
 + (instancetype)cellWithTable:(UITableView *)tableView;
 

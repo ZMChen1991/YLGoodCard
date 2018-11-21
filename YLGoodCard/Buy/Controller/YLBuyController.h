@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLTitleBar.h"
 
 @interface YLBuyController : UIViewController
 
 @property (nonatomic, strong) NSString *searchTitle;
+@property (nonatomic, strong) NSString *brand;
+@property (nonatomic, strong) NSString *price;
+@property (nonatomic, strong) YLTitleBar *titleBar;
+
 
 @end

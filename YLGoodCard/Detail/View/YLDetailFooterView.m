@@ -24,6 +24,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupUI];
+        self.isFavorite = NO;
     }
     return self;
 }
@@ -35,21 +36,23 @@
 //    [self.favorite setTitle:@"收藏" forState:UIControlStateNormal];
 //    self.favorite.titleLabel.font = [UIFont systemFontOfSize:11];
 //    self.favorite.imageView.backgroundColor = [UIColor redColor];
+    self.favorite.tag = 100 + 1;
     [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
     self.favorite.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.favorite setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.favorite.frame = CGRectMake(YLLeftMargin, YLTopMargin, 27, self.frame.size.height - 2 * YLTopMargin);
-    [self.favorite addTarget:self action:@selector(clickFavorite) forControlEvents:UIControlEventTouchUpInside];
+    [self.favorite addTarget:self action:@selector(clickFavorite:) forControlEvents:UIControlEventTouchUpInside];
     
     
     self.customer = [UIButton buttonWithType:UIButtonTypeCustom];
 //    self.customer.backgroundColor = [UIColor greenColor];
 //    [self.customer setTitle:@"客服" forState:UIControlStateNormal];
 //    self.customer.titleLabel.font = [UIFont systemFontOfSize:11];
+    self.customer.tag = 100 + 2;
     [self.customer setImage:[UIImage imageNamed:@"客服"] forState:UIControlStateNormal];
     [self.customer setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.customer.frame = CGRectMake(CGRectGetMaxX(self.favorite.frame) + 5, YLTopMargin, 27, self.frame.size.height - 2 * YLTopMargin);
-    [self.customer addTarget:self action:@selector(clickCustomer) forControlEvents:UIControlEventTouchUpInside];
+    [self.customer addTarget:self action:@selector(clickCustomer:) forControlEvents:UIControlEventTouchUpInside];
     
     self.bargain = [YLCondition buttonWithType:UIButtonTypeCustom];
     [self.bargain setTitle:@"砍价" forState:UIControlStateNormal];
@@ -69,11 +72,21 @@
     [self addSubview:self.order];
 }
 
-- (void)clickFavorite {
+- (void)clickFavorite:(UIButton *)sender {
     NSLog(@"favorite");
+    
+    if (self.detailFooterBlock) {
+        self.detailFooterBlock(sender);
+    }
+    self.isFavorite = !self.isFavorite;
+    if (self.isFavorite) {
+        [self.favorite setImage:[UIImage imageNamed:@"已收藏"] forState:UIControlStateNormal];
+    } else {
+        [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+    }
 }
 
-- (void)clickCustomer {
+- (void)clickCustomer:(UIButton *)sender {
     NSLog(@"customer");
 }
 

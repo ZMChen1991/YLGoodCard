@@ -13,6 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YLBrandTool : YLBaseTool
 
+/**
+ 获取车辆品牌数据
+
+ @param param 参数
+ @param success 请求成功后的回调
+ @param failure 请求失败后的回调
+ */
 + (void)brandWithParam:(id)param success:(void (^)(NSArray<YLBrandModel *> *result))success failure:(void (^)(NSError * error))failure;
 @end
 
