@@ -63,8 +63,9 @@
             }
             if ([string isEqualToString:@"15万以上"]) {
                 buy.price = @"150000fgf9999999999";
+            } else {
+                buy.brand = string;
             }
-            buy.brand = string;
             [buy.titleBar setTitle:string forState:UIControlStateNormal];
             [weakSelf.navigationController pushViewController:buy animated:YES];
         };

@@ -21,10 +21,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.navigationItem.title = @"设置";
     
     self.titles = @[@"清除缓存", @"关于优卡", @"用户隐私条款"];
-    self.detailTitles = @[@"126.5M", @"v1.11", @""];
+    NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+    NSString *versionNum = [info objectForKey:@"CFBundleShortVersionString"];
+    NSString *appName = [info objectForKey:@"CFBundleName"];
+    NSLog(@"当前版本号：%@--%@", versionNum, appName);
+    
+    self.detailTitles = @[@"126.5M", versionNum, appName];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 200)];
     YLCondition *logOut = [[YLCondition alloc] initWithFrame:CGRectMake(YLLeftMargin, 30, YLScreenWidth - 2 * YLLeftMargin, 40)];

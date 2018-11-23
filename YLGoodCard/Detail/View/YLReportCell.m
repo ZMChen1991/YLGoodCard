@@ -9,12 +9,11 @@
 #import "YLReportCell.h"
 #import "YLCondition.h"
 
-@interface YLReportCell () <UITableViewDelegate, UITableViewDataSource>;
+@interface YLReportCell ()
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSArray *subTitles;
-
 
 @end
 
@@ -54,6 +53,7 @@
     YLCondition *consult = [[YLCondition alloc] initWithFrame:CGRectMake(self.frame.size.width - 80 - YLLeftMargin, YLLeftMargin, 80, 25)];
     consult.type = YLConditionTypeBlue;
     [consult setTitle:@"咨询车况" forState:UIControlStateNormal];
+    [consult addTarget:self action:@selector(conssultClick) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:consult];
     
     UIView *bg = [[UIView alloc] initWithFrame:CGRectMake(YLLeftMargin,CGRectGetMaxY(icon.frame) + YLTopMargin, 345, 206)];
@@ -89,12 +89,13 @@
     [self addSubview:bg];
     
     UILabel *text1 = [[UILabel alloc] initWithFrame:CGRectMake(YLLeftMargin, CGRectGetMaxY(bg.frame) + 5, 345, 17)];
-    text1.text = @"以上为2018。06.12车况，交易以复检结果为准";
+    text1.text = @"以上为2018.06.12车况，交易以复检结果为准";
     text1.font = [UIFont systemFontOfSize:12];
     [self addSubview:text1];
     
     UIImageView *pic = [[UIImageView alloc] initWithFrame:CGRectMake(YLLeftMargin, CGRectGetMaxY(text1.frame) + YLLeftMargin, self.frame.size.width - 2 * YLLeftMargin, 159)];
     pic.backgroundColor = [UIColor redColor];
+    pic.image = [UIImage imageNamed:@"检测"];
     [self addSubview:pic];
     
     
@@ -134,6 +135,11 @@
 //    cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
 //    return cell;
 //}
+
+- (void)conssultClick {
+    
+    NSLog(@"reportCell:咨询车况");
+}
 
 - (float)height {
     return 473 + 264;

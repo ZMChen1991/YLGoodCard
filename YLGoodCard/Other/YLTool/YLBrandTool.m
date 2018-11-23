@@ -18,5 +18,10 @@
     
 }
 
++ (void)SeriesWithParam:(id)param success:(void (^)(NSArray<YLSeriesModel *> * result))success failure:(void (^)(NSError * error))failure {
+    
+    NSString *url = @"http://ucarjava.bceapp.com/vehicle?method=series";
+    [self getWithUrl:url param:param arrayForResultClass:[YLSeriesModel class] success:success failure:failure];
+}
 
 @end

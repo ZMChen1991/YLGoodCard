@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YLMineIcon : UIView
 
+@property (nonatomic, strong) NSString *telephone;
+
 @end
 
 NS_ASSUME_NONNULL_END

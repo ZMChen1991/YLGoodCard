@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLTableViewModel.h"
 
 typedef void(^myBlock)(NSString *title);
 
 @interface YLDetailController : UIViewController
 
-@property (nonatomic, strong) NSString *carID;
+@property (nonatomic, strong) YLTableViewModel *model;
+
 //@property (nonatomic, copy) myBlock block;
 
 @end

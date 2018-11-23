@@ -48,4 +48,10 @@
     self.name.frame = CGRectMake(CGRectGetMaxX(self.icon.frame) + YLLeftMargin, 22, 200, 25);
 }
 
+- (void)setTelephone:(NSString *)telephone {
+    
+    _telephone = telephone;
+    self.name.text = telephone;
+}
+
 @end

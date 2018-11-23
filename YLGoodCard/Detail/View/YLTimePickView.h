@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^TimePickBlock)(NSString *timeString);
+
 @interface YLTimePickView : UIView
 
+@property (nonatomic, copy) TimePickBlock timePickBlock;
 
 @end

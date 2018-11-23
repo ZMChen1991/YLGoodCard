@@ -39,10 +39,25 @@
     YLAccount *account = [YLAccountTool account];
     if (account) { // 登录过
         self.header.status = YLLoginStatusUp;
+        
+        
+        
+        
+        
+        
     } else {
         self.header.status = YLLoginStatusDown;
     }
 
+}
+
+- (void)loadDate {
+    
+    // 获取即将看车的个数
+    
+    // 获取我的收藏个数
+    
+    // 浏览记录
 }
 
 - (void)setupNav {

@@ -147,7 +147,7 @@
     [self.message resignFirstResponder];
     
     if ([NSString isBlankString:self.tel.text] || [NSString isBlankString:self.message.text]) {
-        NSLog(@"请输入电话号码或验证码");
+        [self showMessage:@"请输入电话号码或验证码"];
     } else {
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
         param[@"telephone"] = self.tel.text;

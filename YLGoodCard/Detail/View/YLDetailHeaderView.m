@@ -69,12 +69,12 @@
     label1.font = [UIFont systemFontOfSize:12];
     label1.text = @"车主报价";
     
-    self.secondPrice = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label1.frame) + 5, CGRectGetMaxY(self.tagView.frame) + 10, 80, 37)];
+    self.secondPrice = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label1.frame) + 5, CGRectGetMaxY(self.tagView.frame) + 10, 100, 37)];
     self.secondPrice.font = [UIFont systemFontOfSize:26];
     [self.secondPrice setTextColor:[UIColor redColor]];
     self.secondPrice.text = @"0.0万";
     
-    self.price = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.secondPrice.frame) + 5, CGRectGetMaxY(self.tagView.frame) + 20, 100, 17)];
+    self.price = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.secondPrice.frame), CGRectGetMaxY(self.tagView.frame) + 20, 110, 17)];
     self.price.font = [UIFont systemFontOfSize:12];
     // 添加中划线
     NSString *str = @"新车含税价0.0万";
@@ -145,7 +145,7 @@
 - (NSString *)stringToNumber:(NSString *)number {
     
     float count = [number floatValue] / 10000;
-    return [NSString stringWithFormat:@"%.1f万",count];
+    return [NSString stringWithFormat:@"%.2f万",count];
 }
 
 @end

@@ -23,6 +23,7 @@
         self.clipsToBounds = YES;
         self.layer.borderWidth = 0.5;
         self.layer.borderColor = YLColor(155.f, 155.f, 155.f).CGColor;
+        self.font = [UIFont systemFontOfSize:12];
         
         // 设置内容 -- 垂直居中
         self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;

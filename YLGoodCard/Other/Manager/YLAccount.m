@@ -21,7 +21,7 @@
     account.status = dict[@"status"];
     account.ID = dict[@"ID"];
     account.token = dict[@"token"];
-    account.createAt = [NSString stringByDate:[NSDate date]];
+    account.loginTime = [NSDate date];
     return account;
 }
 
@@ -35,7 +35,7 @@
     [aCoder encodeObject:self.status forKey:@"status"];
     [aCoder encodeObject:self.ID forKey:@"ID"];
     [aCoder encodeObject:self.token forKey:@"token"];
-    [aCoder encodeObject:self.createAt forKey:@"createAt"];
+    [aCoder encodeObject:self.loginTime forKey:@"loginTime"];
 }
 
 /**
@@ -48,7 +48,7 @@
         self.status = [aDecoder decodeObjectForKey:@"status"];
         self.ID = [aDecoder decodeObjectForKey:@"ID"];
         self.token = [aDecoder decodeObjectForKey:@"token"];
-        self.createAt = [aDecoder decodeObjectForKey:@"createAt"];
+        self.loginTime = [aDecoder decodeObjectForKey:@"loginTime"];
     }
     return self;
 }

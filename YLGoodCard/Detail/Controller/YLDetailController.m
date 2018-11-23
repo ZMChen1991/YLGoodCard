@@ -27,6 +27,10 @@
 #import "YLAccount.h"
 #import "YLAccountTool.h"
 
+// 进入详情页，保存当前汽车的ID
+// 浏览记录路径
+#define YLBrowsingHistoryPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"browsingHistory.plist"]
+
 @interface YLDetailController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate>
 
 @property (nonatomic, strong) UIImageView *bg;
@@ -53,7 +57,7 @@
 - (void)loadData {
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    param[@"id"] = self.carID;
+    param[@"id"] = self.model.carID;
     __weak typeof(self) weakSelf = self;
     [YLDetailTool detailWithParam:param success:^(YLDetailModel *result) {
         self.detailModel = result;
@@ -210,7 +214,7 @@
 
 - (void)setupNav {
     
-//    self.navigationItem.title = @"详情";
+    self.navigationItem.title = @"详情";
 //    UIBarButtonItem *down = [[UIBarButtonItem alloc] initWithTitle:@"降价通知" style:UIBarButtonItemStylePlain target:self action:@selector(priceDown)];
 //    UIBarButtonItem *share = [[UIBarButtonItem alloc] initWithTitle:@"分享" style:UIBarButtonItemStylePlain target:self action:@selector(share)];
 //    self.navigationItem.rightBarButtonItems = @[share, down];
@@ -227,6 +231,10 @@
 - (void)bargainClick {
     
     NSLog(@"YLDetailController:点击了砍价");
+    self.cover.salePrice = self.detailModel.price;
+    self.cover.bargainBlock = ^(NSString *price) {
+        NSLog(@"砍价的价格是：%@", price);
+    };
     self.cover.hidden = NO;
     self.cover.bargainBg.hidden = NO;
     self.cover.orderBg.hidden = YES;
@@ -235,6 +243,9 @@
 - (void)orderCarClick {
     
     NSLog(@"YLDetailController:点击了预约看车");
+    self.cover.timePickerBlock = ^(NSString *time) {
+        NSLog(@"预约看车时间是：%@", time);
+    };
     self.cover.hidden = NO;
     self.cover.bargainBg.hidden = YES;
     self.cover.orderBg.hidden = NO;

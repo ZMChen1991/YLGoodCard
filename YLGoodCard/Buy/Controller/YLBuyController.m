@@ -9,7 +9,7 @@
 #import "YLBuyController.h"
 #import "YLSearchController.h"
 #import "YLDetailController.h"
-#import "YLTableViewCell.h"
+#import "YLBuyTableViewCell.h"
 #import "YLLinkageView.h"
 #import "YLCustomPrice.h"
 #import "YLSelectView.h"
@@ -17,7 +17,8 @@
 #import "YLRequest.h"
 #import "YLRotateTool.h"
 #import "YLBrandController.h"
-
+#import "YLBuyCellFrame.h"
+#import "YLNoneView.h"
 /*
  品牌列表
  */
@@ -35,10 +36,13 @@
 @property (nonatomic, strong) YLSelectView *selectView; // 筛选视图
 @property (nonatomic, assign) BOOL isSelect;// 是否选中t标题
 @property (nonatomic, strong) UIView  *coverView;// 蒙板
+@property (nonatomic, assign) BOOL isLarge;// 是否大图模式，默认是NO
+@property (nonatomic, strong) YLNoneView *noneView;
 
 
 @property (nonatomic, strong) NSMutableArray *recommends;// 推荐列表或者搜索列表
-@property (nonatomic, strong) YLTableViewCell *cell;
+@property (nonatomic, strong) NSMutableArray *modelArray;// 存放数据模型的数组
+@property (nonatomic, strong) YLBuyTableViewCell *cell;
 
 @end
 
@@ -50,6 +54,7 @@
     [self load];
     [self setNav];
     [self setUI];
+    self.isLarge = NO;
     
     if (![self isBlankString:self.searchTitle]) {
         [self.titleBar setTitle:self.searchTitle forState:UIControlStateNormal];
@@ -59,8 +64,9 @@
 // 加载数据
 - (void)load {
     // 获取推荐列表数组
+    // 这里还需要在修改
+#warning 这里逻辑还需要完善！！！
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-//    param[@"title"] = self.searchTitle;
     if ([self.price isEqualToString:@"5万以下"]) {
         param[@"price"] = @"0fgf50000";
     }
@@ -78,7 +84,10 @@
     [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
         
         for (YLTableViewModel *model in result) {
-            [self.recommends addObject:model];
+            YLBuyCellFrame *cellFrame = [[YLBuyCellFrame alloc] init];
+            cellFrame.model = model;
+            [self.modelArray addObject:model];
+            [self.recommends addObject:cellFrame];
         }
         NSLog(@"recommend:%lu", self.recommends.count);
         [self.tableView reloadData]; // 获取到数据刷新表格
@@ -131,6 +140,7 @@
     [self.coverView addSubview:self.sortView];
     [self.coverView addSubview:self.customPrice];
     [self.coverView addSubview:self.selectView];
+    [self.view addSubview:self.noneView];
     
     self.coverView.hidden = YES;
     self.sortView.hidden = YES;
@@ -140,10 +150,12 @@
 }
 
 - (void)titleClick {
-    
-    NSLog(@"title被点击了！");
-    YLSearchController *searchVc = [[YLSearchController alloc] init];
-    [self.navigationController pushViewController:searchVc animated:YES];
+
+//    NSLog(@"title被点击了！");
+//    self.coverView.hidden = YES;
+//    self.isSelect = NO;
+//    YLSearchController *searchVc = [[YLSearchController alloc] init];
+//    [self.navigationController pushViewController:searchVc animated:YES];
 }
 
 - (void)leftBarButtonItemClick {
@@ -154,14 +166,21 @@
 - (void)rightBarButtonItemClick {
     
     NSLog(@"切换大小图显示");
-    self.cell.islargeImage = !self.cell.islargeImage;
-//    [self.tableView reloadData];
+//    NSMutableArray *array = [NSMutableArray arrayWithArray:self.recommends];
+    [self.recommends removeAllObjects];
+    for (YLTableViewModel *model in self.modelArray) {
+        model.isLargeImage = !model.isLargeImage;
+        YLBuyCellFrame *cellFrame = [[YLBuyCellFrame alloc] init];
+        cellFrame.model = model;
+        [self.recommends addObject:cellFrame];
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark 代理
 // 标题按钮点击的代理
 - (void)pushCoverView:(UIButton *)sender {
-    
+
     self.isSelect = !self.isSelect;
     if (self.isSelect) {
         if (sender.tag == 100) {
@@ -172,7 +191,7 @@
             self.selectView.hidden = YES;
         } else if (sender.tag == 101) {
             NSLog(@"品牌");
-            
+
             self.coverView.hidden = YES;
             self.sortView.hidden = YES;
             self.customPrice.hidden = YES;
@@ -180,7 +199,7 @@
             self.isSelect = NO;
             YLBrandController *brand = [[YLBrandController alloc] init];
             [self.navigationController pushViewController:brand animated:YES];
-            
+
         }else if (sender.tag == 102) {
             NSLog(@"价格");
             self.coverView.hidden = NO;
@@ -197,7 +216,7 @@
 //            self.customPrice.hidden = YES;
 //            self.selectView.hidden = NO;
         }
-        
+
     } else {
         self.coverView.hidden = YES;
         self.sortView.hidden = YES;
@@ -208,7 +227,7 @@
 
 // 价格视图里面的高价和低价代理
 - (void)pushLowPrice:(NSString *)lowPrice highPrice:(NSString *)highPrice {
-    
+
     self.coverView.hidden = YES;
     self.isSelect = NO;
     // 根据价格视图传过来的低价和高价，重新加载数据，刷新列表
@@ -222,14 +241,18 @@
             [self.recommends addObject:model];
         }
         NSLog(@"recommend:%lu", self.recommends.count);
+        // 如果搜索结果为空，那么显示noneView
+        if (![self.recommends count]) {
+            self.noneView.hidden = NO;
+        }
         [self.tableView reloadData]; // 获取到数据刷新表格
     } failure:^(NSError * _Nonnull error) {
-        
+
     }];
 }
 
 - (void)didSelectSort:(NSString *)string {
-    
+
 //    // 点击了排序，根据排序e内容将数据重新排列
 //    // 根据string进行排序，ascending：YES为升序，No为降序
 //    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:string ascending:YES];
@@ -251,10 +274,10 @@
         } failure:^(NSError * _Nonnull error) {
             NSLog(@"请求失败!");
         }];
-        
+
     }
     if ([string isEqualToString:@"价格最低"]) {
-        
+
         // 重新请求数据
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
         param[@"sort"] = @"2";
@@ -271,7 +294,7 @@
         }];
     }
     if ([string isEqualToString:@"价格最高"]) {
-        
+
         // 重新请求数据
         NSMutableDictionary *param = [NSMutableDictionary dictionary];
         param[@"sort"] = @"3";
@@ -338,29 +361,24 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     
-    self.cell = [YLTableViewCell cellWithTableView:tableView];
+    self.cell = [YLBuyTableViewCell cellWithTableView:tableView];
     self.cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    YLTableViewModel *model = self.recommends[indexPath.row];
-    self.cell.model = model;
+    self.cell.cellFrame = self.recommends[indexPath.row];
     return self.cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    YLTableViewModel *model = self.recommends[indexPath.row];
+    YLBuyCellFrame *cellFrame = self.recommends[indexPath.row];
     YLDetailController *detailVc = [[YLDetailController alloc] init];
-    detailVc.carID = model.carID;
+    detailVc.model = cellFrame.model;
     [self.navigationController pushViewController:detailVc animated:YES];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    // 大图：338  小图：110
-    if (self.cell.islargeImage) {
-        return 338;
-    } else {
-        return 110;
-    }
+    YLBuyCellFrame *cell = self.recommends[indexPath.row];
+    return cell.cellHeight;
 }
 
 // 判断字符串是否为空或者空格符
@@ -376,26 +394,6 @@
     }
     return NO;
 }
-
-//- (void)tap {
-//
-//    NSLog(@"点击蒙版");
-//}
-//
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-//
-//    // 如果是子视图，设置无法接受父视图手势
-//    if ([touch.view isDescendantOfView:self.sortView]) {
-//        return NO;
-//    }
-//    if ([touch.view isDescendantOfView:self.customPrice]) {
-//        return NO;
-//    }
-//    if ([touch.view isDescendantOfView:self.selectView]) {
-//        return NO;
-//    }
-//    return YES;
-//}
 
 #pragma mark 懒加载
 - (YLLinkageView *)linkageView {
@@ -485,4 +483,23 @@
     }
     return _titleBar;
 }
+
+- (NSMutableArray *)modelArray {
+    
+    if (!_modelArray) {
+        _modelArray = [NSMutableArray array];
+    }
+    return _modelArray;
+}
+
+- (YLNoneView *)noneView {
+    
+    if (!_noneView) {
+        _noneView = [[YLNoneView alloc] initWithFrame:CGRectMake(0, 64, YLScreenWidth, YLScreenHeight)];
+//        _noneView.backgroundColor = [UIColor redColor];
+        _noneView.hidden = YES;
+    }
+    return _noneView;
+}
+
 @end

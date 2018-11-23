@@ -46,6 +46,8 @@
 - (void)go {
     
     NSLog(@"现在去逛逛");
+    self.hidden = !self.hidden;
+    // 需要在控制器里重新获取数据
 }
 
 - (void)layoutSubviews {

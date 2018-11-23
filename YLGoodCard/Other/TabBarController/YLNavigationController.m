@@ -49,7 +49,7 @@
 - (void)back {
     
     // 因为self本来就是一个导航控制器，self.navigationController这里是nil的
-    [self popViewControllerAnimated:YES];
+    [self popToRootViewControllerAnimated:YES];
 }
 
 @end

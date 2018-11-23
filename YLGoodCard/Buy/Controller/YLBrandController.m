@@ -9,11 +9,13 @@
 #import "YLBrandController.h"
 #import "YLBrandTool.h"
 #import "YLBrandModel.h"
-
+#import "YLSeriesController.h"
+//#define YLBrandsPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"brands.plist"]
 
 @interface YLBrandController ()
 
 @property (nonatomic, strong) NSMutableArray *brands;// 汽车品牌
+@property (nonatomic, strong) NSMutableArray *groups;// 组
 
 @end
 
@@ -21,15 +23,37 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.title = @"选择品牌";
     
     [self loadData];
 }
 
 - (void)loadData {
+//    self.groups
     
-    [YLBrandTool brandWithParam:nil success:^(NSArray<YLBrandModel *> * _Nonnull result) {
+    // 思路：一组装字母，再以字母x筛选出品牌装进数组，然后用另一数组存该数组
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [YLBrandTool brandWithParam:param success:^(NSArray<YLBrandModel *> * _Nonnull result) {
+        NSMutableArray *group = [NSMutableArray array];
+        // 取出首字母
         for (YLBrandModel *model in result) {
-            [self.brands addObject:model];
+            NSString *zimu = model.initialLetter;
+            [group addObject:zimu];
+        }
+        NSSet *set = [NSSet setWithArray:group];
+        self.groups = [NSMutableArray arrayWithArray:[set allObjects]];
+        
+        // 根据首字母取出汽车品牌存放在数组里
+        for (NSInteger i = 0; i < self.groups.count; i++) {
+            NSString *str = self.groups[i];
+            NSMutableArray *array = [NSMutableArray array];
+            for (YLBrandModel *model in result) {
+                if ([str isEqualToString:model.initialLetter]) {
+                    [array addObject:model];
+                }
+            }
+            // 将首字母的c汽车品牌数组存放在数组里
+            [self.brands addObject:array];
         }
         [self.tableView reloadData];
     } failure:^(NSError * error) {
@@ -40,11 +64,12 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return self.groups.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.brands.count;
+
+    return [self.brands[section] count];
 }
 
 #pragma mark 循环利用cell
@@ -57,11 +82,28 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    YLBrandModel *model = self.brands[indexPath.row];
+    
+    YLBrandModel *model = self.brands[indexPath.section][indexPath.row];
     cell.textLabel.text = model.brand;
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    YLBrandModel *model = self.brands[indexPath.section][indexPath.row];
+    YLSeriesController *series = [[YLSeriesController alloc] init];
+    series.model = model;
+    [self.navigationController pushViewController:series animated:YES];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    return self.groups[section];
+}
+
+- (NSArray<NSString *> *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return self.groups;
+}
 
 - (NSMutableArray *)brands {
     

@@ -19,7 +19,6 @@
     [YLRequest GET:url parameters:params responseCache:nil success:^(id responseObject) {
         if (success) {
             id result = [resultClass mj_objectWithKeyValues:responseObject[@"data"]];
-//            NSLog(@"result:%@",result);
             success(result);// 返回的是存放模型类的数组
         }
     } failed:^(NSError * _Nonnull error) {

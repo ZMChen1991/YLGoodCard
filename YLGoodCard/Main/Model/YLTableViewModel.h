@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
-typedef NS_ENUM(NSInteger, YLTableViewCellType) {
-    YLTableViewCellTypeSamllImage,
-    YLTableViewCellTypeLargeImage,
-};
+//
+//typedef NS_ENUM(NSInteger, YLTableViewCellType) {
+//    YLTableViewCellTypeSamllImage,
+//    YLTableViewCellTypeLargeImage,
+//};
 
 typedef NS_ENUM(NSInteger, YLTableViewCellStatus) {
     YLTableViewCellStatusSold,
@@ -34,7 +34,7 @@ typedef NS_ENUM(NSInteger, YLTableViewCellStatus) {
 @property (nonatomic, strong) NSString *status;
 
 @property (nonatomic, assign) YLTableViewCellStatus cellStatus;
-@property (nonatomic, assign) YLTableViewCellType cellType;
+@property (nonatomic, assign) BOOL isLargeImage;
 
 @end
 

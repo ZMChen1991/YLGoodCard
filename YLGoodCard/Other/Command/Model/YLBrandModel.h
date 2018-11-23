@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YLBrandModel : YLBaseTool
+@interface YLBrandModel : YLBaseTool <NSCoding>
 
 @property (nonatomic, strong) NSString *brand;// 品牌
 @property (nonatomic, strong) NSString *brandId;

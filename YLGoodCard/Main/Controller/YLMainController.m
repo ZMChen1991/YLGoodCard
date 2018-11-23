@@ -17,6 +17,7 @@
 #import "YLTableViewModel.h"
 #import "YLBuyController.h"
 #import "YLTabBarController.h"
+#import "YLHomeTool.h"
 
 @interface YLMainController ()<UITableViewDelegate, UITableViewDataSource, YLButtonViewDelegate, YLTableGroupHeaderDelegate>
 
@@ -24,8 +25,7 @@
 @property (nonatomic, strong) NSMutableArray *images; // 存放转播图的数组
 @property (nonatomic, strong) NSMutableArray *recommends; // 存放推荐类别
 @property (nonatomic, strong) NSMutableArray *notableTitles; // 存放走马灯广告
-//@property (nonatomic, strong) UIImageView *barImageView; // 导航栏图片背景
-@property (nonatomic, strong) YLTabBarController *tabBarVc;
+//@property (nonatomic, strong) YLTabBarController *tabBarVc;
 
 @end
 
@@ -35,7 +35,9 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO; // 不自动调节滚动区域
-//    self.barImageView = self.navigationController.navigationBar.subviews.firstObject;
+    
+    NSLog(@"%@", self.navigationController.viewControllers);
+    
     [self load];
     [self setNav];
     [self setupTableView];
@@ -45,31 +47,51 @@
     
     // 获取轮播图数组
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [YLRotateTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
+    [YLHomeTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
         for (YLBannerModel *model in result) {
             [self.images addObject:model.img];
         }
-//        NSLog(@"加载数据成功:self.images:%@",self.images);
-    } failure:^(NSError * _Nonnull error) {
-    }];
+    } failure:nil];
+    
+//    [YLRotateTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
+//        for (YLBannerModel *model in result) {
+//            [self.images addObject:model.img];
+//        }
+////        NSLog(@"加载数据成功:self.images:%@",self.images);
+//    } failure:^(NSError * _Nonnull error) {
+//    }];
 
     // 获取走马灯广告数组
-    [YLRotateTool notableWithParam:param success:^(NSArray<YLNotableModel *> *result) {
+    [YLHomeTool notableWithParam:param success:^(NSArray<YLNotableModel *> * _Nonnull result) {
         for (YLNotableModel *model in result) {
             [self.notableTitles addObject:model.text];
         }
-        NSLog(@"加载走马灯广告成功");
-    } failure:^(NSError * _Nonnull error) {
-    }];
+    } failure:nil];
+    
+    
+//    [YLRotateTool notableWithParam:param success:^(NSArray<YLNotableModel *> *result) {
+//        for (YLNotableModel *model in result) {
+//            [self.notableTitles addObject:model.text];
+//        }
+//        NSLog(@"加载走马灯广告成功");
+//    } failure:^(NSError * _Nonnull error) {
+//    }];
     // 获取推荐列表数组
-    [YLRotateTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+    [YLHomeTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
         for (YLTableViewModel *model in result) {
             [self.recommends addObject:model];
         }
         [self.tableView reloadData]; // 获取到数据刷新表格
-        NSLog(@"加载推荐列表成功");
-    } failure:^(NSError * _Nonnull error) {
-    }];
+    } failure:nil];
+    
+//    [YLRotateTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+//        for (YLTableViewModel *model in result) {
+//            [self.recommends addObject:model];
+//        }
+//        [self.tableView reloadData]; // 获取到数据刷新表格
+//        NSLog(@"加载推荐列表成功");
+//    } failure:^(NSError * _Nonnull error) {
+//    }];
 }
 
 - (void)setupTableView {
@@ -82,6 +104,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     NSMutableArray *bannerTitles = [NSMutableArray arrayWithObjects:@"http://image-public.gz.bcebos.com/vehicle.jpg", @"http://image-public.gz.bcebos.com/vehicle2.jpg", @"http://image-public.gz.bcebos.com/vehicle3.jpg", nil];
+    
     CGRect frame = CGRectMake(0, 100, YLScreenWidth, 424);
     YLHomeHeader *homeHeader = [[YLHomeHeader alloc] initWithFrame:frame bannerTitles:bannerTitles notabletitles:self.notableTitles];
     // 代理
@@ -92,7 +115,7 @@
     // block
     homeHeader.buttonView.tapClickBlock = ^(UILabel *label) {
         NSLog(@"YLMainController:%@", label);
-        // 点击列表，跳转控制器
+        // 点击列表，跳转买车控制器
         YLSearchController *search = [[YLSearchController alloc] init];
         if (label.tag >= 100  && label.tag < 104) {
             search.price = label.text;
@@ -129,8 +152,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     YLTableViewModel *model = self.recommends[indexPath.row];
     YLDetailController *detail = [[YLDetailController alloc] init];
-    detail.carID = model.carID;
-    NSLog(@"%@", model.carID);
+    detail.model = model;
     [self.navigationController pushViewController:detail animated:YES];
 }
 
@@ -141,28 +163,32 @@
 
 
 #pragma mark 代理方法
-// 这里是条件搜索框里的按钮代理方法，根据标题跳转到搜索框搜索相关的车辆
-- (void)selectBtnTitle:(NSString *)title {
+//// 这里是条件搜索框里的按钮代理方法，根据标题跳转到搜索框搜索相关的车辆
+//- (void)selectBtnTitle:(NSString *)title {
+//
+//    NSLog(@"%@", title);
+//    YLSearchController *search = [[YLSearchController alloc] init];
+//    search.searchTitle = title;
+//    [self.navigationController pushViewController:search animated:YES];
+//}
+//
+//// 查看更多
+//- (void)checkMore {
+//    
+//    NSLog(@"YLMainController:checkMore");
+//    YLSearchController *searchVc = [[YLSearchController alloc] init];
+//    [self.navigationController pushViewController:searchVc animated:YES];
+//}
 
-    NSLog(@"%@", title);
-    YLSearchController *search = [[YLSearchController alloc] init];
-    search.searchTitle = title;
-    [self.navigationController pushViewController:search animated:YES];
-}
-
-- (void)checkMore {
-    
-    NSLog(@"YLMainController:checkMore");
-    YLSearchController *searchVc = [[YLSearchController alloc] init];
-    [self.navigationController pushViewController:searchVc animated:YES];
-}
-
+// 点击首页热门二手车的查看更多
 - (void)pushBuyControl {
     
     // 点击了查看更多
+    YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    tab.selectedIndex = 1;
 //    self.tabBarVc.selectedIndex = 1;
-    YLBuyController *buy = [[YLBuyController alloc] init];
-    [self.navigationController pushViewController:buy animated:YES];
+//    YLBuyController *buy = [[YLBuyController alloc] init];
+//    [self.navigationController pushViewController:buy animated:YES];
 }
 
 #pragma mark Private
@@ -207,6 +233,9 @@
 
 - (void)leftBarButtonItemClick {
     
+    
+//    YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+//    tab.selectedIndex = 3;
     NSLog(@"leftBarButtonItem被点击了！");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"暂时只支持阳江市" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
     [alert show];
@@ -245,10 +274,4 @@
     return _notableTitles;
 }
 
-- (YLTabBarController *)tabBarVc {
-    if (!_tabBarVc) {
-        _tabBarVc = [[YLTabBarController alloc] init];
-    }
-    return _tabBarVc;
-}
 @end

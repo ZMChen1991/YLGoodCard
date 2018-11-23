@@ -17,4 +17,27 @@
     [self getWithUrl:urlString param:param dictForResultClass:[YLDetailModel class] success:success failure:failure];
 }
 
++ (void)favoriteWithParam:(id)param success:(void (^)(YLDetailModel * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
+    
+    NSString *urlString = @"http://ucarjava.bceapp.com/collection?method=upd";
+    [self getWithUrl:urlString param:param dictForResultClass:[YLDetailModel class] success:success failure:failure];
+}
+
++ (void)lookCarWithParam:(id)param success:(void (^)(YLDetailModel * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
+    
+    NSString *urlString = @"http://ucarjava.bceapp.com/buy?method=order";
+    [self getWithUrl:urlString param:param dictForResultClass:[YLDetailModel class] success:success failure:failure];
+}
+
++ (void)bargainWithParam:(id)param success:(void (^)(YLDetailModel * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
+    
+    NSString *urlString = @"http://ucarjava.bceapp.com/bargain?method=dicker";
+    [self getWithUrl:urlString param:param dictForResultClass:[YLDetailModel class] success:success failure:failure];
+}
+
++ (void)configWithParam:(id)param success:(void (^)(YLDetailModel * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
+    NSString *urlString = @"http://ucarjava.bceapp.com/detail?method=config";
+    [self getWithUrl:urlString param:param dictForResultClass:[YLDetailModel class] success:success failure:failure];
+}
+
 @end

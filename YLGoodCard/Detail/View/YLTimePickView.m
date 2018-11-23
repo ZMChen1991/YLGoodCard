@@ -24,9 +24,13 @@
     NSMutableArray<NSString *> *dayArray;
     NSMutableArray<NSString *> *hourArray;
     NSMutableArray<NSString *> *minutehArray;
-    
-    
 }
+
+@property (nonatomic, strong) NSString *month;
+@property (nonatomic, strong) NSString *day;
+@property (nonatomic, strong) NSString *hour;
+@property (nonatomic, strong) NSString *minute;
+
 @end
 
 @implementation YLTimePickView
@@ -37,6 +41,7 @@
         
         [self __initDate];
         [self __initView];
+        
     }
     return self;
 }
@@ -76,6 +81,7 @@
     datePickerView.showsSelectionIndicator = YES;
     datePickerView.delegate = self;
     datePickerView.dataSource = self;
+    [datePickerView selectRow:0 inComponent:0 animated:YES];
     [self addSubview:datePickerView];
 }
 
@@ -119,6 +125,12 @@
         NSString *str = [NSString stringWithFormat:@"%ld", (long)i];
         [minutehArray addObject:str];
     }
+    
+    // 设置默认
+    self.month = monthArray[0];
+    self.day = dayArray[0];
+    self.hour = hourArray[0];
+    self.minute = minutehArray[0];
 }
 
 #pragma mark 重置天数
@@ -180,7 +192,11 @@
 }
 
 - (void)completionBtn {
-    NSLog(@"点击完成");
+    NSLog(@"z选择时间是：%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute);
+    NSString *timeString = [NSString stringWithFormat:@"%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute];
+    if (self.timePickBlock) {
+        self.timePickBlock(timeString);
+    }
     UIView *spView = self.superview;
     CGFloat originY = CGRectGetHeight(spView.frame);
     [UIView animateWithDuration:YLDURATION animations:^{
@@ -252,14 +268,22 @@
             [dayArray removeAllObjects];
             [self daysWithYear:[self currentYear] month:row + 1];
             [pickerView reloadComponent:1];
+            self.month = monthArray[row];
             break;
         case 1:
-            
+            self.day = dayArray[row];
+            break;
+        case 2:
+            self.hour = hourArray[row];
+            break;
+        case 3:
+            self.minute = minutehArray[row];
             break;
         default:
             break;
     }
 }
+
 
 
 @end

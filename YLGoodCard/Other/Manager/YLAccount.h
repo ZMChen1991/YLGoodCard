@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *status;
 @property (nonatomic, strong) NSString *telephone;
 @property (nonatomic, strong) NSString *token;
-@property (nonatomic, strong) NSString *createAt;
+@property (nonatomic, strong) NSDate *loginTime;
 
 + (instancetype)accountWithDict:(NSDictionary *)dict;
 

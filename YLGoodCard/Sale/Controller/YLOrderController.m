@@ -10,6 +10,7 @@
 #import "YLReservationController.h"
 #import "YLDetectCenterView.h"
 #import "YLDetectCenterTool.h"
+#import "YLBrandController.h"
 
 @interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate, YLDetectCenterViewDelegate>
 
@@ -99,6 +100,11 @@
     if (indexPath.row == 1) {
         NSLog(@"打开弹窗,显示检测中心列表");
         self.cover.hidden = NO;
+    }
+    if (indexPath.row == 2) {
+        YLBrandController *brand = [[YLBrandController alloc] init];
+        brand.navigationItem.title = @"选择品牌";
+        [self.navigationController pushViewController:brand animated:YES];
     }
 }
 

@@ -66,14 +66,11 @@
     NSString *title = sender.titleLabel.text;
     NSInteger index = sender.tag;
     __weak typeof(self) weakSelf = self;
-    if (index == 101) {
-        if ([NSString isBlankString:self.saleView.telephone.text]) {
-            // 如果电话号码为空，点击按钮弹出提示框
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入电话号码" message:nil delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-            [alert show];
-        } else {
-            self.saleView.saleTelBlock = ^(NSString *telString) {
-                NSLog(@"预约卖车电话：%@", telString);
+    if (index == 301) {
+        self.saleView.saleTelBlock = ^(NSString *telString) {
+            if ([NSString isBlankString:telString]) {
+                [weakSelf showMessage:@"请输入电话号码"];
+            } else {
                 NSArray *titles = @[@"城市", @"检测中心", @"选择车型", @"上牌时间", @"行驶里程", @"验车时间", @"联系电话"];
                 YLOrderController *orderVc = [[YLOrderController alloc] init];
                 orderVc.array = titles;
@@ -84,10 +81,10 @@
                 YLSalerInformation *saler = [YLSalerInformation saler];
                 saler.telephone = telString;
                 [YLSalerInformation saveInformation:saler];
-            };
-        }
+            }
+        };
     }
-    if (index == 102) {
+    if (index == 302) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"联系电话"
                                                         message:@"0662-12345678"
                                                        delegate:nil
@@ -95,26 +92,14 @@
                                               otherButtonTitles:nil, nil];
         [alert show];
     }
-    if (index == 103) {
-//        if ([NSString isBlankString:self.saleView.telephone.text]) {
-            // 如果电话号码为空，点击按钮弹出提示框
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"此功能以后开放"
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"好的"
-                                                  otherButtonTitles:nil, nil];
-            [alert show];
-//        } else {
-//            self.saleView.saleTelBlock = ^(NSString *telString) {
-//                NSLog(@"预约估价电话：%@", telString);
-//                NSArray *titles = @[@"选择车型", @"上牌城市", @"上牌时间", @"行驶里程", @"验车时间", @"联系电话"];
-//                YLOrderController *orderVc = [[YLOrderController alloc] init];
-//                orderVc.array = titles;
-//                orderVc.telephone = telString;
-//                orderVc.navigationItem.title = title;
-//                [weakSelf.navigationController pushViewController:orderVc animated:YES];
-//            };
-//        }
+    if (index == 303) {
+        // 如果电话号码为空，点击按钮弹出提示框
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"此功能以后开放"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"好的"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
     }
     
 }
@@ -122,6 +107,29 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     [self resignFirstResponder];
+}
+
+// 提示弹窗
+- (void)showMessage:(NSString *)message {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;// 获取最上层窗口
+    
+    UILabel *messageLabel = [[UILabel alloc] init];
+    CGSize messageSize = CGSizeMake([message getSizeWithFont:[UIFont systemFontOfSize:12]].width + 30, 30);
+    messageLabel.frame = CGRectMake((YLScreenWidth - messageSize.width) / 2, YLScreenHeight/2, messageSize.width, messageSize.height);
+    messageLabel.text = message;
+    messageLabel.font = [UIFont systemFontOfSize:12];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    messageLabel.layer.cornerRadius = 5.0f;
+    messageLabel.layer.masksToBounds = YES;
+    [window addSubview:messageLabel];
+    
+    [UIView animateWithDuration:1 animations:^{
+        messageLabel.alpha = 0;
+    } completion:^(BOOL finished) {
+        [messageLabel removeFromSuperview];
+    }];
 }
 
 @end

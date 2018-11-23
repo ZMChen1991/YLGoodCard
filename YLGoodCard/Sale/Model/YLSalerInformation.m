@@ -49,10 +49,6 @@
 
 + (void)saveInformation:(YLSalerInformation *)saler {
     NSLog(@"%@", YLOrderAndAppraisePath);
-//    BOOL success = [[NSFileManager defaultManager] fileExistsAtPath:YLOrderAndAppraisePath];
-//    if (!success) {
-//        [[NSFileManager defaultManager] createFileAtPath:YLOrderAndAppraisePath contents:nil attributes:nil];
-//    }
     [NSKeyedArchiver archiveRootObject:saler toFile:YLOrderAndAppraisePath];
 }
 

@@ -14,6 +14,10 @@
 
 //@property (nonatomic, assign) float sale; // 卖家出价
 @property (nonatomic, strong) UILabel *buye; // 买家出价
+@property (nonatomic, strong) UILabel *saler;// 卖家出价
+@property (nonatomic, strong) UISlider *slider; // 滚动条
+@property (nonatomic, strong) UIButton *time;// 预约看车时间
+@property (nonatomic, strong) NSString *timeString;
 
 @end
 
@@ -42,11 +46,12 @@
     
     UIButton *timeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     timeBtn.frame = CGRectMake(0, CGRectGetMaxY(title.frame) + 20, YLScreenWidth, 37);
-    [timeBtn setTitle:@"11月11日 18:00" forState:UIControlStateNormal];
+    [timeBtn setTitle:[self stringForDate] forState:UIControlStateNormal];
     [timeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [timeBtn addTarget:self action:@selector(selectTime) forControlEvents:UIControlEventTouchUpInside];
     timeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     timeBtn.titleLabel.font = [UIFont systemFontOfSize:26];
+    self.time = timeBtn;
     
     UILabel *warning = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(timeBtn.frame) + 20, YLScreenWidth, 17)];
     warning.text = @"多人已关注，预计很快售出，建议尽早预约";
@@ -81,9 +86,10 @@
     
     // 宽一半，高：22，间距：12
     UILabel *sale = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(title.frame) + 12, width, height)];
-    sale.text = @"20.50万";
+    sale.text = @"0.0万";
     sale.textAlignment = NSTextAlignmentCenter;
     sale.font = [UIFont systemFontOfSize:20];
+    self.saler = sale;
     
     UILabel *buye = [[UILabel alloc] initWithFrame:CGRectMake(width, CGRectGetMaxY(title.frame) + 12, width, height)];
     buye.text = @"0.00万";
@@ -105,10 +111,11 @@
     UISlider *slider = [[UISlider alloc] initWithFrame:CGRectMake(YLLeftMargin, CGRectGetMaxY(saler.frame) + YLLeftMargin, YLScreenWidth - 2 * YLLeftMargin, 10)];
     // 设置最小值最大值
     slider.minimumValue = 0;
-    slider.maximumValue = 20; // 获取卖家价格
+//    slider.maximumValue = 20; // 获取卖家价格
     slider.continuous = YES;
     [slider addTarget:self action:@selector(changeBuy:) forControlEvents:UIControlEventValueChanged];
 //    slider.backgroundColor = [UIColor redColor];
+    self.slider = slider;
     
     YLCondition *bargain = [[YLCondition alloc] initWithFrame:CGRectMake(YLLeftMargin, CGRectGetMaxY(slider.frame) + YLLeftMargin, YLScreenWidth - 2 * YLLeftMargin, 40)];
     bargain.type = YLConditionTypeBlue;
@@ -135,12 +142,18 @@
 - (void)bargain {
     
     NSLog(@"点击了砍价");
+    if (self.bargainBlock) {
+        self.bargainBlock(self.buye.text);
+    }
     self.hidden = YES;
 }
 
 - (void)orderCar {
     
     NSLog(@"YLCoverView:预约看车");
+    if (self.timePickerBlock) {
+        self.timePickerBlock(self.timeString);
+    }
     self.hidden = YES;
 }
 
@@ -148,7 +161,26 @@
     
     NSLog(@"选择时间");
     YLTimePickView *timePicker = [[YLTimePickView alloc] initWithFrame:CGRectMake(0, YLScreenHeight - 213, YLScreenWidth, 213)];
+    timePicker.timePickBlock = ^(NSString *timeString) {
+        NSLog(@"选择的时间是%@", timeString);
+        self.timeString = timeString;
+        [self.time setTitle:timeString forState:UIControlStateNormal];
+    };
     [self addSubview:timePicker];
 }
 
+- (void)setSalePrice:(NSString *)salePrice {
+    _salePrice = salePrice;
+    NSString *price = [NSString stringWithFormat:@"%.2f万", [salePrice floatValue] / 10000];
+    self.saler.text = price;
+    self.slider.maximumValue = [salePrice floatValue] / 10000;
+}
+
+
+- (NSString *)stringForDate {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MM月dd日 HH:mm"];
+    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+    return dateString;
+}
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "YLMineHeader.h"
+#import "YLAccount.h"
+#import "YLAccountTool.h"
 
 @implementation YLMineHeader
 
@@ -38,7 +40,9 @@
     
     _status = status;
     if (status == YLLoginStatusUp) {
+        YLAccount *account = [YLAccountTool account];
         self.mineIcon.hidden = NO;
+        self.mineIcon.telephone = account.telephone;
         self.loginHeader.hidden = YES;
     } else {
         self.mineIcon.hidden = YES;

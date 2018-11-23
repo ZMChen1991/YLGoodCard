@@ -11,6 +11,7 @@
 #import "YLCondition.h"
 
 typedef void(^saleTelBlock)(NSString *telString);
+typedef void(^AppraiseBlock)(NSString *telString);
 
 @interface YLSaleView : UIView
 
@@ -18,8 +19,8 @@ typedef void(^saleTelBlock)(NSString *telString);
 @property (nonatomic, strong) YLCondition *saleBtn; // 预约卖车
 @property (nonatomic, strong) YLCondition *consultBtn; // 免费咨询
 @property (nonatomic, strong) YLCondition *appraiseBtn;// 爱车估价
-@property (nonatomic, strong) UITextField *telephone;
 
 @property (nonatomic, copy) saleTelBlock saleTelBlock;
+@property (nonatomic, copy) AppraiseBlock appraiseBlock;
 
 @end
