@@ -143,4 +143,9 @@
     [textArr removeObjectsInRange:range];
     [NSKeyedArchiver archiveRootObject:textArr toFile:YLSearchHistoryPath];
 }
+
+- (void)setHotArray:(NSMutableArray *)hotArray {
+    _hotArray = hotArray;
+}
+
 @end

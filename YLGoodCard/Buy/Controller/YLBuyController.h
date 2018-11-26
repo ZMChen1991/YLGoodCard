@@ -16,5 +16,6 @@
 @property (nonatomic, strong) NSString *price;
 @property (nonatomic, strong) YLTitleBar *titleBar;
 
+@property (nonatomic, strong) NSMutableDictionary *param;
 
 @end

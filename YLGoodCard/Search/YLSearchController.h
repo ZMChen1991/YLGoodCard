@@ -10,8 +10,10 @@
 
 @interface YLSearchController : UIViewController
 
-@property (nonatomic, strong) NSString *searchTitle;
-@property (nonatomic, strong) NSString *brand;
-@property (nonatomic, strong) NSString *price;
+//@property (nonatomic, strong) NSString *searchTitle;
+//@property (nonatomic, strong) NSString *brand;
+//@property (nonatomic, strong) NSString *price;
+
+@property (nonatomic, strong) NSMutableArray *hotSearch;// 热门搜索
 
 @end

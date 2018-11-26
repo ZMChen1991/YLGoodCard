@@ -12,7 +12,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+
 @interface YLSearchParamModel : NSObject
+
+YLSingletonH
 
 @property (nonatomic, strong) NSString *carID; // 车辆ID
 @property (nonatomic, strong) NSString *title;// 标题

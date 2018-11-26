@@ -6,6 +6,17 @@
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
+/**
+ 1、智能排序
+ 2、品牌
+ 3、价格
+ 4、筛选
+ 5、热门推荐
+ 6、大图小图模式
+ */
+
+
+
 #import "YLBuyController.h"
 #import "YLSearchController.h"
 #import "YLDetailController.h"
@@ -14,11 +25,12 @@
 #import "YLCustomPrice.h"
 #import "YLSelectView.h"
 #import "YLSortView.h"
-#import "YLRequest.h"
-#import "YLRotateTool.h"
 #import "YLBrandController.h"
 #import "YLBuyCellFrame.h"
 #import "YLNoneView.h"
+#import "YLBuyTool.h"
+#import "YLSearchParamModel.h"
+
 /*
  品牌列表
  */
@@ -51,7 +63,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self load];
+    [self loadData];
     [self setNav];
     [self setUI];
     self.isLarge = NO;
@@ -62,37 +74,22 @@
 }
 
 // 加载数据
-- (void)load {
+- (void)loadData {
     // 获取推荐列表数组
-    // 这里还需要在修改
-#warning 这里逻辑还需要完善！！！
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    if ([self.price isEqualToString:@"5万以下"]) {
-        param[@"price"] = @"0fgf50000";
-    }
-    if ([self.price isEqualToString:@"5-10万"]) {
-        param[@"price"] = @"50000fgf100000";
-    }
-    if ([self.price isEqualToString:@"10-15万"]) {
-        param[@"price"] = @"100000fgf150000";
-    }
-    if ([self.price isEqualToString:@"15万以上"]) {
-        param[@"price"] = @"150000fgf9999999999";
-    }
-    param[@"brand"] = self.brand;
-    param[@"title"] = self.searchTitle;
-    [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-        
+//    NSLog(@"param:%@--%@", self.param, self);
+    [YLBuyTool buyWithParam:self.param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+        [self.modelArray removeAllObjects];
+        [self.recommends removeAllObjects];
         for (YLTableViewModel *model in result) {
+//            NSLog(@"%@", result);
             YLBuyCellFrame *cellFrame = [[YLBuyCellFrame alloc] init];
             cellFrame.model = model;
             [self.modelArray addObject:model];
             [self.recommends addObject:cellFrame];
         }
-        NSLog(@"recommend:%lu", self.recommends.count);
-        [self.tableView reloadData]; // 获取到数据刷新表格
+        [self noneToSearchResult];
+        [self.tableView reloadData];
     } failure:^(NSError * _Nonnull error) {
-        
     }];
 }
 
@@ -151,11 +148,11 @@
 
 - (void)titleClick {
 
-//    NSLog(@"title被点击了！");
-//    self.coverView.hidden = YES;
-//    self.isSelect = NO;
-//    YLSearchController *searchVc = [[YLSearchController alloc] init];
-//    [self.navigationController pushViewController:searchVc animated:YES];
+    NSLog(@"title被点击了！");
+    self.coverView.hidden = YES;
+    self.isSelect = NO;
+    YLSearchController *searchVc = [[YLSearchController alloc] init];
+    [self.navigationController pushViewController:searchVc animated:YES];
 }
 
 - (void)leftBarButtonItemClick {
@@ -233,116 +230,53 @@
     // 根据价格视图传过来的低价和高价，重新加载数据，刷新列表
     NSLog(@"%@--%@", lowPrice, highPrice);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    NSString *tempStr = [NSString stringWithFormat:@"%@fgf%@", lowPrice, highPrice];
+    NSString *tempStr = [NSString stringWithFormat:@"%.ffgf%.f", [lowPrice floatValue] * 10000, [highPrice floatValue] * 10000];
     param[@"price"] = tempStr;
-    [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+    
+    [YLBuyTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
         [self.recommends removeAllObjects];
         for (YLTableViewModel *model in result) {
-            [self.recommends addObject:model];
+            YLBuyCellFrame *cellFrame = [[YLBuyCellFrame alloc] init];
+            cellFrame.model = model;
+            [self.modelArray addObject:model];
+            [self.recommends addObject:cellFrame];
         }
         NSLog(@"recommend:%lu", self.recommends.count);
         // 如果搜索结果为空，那么显示noneView
-        if (![self.recommends count]) {
-            self.noneView.hidden = NO;
-        }
+        [self noneToSearchResult];
         [self.tableView reloadData]; // 获取到数据刷新表格
     } failure:^(NSError * _Nonnull error) {
-
+        
     }];
 }
 
-- (void)didSelectSort:(NSString *)string {
 
-//    // 点击了排序，根据排序e内容将数据重新排列
-//    // 根据string进行排序，ascending：YES为升序，No为降序
-//    NSSortDescriptor *sort = [[NSSortDescriptor alloc] initWithKey:string ascending:YES];
-//    // sortUsingDescriptors后面添加的数组为排序条件组，如果是多个条件排序，先根据最先的条件排序，如果相同，则根据第二个条件进行排序
-//    [self.recommends sortUsingDescriptors:@[sort]];
+/**
+ 排序，根据排序重新获取数据
+
+ @param index 按钮文字
+ */
+- (void)didSelectSort:(NSInteger)index {
+
     [self.recommends removeAllObjects];
-    if ([string isEqualToString:@"最新上架"]) {
-        // 重新请求数据
-        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        param[@"sort"] = @"1";
-        // 获取推荐列表数组
-        [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            [self.recommends removeAllObjects];
-            for (YLTableViewModel *model in result) {
-                [self.recommends addObject:model];
-            }
-            [self.tableView reloadData]; // 获取到数据刷新表格
-            NSLog(@"请求成功!----%lu", (unsigned long)self.recommends.count);
-        } failure:^(NSError * _Nonnull error) {
-            NSLog(@"请求失败!");
-        }];
-
-    }
-    if ([string isEqualToString:@"价格最低"]) {
-
-        // 重新请求数据
-        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        param[@"sort"] = @"2";
-        // 获取推荐列表数组
-        [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            [self.recommends removeAllObjects];
-            for (YLTableViewModel *model in result) {
-                [self.recommends addObject:model];
-            }
-            [self.tableView reloadData]; // 获取到数据刷新表格
-            NSLog(@"请求成功!----%lu", (unsigned long)self.recommends.count);
-        } failure:^(NSError * _Nonnull error) {
-            NSLog(@"请求失败!");
-        }];
-    }
-    if ([string isEqualToString:@"价格最高"]) {
-
-        // 重新请求数据
-        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        param[@"sort"] = @"3";
-        // 获取推荐列表数组
-        [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            [self.recommends removeAllObjects];
-            for (YLTableViewModel *model in result) {
-                [self.recommends addObject:model];
-            }
-            [self.tableView reloadData]; // 获取到数据刷新表格
-            NSLog(@"请求成功!----%lu", (unsigned long)self.recommends.count);
-        } failure:^(NSError * _Nonnull error) {
-            NSLog(@"请求失败!");
-        }];
-    }
-    if ([string isEqualToString:@"车龄最短"]) {
-        // 重新请求数据
-        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        param[@"sort"] = @"4";
-        // 获取推荐列表数组
-        [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            [self.recommends removeAllObjects];
-            for (YLTableViewModel *model in result) {
-                [self.recommends addObject:model];
-            }
-            [self.tableView reloadData]; // 获取到数据刷新表格
-            NSLog(@"请求成功!----%lu", (unsigned long)self.recommends.count);
-        } failure:^(NSError * _Nonnull error) {
-            NSLog(@"请求失败!");
-        }];
-    }
-    if ([string isEqualToString:@"里程最少"]) {
-        // 重新请求数据
-        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        param[@"sort"] = @"5";
-        // 获取推荐列表数组
-        [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-            [self.recommends removeAllObjects];
-            for (YLTableViewModel *model in result) {
-                [self.recommends addObject:model];
-            }
-            [self.tableView reloadData]; // 获取到数据刷新表格
-            NSLog(@"请求成功!");
-        } failure:^(NSError * _Nonnull error) {
-            NSLog(@"请求失败!");
-        }];
-    }
-    NSLog(@"YLBuyController:%@", string);
+    NSString *sort = [NSString stringWithFormat:@"%ld", index + 1];
+    // 重新请求数据
+    self.param[@"sort"] = sort;
+    // 获取推荐列表数组
+    [YLBuyTool buyWithParam:self.param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+        [self.recommends removeAllObjects];
+        for (YLTableViewModel *model in result) {
+            YLBuyCellFrame *cellFrame = [[YLBuyCellFrame alloc] init];
+            cellFrame.model = model;
+            [self.modelArray addObject:model];
+            [self.recommends addObject:cellFrame];
+        }
+        [self noneToSearchResult];
+        [self.tableView reloadData]; // 获取到数据刷新表格
+        NSLog(@"请求成功!----%lu", (unsigned long)self.recommends.count);
+    } failure:^(NSError * _Nonnull error) {
+        NSLog(@"请求失败!");
+    }];
     self.coverView.hidden = YES;
     self.isSelect = NO;
 }
@@ -379,6 +313,22 @@
 
     YLBuyCellFrame *cell = self.recommends[indexPath.row];
     return cell.cellHeight;
+}
+
+// 如果搜索结果为空，那么显示noneView
+- (void)noneToSearchResult {
+
+    if (![self.recommends count]) {
+        self.noneView.title = @"暂无搜索记录";
+        self.noneView.hidden = NO;
+        __weak typeof(self) weakSelf = self;
+        self.noneView.noneViewBlock = ^{
+            [weakSelf.param removeAllObjects];
+            [weakSelf.titleBar setTitle:@"搜索您想要的车" forState:UIControlStateNormal];
+            [weakSelf loadData];
+            weakSelf.noneView.hidden = YES;
+        };
+    }
 }
 
 // 判断字符串是否为空或者空格符
@@ -438,19 +388,20 @@
             // 重新加载数据，刷新表格
             NSInteger tag = sender.tag - 100;
             NSArray *array = @[@"0fgf9999999", @"0fgf30000", @"30000fgf50000", @"50000fgf70000", @"70000fgf90000", @"90000fgf120000", @"120000fgf160000", @"160000fgf200000", @"200000fgf99999999"];
-            NSMutableDictionary *param = [NSMutableDictionary dictionary];
-            param[@"price"] = array[tag];
-            [YLRotateTool buyWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+            weakSelf.param[@"price"] = array[tag];
+            [YLBuyTool buyWithParam:weakSelf.param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
                 [weakSelf.recommends removeAllObjects];
                 for (YLTableViewModel *model in result) {
-                    [weakSelf.recommends addObject:model];
+                    YLBuyCellFrame *cellFrame = [[YLBuyCellFrame alloc] init];
+                    cellFrame.model = model;
+                    [weakSelf.modelArray addObject:model];
+                    [weakSelf.recommends addObject:cellFrame];
                 }
+                [weakSelf noneToSearchResult];
                 NSLog(@"recommend:%lu", weakSelf.recommends.count);
                 [weakSelf.tableView reloadData]; // 获取到数据刷新表格
             } failure:^(NSError * _Nonnull error) {
-                
             }];
-            
             [weakSelf.tableView reloadData];
         };
     }
@@ -476,7 +427,8 @@
 - (YLTitleBar *)titleBar {
     if (!_titleBar) {
         _titleBar = [[YLTitleBar alloc] initWithFrame:CGRectMake(0, 0, 260, 36)];
-        [_titleBar setTitle:@"    搜索您想要的车   " forState:UIControlStateNormal];
+        [_titleBar setTitle:@"搜索您想要的车" forState:UIControlStateNormal];
+        _titleBar.titleLabel.textAlignment = NSTextAlignmentCenter;
         [_titleBar addTarget:self action:@selector(titleClick) forControlEvents:UIControlEventTouchUpInside];
         _titleBar.backgroundColor = YLColor(239.f, 242.f, 247.f);
         
@@ -496,10 +448,17 @@
     
     if (!_noneView) {
         _noneView = [[YLNoneView alloc] initWithFrame:CGRectMake(0, 64, YLScreenWidth, YLScreenHeight)];
-//        _noneView.backgroundColor = [UIColor redColor];
         _noneView.hidden = YES;
+        _noneView.backgroundColor = [UIColor whiteColor];
     }
     return _noneView;
+}
+
+
+- (void)setParam:(NSMutableDictionary *)param {
+    
+    _param = param;
+    [self loadData];
 }
 
 @end

@@ -14,6 +14,8 @@ typedef void(^tapClick)(NSString *string);
 
 @interface YLSearchView : UIView
 
+//@property (nonatomic, strong) NSMutableArray *hotArray;
+
 @property (nonatomic, copy) tapClick tapClick;
 
 - (instancetype)initWithFrame:(CGRect)frame historyArray:(NSMutableArray *)historyArray hotArray:(NSMutableArray *)hotArray;

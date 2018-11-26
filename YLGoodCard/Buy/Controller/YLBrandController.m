@@ -7,7 +7,8 @@
 //
 
 #import "YLBrandController.h"
-#import "YLBrandTool.h"
+//#import "YLBrandTool.h"
+#import "YLBuyTool.h"
 #import "YLBrandModel.h"
 #import "YLSeriesController.h"
 //#define YLBrandsPath [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"brands.plist"]
@@ -33,7 +34,7 @@
     
     // 思路：一组装字母，再以字母x筛选出品牌装进数组，然后用另一数组存该数组
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [YLBrandTool brandWithParam:param success:^(NSArray<YLBrandModel *> * _Nonnull result) {
+    [YLBuyTool brandWithParam:param success:^(NSArray<YLBrandModel *> * _Nonnull result) {
         NSMutableArray *group = [NSMutableArray array];
         // 取出首字母
         for (YLBrandModel *model in result) {

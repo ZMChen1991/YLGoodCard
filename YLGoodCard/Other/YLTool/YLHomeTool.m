@@ -23,10 +23,16 @@
     //    NSLog(@"%@",success);
 }
 
-+ (void)recommendWithParam:(id)param success:(void (^)(NSArray<YLTableViewModel *> *result))success failure:(void (^)(NSError * _Nonnull))failure {
++ (void)recommendWithParam:(id)param success:(void (^)(NSArray<YLTableViewModel *> *result))success failure:(void (^)(NSError * error))failure {
     
     NSString *urlString = @"http://ucarjava.bceapp.com/detail?method=recommend";
     [self getWithUrl:urlString param:param arrayForResultClass:[YLTableViewModel class] success:success failure:failure];
+}
+
++ (void)hotBrandWithParam:(id)param success:(void (^)(NSDictionary * result))success failure:(void (^)(NSError * error))failure {
+
+    NSString *urlString = @"http://ucarjava.bceapp.com/home?method=brand";
+    [self getWithUrl:urlString param:param success:success failure:failure];
 }
 
 @end

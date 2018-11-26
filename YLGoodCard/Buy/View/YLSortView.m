@@ -61,7 +61,7 @@
     
     // 代理
     if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectSort:)]) {
-        [self.delegate didSelectSort:self.dataArray[indexPath.row]];
+        [self.delegate didSelectSort:indexPath.row];
     }
 }
 

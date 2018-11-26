@@ -23,7 +23,7 @@
     YLAccount *account = [NSKeyedUnarchiver unarchiveObjectWithFile:YLAccountPath];
     // 此处没有想好，以后再修改
     // 如果登录时间超过1小时，
-    long long time = 60;
+    long long time = 36000;
     NSDate *expirseTime = [account.loginTime dateByAddingTimeInterval:time];
     NSDate *now = [NSDate date];
     NSLog(@"%@----%@", expirseTime, now);

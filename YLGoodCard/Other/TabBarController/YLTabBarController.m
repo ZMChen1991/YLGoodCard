@@ -47,7 +47,7 @@
     childController.tabBarItem.selectedImage = [[UIImage imageNamed:selectImage] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     YLNavigationController *nav = [[YLNavigationController alloc] initWithRootViewController:childController];
-    
+//    NSLog(@"nav:%@--childController:%@", nav, childController);
     // 在此修改tabBarItem的文字属性
     NSMutableDictionary *textAttrs = [NSMutableDictionary dictionary];
     textAttrs[NSForegroundColorAttributeName] = [UIColor blackColor];

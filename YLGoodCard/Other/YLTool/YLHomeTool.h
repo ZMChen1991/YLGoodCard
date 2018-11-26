@@ -45,6 +45,15 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)recommendWithParam:(id)param success:(void(^)(NSArray<YLTableViewModel *> *result))success failure:(void (^)(NSError *error))failure;
 
+/**
+ 推荐热门汽车品牌
+ 
+ @param param 请求参数
+ @param success 请求成功后的回调
+ @param failure 请求失败后的回调
+ */
++ (void)hotBrandWithParam:(id)param success:(void(^)(NSDictionary *result))success failure:(void (^)(NSError *error))failure;
+
 @end
 
 NS_ASSUME_NONNULL_END

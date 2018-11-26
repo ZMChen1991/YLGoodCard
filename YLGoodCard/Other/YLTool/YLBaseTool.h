@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)getWithUrl:(NSString *)url param:(id)param dictForResultClass:(Class)resultClass success:(void (^)(id result))success failure:(void (^)(NSError * error))failure;
 
++ (void)getWithUrl:(NSString *)url param:(id)param success:(void (^)(id result))success failure:(void (^)(NSError *error))failure;
+
 @end
 
 NS_ASSUME_NONNULL_END

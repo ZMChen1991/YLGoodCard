@@ -10,23 +10,23 @@
 
 @implementation YLSaleTool
 
-+ (void)saleWithParam:(id)param success:(void (^)(NSDictionary * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
++ (void)saleWithParam:(id)param success:(void (^)(NSDictionary * result))success failure:(void (^)(NSError * error))failure {
     NSString *urlString = @"http://ucarjava.bceapp.com/sell?method=order";
     [self getWithUrl:urlString param:param dictForResultClass:[NSDictionary class] success:success failure:failure];
     
 }
 
-+ (void)detectDetailWithParam:(id)param success:(void (^)(NSDictionary * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
++ (void)detectDetailWithParam:(id)param success:(void (^)(NSDictionary * result))success failure:(void (^)(NSError * error))failure {
     
     NSString *urlString = @"http://ucarjava.bceapp.com/center?method=id";
     [self getWithUrl:urlString param:param arrayForResultClass:[NSDictionary class] success:success failure:failure];
 }
 
 
-+ (void)cityDetectWithParam:(id)param success:(void (^)(NSArray * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
++ (void)cityDetectWithParam:(id)param success:(void (^)(NSArray<YLDetectCenterModel *> * result))success failure:(void (^)(NSError * error))failure {
     
     NSString *urlString = @"http://ucarjava.bceapp.com/center?method=city";
-    [self getWithUrl:urlString param:param arrayForResultClass:[NSDictionary class] success:success failure:failure];
+    [self getWithUrl:urlString param:param arrayForResultClass:[YLDetectCenterModel class] success:success failure:failure];
 }
 
 @end

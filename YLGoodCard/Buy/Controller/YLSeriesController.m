@@ -7,9 +7,12 @@
 //
 
 #import "YLSeriesController.h"
-#import "YLBrandTool.h"
+//#import "YLBrandTool.h"
+#import "YLBuyTool.h"
 #import "YLSeriesModel.h"
-#import "YLCarTypeController.h"
+#import "YLTabBarController.h"
+#import "YLNavigationController.h"
+#import "YLBuyController.h"
 
 
 @interface YLSeriesController ()
@@ -27,7 +30,7 @@
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"id"] = self.model.brandId;
-    [YLBrandTool SeriesWithParam:param success:^(NSArray<YLSeriesModel *> * _Nonnull result) {
+    [YLBuyTool seriesWithParam:param success:^(NSArray<YLSeriesModel *> * _Nonnull result) {
         self.series = result;
         [self.tableView reloadData];
     } failure:^(NSError * _Nonnull error) {
@@ -63,11 +66,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     YLSeriesModel *model = self.series[indexPath.row];
-    YLCarTypeController *carType = [[YLCarTypeController alloc] init];
-    carType.model = model;
-    carType.navigationItem.title = @"选择车型";
-    [self.navigationController pushViewController:carType animated:YES];
-    NSLog(@"%@", model);
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setValue:self.model.brand forKey:@"brand"];
+    [param setValue:model.series forKey:@"series"];
+    // 获取tabBarVC里的导航控制器存放的子控制器，传值到子控制器，再切换视图
+    YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    YLNavigationController *nav2 = tab.viewControllers[1];
+    YLBuyController *buy = nav2.viewControllers.firstObject;
+    buy.param = param;
+    tab.selectedIndex = 1;
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 

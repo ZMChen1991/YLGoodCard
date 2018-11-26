@@ -24,10 +24,12 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     // 设置图片
-    [btn setBackgroundImage:[UIImage imageNamed:image] forState:UIControlStateNormal];
-    [btn setBackgroundImage:[UIImage imageNamed:highImage] forState:UIControlStateHighlighted];
+    [btn setTitle:@"返回" forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [btn setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateSelected];
     // 设置尺寸
-    btn.size = btn.currentBackgroundImage.size;
+    CGSize size = CGSizeMake(50, 30);
+    btn.size = size;
     return [[UIBarButtonItem alloc] initWithCustomView:btn];
 }
 

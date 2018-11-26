@@ -5,6 +5,16 @@
 //  Created by lm on 2018/11/1.
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
+/**
+ 1、轮播图
+ 2、成交记录
+ 3、热门品牌
+ 4、推荐列表
+ 5、热门品牌点击跳转买车页面
+ 6、热门头查看更多跳转买车页面
+ */
+
+
 
 #import "YLMainController.h"
 #import "YLTitleBar.h"
@@ -13,11 +23,13 @@
 #import "YLSearchController.h"
 #import "YLDetailController.h"
 #import "YLHomeHeader.h"
-#import "YLRotateTool.h"
+//#import "YLRotateTool.h"
 #import "YLTableViewModel.h"
 #import "YLBuyController.h"
 #import "YLTabBarController.h"
 #import "YLHomeTool.h"
+#import "YLSearchParamModel.h"
+#import "YLNavigationController.h"
 
 @interface YLMainController ()<UITableViewDelegate, UITableViewDataSource, YLButtonViewDelegate, YLTableGroupHeaderDelegate>
 
@@ -25,7 +37,11 @@
 @property (nonatomic, strong) NSMutableArray *images; // 存放转播图的数组
 @property (nonatomic, strong) NSMutableArray *recommends; // 存放推荐类别
 @property (nonatomic, strong) NSMutableArray *notableTitles; // 存放走马灯广告
+
+//@property (nonatomic, strong) YLSearchParamModel *searchParam;
 //@property (nonatomic, strong) YLTabBarController *tabBarVc;
+
+@property (nonatomic, strong) NSMutableDictionary *param;
 
 @end
 
@@ -35,8 +51,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO; // 不自动调节滚动区域
-    
-    NSLog(@"%@", self.navigationController.viewControllers);
+
     
     [self load];
     [self setNav];
@@ -53,14 +68,6 @@
         }
     } failure:nil];
     
-//    [YLRotateTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
-//        for (YLBannerModel *model in result) {
-//            [self.images addObject:model.img];
-//        }
-////        NSLog(@"加载数据成功:self.images:%@",self.images);
-//    } failure:^(NSError * _Nonnull error) {
-//    }];
-
     // 获取走马灯广告数组
     [YLHomeTool notableWithParam:param success:^(NSArray<YLNotableModel *> * _Nonnull result) {
         for (YLNotableModel *model in result) {
@@ -68,14 +75,6 @@
         }
     } failure:nil];
     
-    
-//    [YLRotateTool notableWithParam:param success:^(NSArray<YLNotableModel *> *result) {
-//        for (YLNotableModel *model in result) {
-//            [self.notableTitles addObject:model.text];
-//        }
-//        NSLog(@"加载走马灯广告成功");
-//    } failure:^(NSError * _Nonnull error) {
-//    }];
     // 获取推荐列表数组
     [YLHomeTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
         for (YLTableViewModel *model in result) {
@@ -83,15 +82,6 @@
         }
         [self.tableView reloadData]; // 获取到数据刷新表格
     } failure:nil];
-    
-//    [YLRotateTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-//        for (YLTableViewModel *model in result) {
-//            [self.recommends addObject:model];
-//        }
-//        [self.tableView reloadData]; // 获取到数据刷新表格
-//        NSLog(@"加载推荐列表成功");
-//    } failure:^(NSError * _Nonnull error) {
-//    }];
 }
 
 - (void)setupTableView {
@@ -114,16 +104,27 @@
     __weak typeof(self) weakSelf = self;
     // block
     homeHeader.buttonView.tapClickBlock = ^(UILabel *label) {
-        NSLog(@"YLMainController:%@", label);
+        NSLog(@"YLMainController:%@", label.text);
         // 点击列表，跳转买车控制器
-        YLSearchController *search = [[YLSearchController alloc] init];
-        if (label.tag >= 100  && label.tag < 104) {
-            search.price = label.text;
+        YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        YLNavigationController *nav = tab.viewControllers[1];
+        YLBuyController *buy = nav.viewControllers.firstObject;
+        NSString *labelStr = label.text;
+        if ([labelStr isEqualToString:@"5万以下"]) {
+            [weakSelf.param setValue:@"0fgf50000" forKey:@"price"];
+        } else if ([labelStr isEqualToString:@"5-10万"]) {
+            [weakSelf.param setValue:@"50000fgf100000" forKey:@"price"];
+        } else if ([labelStr isEqualToString:@"10-15万"]) {
+            [weakSelf.param setValue:@"100000fgf150000" forKey:@"price"];
+        } else if ([labelStr isEqualToString:@"15万以上"]) {
+            [weakSelf.param setValue:@"150000fgf99999999" forKey:@"price"];
         } else {
-            search.brand = label.text;
+            [weakSelf.param setValue:labelStr forKey:@"brand"];
         }
-        search.searchTitle = label.text;
-        [weakSelf.navigationController pushViewController:search animated:YES];
+        buy.param = weakSelf.param;
+        [buy.titleBar setTitle:labelStr forState:UIControlStateNormal];
+        tab.selectedIndex = 1;
+        [weakSelf.param removeAllObjects];
     };
     self.tableView.tableHeaderView = homeHeader;
 }
@@ -183,12 +184,13 @@
 // 点击首页热门二手车的查看更多
 - (void)pushBuyControl {
     
-    // 点击了查看更多
     YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    YLNavigationController *nav = tab.viewControllers[1];
+    YLBuyController *buy = nav.viewControllers.firstObject;
+    [self.param removeAllObjects];
+    buy.param = self.param;
+    [buy.titleBar setTitle:@"搜索您想要的车" forState:UIControlStateNormal];
     tab.selectedIndex = 1;
-//    self.tabBarVc.selectedIndex = 1;
-//    YLBuyController *buy = [[YLBuyController alloc] init];
-//    [self.navigationController pushViewController:buy animated:YES];
 }
 
 #pragma mark Private
@@ -227,16 +229,29 @@
 - (void)titleClick {
     
     NSLog(@"title被点击了！");
-    YLSearchController *search = [[YLSearchController alloc] init];
-    [self.navigationController pushViewController:search animated:YES];
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [YLHomeTool hotBrandWithParam:param success:^(NSDictionary * _Nonnull result) {
+        NSMutableArray *hotBrands = (NSMutableArray *)result[@"data"][@"keyword"];
+        YLSearchController *search = [[YLSearchController alloc] init];
+        search.hotSearch = hotBrands;
+        [self.navigationController pushViewController:search animated:YES];
+    } failure:^(NSError * _Nonnull error) {
+    }];
+    
 }
+
 
 - (void)leftBarButtonItemClick {
     
-    
+//    // 获取tabBarVC里的导航控制器存放的子控制器，传值到子控制器，再切换视图
 //    YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-//    tab.selectedIndex = 3;
-    NSLog(@"leftBarButtonItem被点击了！");
+//    YLNavigationController *nav2 = tab.viewControllers[1];
+//    YLBuyController *buy = nav2.viewControllers.firstObject;
+//    buy.searchTitle = @"雪佛兰";
+//    tab.selectedIndex = 1;
+    
+    NSLog(@"leftBarButtonItem被点击了!");
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"暂时只支持阳江市" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
     [alert show];
     
@@ -272,6 +287,15 @@
         _notableTitles = [NSMutableArray array];
     }
     return _notableTitles;
+}
+
+
+- (NSMutableDictionary *)param {
+    
+    if (!_param) {
+        _param = [NSMutableDictionary dictionary];
+    }
+    return _param;
 }
 
 @end

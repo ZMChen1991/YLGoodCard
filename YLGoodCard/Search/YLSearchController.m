@@ -10,6 +10,9 @@
 #import "YLSearchBar.h"
 #import "YLBuyController.h"
 #import "YLSearchView.h"
+#import "YLTabBarController.h"
+#import "YLNavigationController.h"
+#import "YLHomeTool.h"
 
 /**
  搜索界面思路:本地
@@ -21,7 +24,7 @@
 @interface YLSearchController () <UISearchBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray *searchHistory;// l历史搜索
-@property (nonatomic, strong) NSMutableArray *hotSearch;// 热门搜索
+
 @property (nonatomic, strong) YLSearchBar *searchBar;
 @property (nonatomic, strong) YLSearchView *searchView;
 
@@ -33,52 +36,52 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
     [self setTitleBar];
-    self.searchBar.text = self.searchTitle;
     [self.view addSubview:self.searchView];
 }
 
 - (YLSearchView *)searchView {
     
+//    // 获取tabBarVC里的导航控制器存放的子控制器，传值到子控制器，再切换视图
+//    YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+//    YLNavigationController *nav2 = tab.viewControllers[1];
+//    YLBuyController *buy = nav2.viewControllers.firstObject;
+//    tab.selectedIndex = 1;
+    
     if (!_searchView) {
         CGRect rect = CGRectMake(0, 64, YLScreenWidth, YLScreenHeight - 64);
         self.searchView = [[YLSearchView alloc] initWithFrame:rect historyArray:self.searchHistory hotArray:self.hotSearch];
+//        self.searchView.hotArray = self.hotSearch;
         __weak typeof(self) weakSelf = self;
         self.searchView.tapClick = ^(NSString * _Nonnull string) {
             NSLog(@"%@", string);
-            
-            weakSelf.searchBar.text = string;
             [weakSelf saveSearchHistory:string];
             // 这里跳转到买车控制器
-            YLBuyController *buy = [[YLBuyController alloc] init];
-            if ([string isEqualToString:@"5万以下"]) {
-                buy.price = @"0fgf50000";
-            }
-            if ([string isEqualToString:@"5-10万"]) {
-                buy.price = @"50000fgf100000";
-            }
-            if ([string isEqualToString:@"10-15万"]) {
-                buy.price = @"100000fgf150000";
-            }
-            if ([string isEqualToString:@"15万以上"]) {
-                buy.price = @"150000fgf9999999999";
-            } else {
-                buy.brand = string;
-            }
-            [buy.titleBar setTitle:string forState:UIControlStateNormal];
-            [weakSelf.navigationController pushViewController:buy animated:YES];
+            NSMutableDictionary *param = [NSMutableDictionary dictionary];
+            [param setValue:string forKey:@"brand"];
+            // 获取tabBarVC里的导航控制器存放的子控制器，传值到子控制器，再切换视图
+            YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+            YLNavigationController *nav2 = tab.viewControllers[1];
+            YLBuyController *buy = nav2.viewControllers.firstObject;
+            buy.param = param;
+            tab.selectedIndex = 1;
+            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
         };
     }
     return _searchView;
 }
 
-- (NSMutableArray *)hotSearch {
+//// 热门搜索
+//- (NSMutableArray *)hotSearch {
+//
+//    if (!_hotSearch) {
+//        _hotSearch = [NSMutableArray arrayWithObjects:@"雪佛兰",@"丰田",@"陆风",@"传祺",@"宝马",@"吉利",@"现代",@"本田",@"奥迪", nil];
+//    }
+//    return _hotSearch;
+//}
+- (void)setHotSearch:(NSMutableArray *)hotSearch {
     
-    if (!_hotSearch) {
-        _hotSearch = [NSMutableArray arrayWithObjects:@"丰田", @"大众", @"日产", @"别克", @"传祺", @"陆风", @"奥迪", @"奔驰", nil];
-    }
-    return _hotSearch;
+    _hotSearch = hotSearch;
 }
 
 - (NSMutableArray *)searchHistory {
@@ -134,17 +137,24 @@
 
     // 如果点击是搜索，就以title搜索为主
     if (![self isBlankString:self.searchBar.text]) {
+        // 将搜索的条件以字典的形式传给控制器
+        NSString *titleString = self.searchBar.text;
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setValue:titleString forKey:@"title"];
         // 跳转m到买车控制器
-        YLBuyController *buy = [[YLBuyController alloc] init];
-        buy.searchTitle = self.searchBar.text;
-        [self.navigationController pushViewController:buy animated:YES];
+        YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        YLNavigationController *nav = tab.viewControllers[1];
+        YLBuyController *buy = nav.viewControllers.firstObject;
+        buy.param = dict;
+        [buy.titleBar setTitle:titleString forState:UIControlStateNormal];
+        tab.selectedIndex = 1;
+        [self.navigationController popToRootViewControllerAnimated:YES];
         
         // 保存搜索记录
-        [self saveSearchHistory:self.searchBar.text];
+        [self saveSearchHistory:titleString];
     } else {
         NSLog(@"搜索栏为空");
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"搜索栏为空" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-        [alert show];
+        [self showMessage:@"搜索栏为空"];
     }
 }
 
@@ -162,12 +172,7 @@
     if (self.searchHistory.count > 6) {
         [self.searchHistory removeLastObject];
     }
-//    if ([self isBlankString:self.searchBar.text]) {
-//        NSLog(@"退出");
-//        return;
-//    }
-    // 更新本地搜索记录
-    //    [self.searchHistory writeToFile:YLSearchHistoryPath atomically:YES];
+    NSLog(@"%@", YLSearchHistoryPath);
     BOOL success = [NSKeyedArchiver archiveRootObject:self.searchHistory toFile:YLSearchHistoryPath];
     if (success) {
         NSLog(@"保存成功");
@@ -190,5 +195,27 @@
     return NO;
  }
 
+// 提示弹窗
+- (void)showMessage:(NSString *)message {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;// 获取最上层窗口
+    
+    UILabel *messageLabel = [[UILabel alloc] init];
+    CGSize messageSize = CGSizeMake([message getSizeWithFont:[UIFont systemFontOfSize:12]].width + 30, 30);
+    messageLabel.frame = CGRectMake((YLScreenWidth - messageSize.width) / 2, YLScreenHeight/2, messageSize.width, messageSize.height);
+    messageLabel.text = message;
+    messageLabel.font = [UIFont systemFontOfSize:12];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    messageLabel.layer.cornerRadius = 5.0f;
+    messageLabel.layer.masksToBounds = YES;
+    [window addSubview:messageLabel];
+    
+    [UIView animateWithDuration:1 animations:^{
+        messageLabel.alpha = 0;
+    } completion:^(BOOL finished) {
+        [messageLabel removeFromSuperview];
+    }];
+}
 
 @end

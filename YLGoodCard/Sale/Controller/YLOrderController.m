@@ -9,8 +9,14 @@
 #import "YLOrderController.h"
 #import "YLReservationController.h"
 #import "YLDetectCenterView.h"
-#import "YLDetectCenterTool.h"
+//#import "YLDetectCenterTool.h"
 #import "YLBrandController.h"
+#import "YLBrandView.h"
+#import "YLSeriesView.h"
+#import "YLCartypeView.h"
+#import "YLBuyTool.h"
+
+#import "YLSaleTool.h"
 
 @interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate, YLDetectCenterViewDelegate>
 
@@ -18,6 +24,15 @@
 @property (nonatomic, strong) UIView *cover; // 蒙板
 @property (nonatomic, strong) YLDetectCenterView *detectCenterView;
 @property (nonatomic, strong) NSMutableArray *detailArray;
+@property (nonatomic, strong) NSMutableArray *brands;
+
+@property (nonatomic, strong) YLBrandView *brandView;
+@property (nonatomic, strong) YLSeriesView *seriesView;
+@property (nonatomic, strong) YLCartypeView *carTypeView;
+
+@property (nonatomic, strong) YLBrandModel *brandModel;
+@property (nonatomic, strong) YLSeriesModel *seriesModel;
+@property (nonatomic, strong) YLCarTypeModel *carTypeModel;
 
 @end
 
@@ -26,8 +41,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
-//    self.detailArray = [NSMutableArray arrayWithObjects:@"阳江",@"请选择",@"请选择",@"请输入",@"请输入",@"请输入",@"请选择", nil];
     
     [self setupUI];
     [self loadData];
@@ -48,6 +61,9 @@
     self.orderView = orderView;
     
     [self.cover addSubview:self.detectCenterView];
+    [self.cover addSubview:self.brandView];
+    [self.cover addSubview:self.seriesView];
+    [self.cover addSubview:self.carTypeView];
     [self.view addSubview:self.cover];
 }
 
@@ -55,12 +71,40 @@
     
     // 获取检测中心数据
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [YLDetectCenterTool detectCenterWithParam:param success:^(NSArray<YLDetectCenterModel *> * _Nonnull result) {
-        NSLog(@"获取成功");
+    [param setValue:@"阳江" forKey:@"city"];
+    [YLSaleTool cityDetectWithParam:param success:^(NSArray * _Nonnull result) {
+        NSLog(@"result:%@", result);
         self.detectCenterView.detectCenters = result;
-    } failure:^(NSError * _Nonnull error) {
-        NSLog(@"获取失败");
-    }];
+    } failure:nil];
+    
+    // 获取品牌数据
+    NSMutableDictionary *brandParam = [NSMutableDictionary dictionary];
+    [YLBuyTool brandWithParam:brandParam success:^(NSArray<YLBrandModel *> * _Nonnull result) {
+        // 取出首字母
+        NSMutableArray *groups = [NSMutableArray array];
+        for (YLBrandModel *model in result) {
+            NSString *zimu = model.initialLetter;
+            [groups addObject:zimu];
+        }
+        NSSet *set = [NSSet setWithArray:groups];
+        self.brandView.groups = [NSMutableArray arrayWithArray:[set allObjects]];
+        // 根据首字母取出汽车品牌
+        self.brands = [NSMutableArray array];
+        for (NSInteger i = 0; i < self.brandView.groups.count; i++) {
+            NSString *str = self.brandView.groups[i];
+            NSMutableArray *array = [NSMutableArray array];
+            for (YLBrandModel *model in result) {
+                if ([str isEqualToString:model.initialLetter]) {
+                    [array addObject:model];
+                }
+            }
+            // 将各个首字母汽车品牌存放在数组里
+            [self.brands addObject:array];
+        }
+        self.brandView.brands = self.brands;
+    } failure:nil];
+
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -100,11 +144,14 @@
     if (indexPath.row == 1) {
         NSLog(@"打开弹窗,显示检测中心列表");
         self.cover.hidden = NO;
+        self.detectCenterView.hidden = NO;
+        self.brandView.hidden = YES;
     }
     if (indexPath.row == 2) {
-        YLBrandController *brand = [[YLBrandController alloc] init];
-        brand.navigationItem.title = @"选择品牌";
-        [self.navigationController pushViewController:brand animated:YES];
+        NSLog(@"弹出品牌列表");
+        self.cover.hidden = NO;
+        self.detectCenterView.hidden = YES;
+        self.brandView.hidden = NO;
     }
 }
 
@@ -152,7 +199,7 @@
 
 - (NSMutableArray *)detailArray {
     if (!_detailArray) {
-        _detailArray = [NSMutableArray arrayWithObjects:@"阳江",@"请选择",@"请选择",@"请输入",@"请输入",@"请输入",@"请选择", nil];
+        _detailArray = [NSMutableArray arrayWithObjects:@"阳江",@"请选择",@"请选择",@"请输入",@"请输入(单位:万公里)",@"请选择",@"请选择", nil];
     }
     return _detailArray;
 }
@@ -160,10 +207,72 @@
 - (YLDetectCenterView *)detectCenterView {
     
     if (!_detectCenterView) {
-        _detectCenterView = [[YLDetectCenterView alloc] initWithFrame:CGRectMake(47, 0, YLScreenWidth - 47, YLScreenHeight+20)];
+        _detectCenterView = [[YLDetectCenterView alloc] initWithFrame:CGRectMake(47, 0, YLScreenWidth - 47, YLScreenHeight-30)];
         _detectCenterView.delegate = self;
+        _detectCenterView.hidden = YES;
     }
     return _detectCenterView;
+}
+
+- (YLBrandView *)brandView {
+    
+    if (!_brandView) {
+        _brandView = [[YLBrandView alloc] initWithFrame:CGRectMake(50, 50, YLScreenWidth - 100, YLScreenHeight - 300)];
+        _brandView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _brandView.BrandViewBlock = ^(YLBrandModel * _Nonnull brandModel) {
+            NSLog(@"brandModel:%@", brandModel.brand);
+            weakSelf.cover.hidden = NO;
+            weakSelf.brandView.hidden = YES;
+            weakSelf.seriesView.hidden = NO;
+            // 获取车系数据
+            NSMutableDictionary *seriesParam = [NSMutableDictionary dictionary];
+            [seriesParam setValue:brandModel.brandId forKey:@"id"];
+            [YLBuyTool seriesWithParam:seriesParam success:^(NSArray<YLSeriesModel *> * _Nonnull result) {
+                weakSelf.seriesView.series = result;
+//                weakSelf.seriesView.hidden = NO;
+            } failure:nil];
+        };
+    }
+    return _brandView;
+}
+
+- (YLSeriesView *)seriesView {
+    if (!_seriesView) {
+        _seriesView = [[YLSeriesView alloc] initWithFrame:CGRectMake(50, 50, YLScreenWidth - 100, YLScreenHeight - 300)];
+        _seriesView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _seriesView.seriesBlock = ^(YLSeriesModel * _Nonnull seriesModel) {
+            NSLog(@"%@", seriesModel.series);
+            weakSelf.brandView.hidden = YES;
+            weakSelf.seriesView.hidden = YES;
+            // 获取车型数据
+            NSMutableDictionary *carTypeParam = [NSMutableDictionary dictionary];
+            [carTypeParam setValue:seriesModel.seriesId forKey:@"id"];
+            [YLBuyTool carTypeWithParam:carTypeParam success:^(NSArray<YLCarTypeModel *> * _Nonnull result) {
+                NSLog(@"result:%@", result);
+                weakSelf.carTypeView.carTypes = (NSMutableArray *)result;
+                weakSelf.carTypeView.hidden = NO;
+            } failure:nil];
+        };
+    }
+    return _seriesView;
+}
+
+- (YLCartypeView *)carTypeView {
+    
+    if (!_carTypeView) {
+        _carTypeView = [[YLCartypeView alloc] initWithFrame:CGRectMake(50, 50, YLScreenWidth - 100, YLScreenHeight - 300)];
+        _carTypeView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _carTypeView.carTypeBlock = ^(YLCarTypeModel * _Nonnull carTypeModel) {
+            weakSelf.cover.hidden = YES;
+            weakSelf.brandView.hidden = NO;
+            weakSelf.seriesView.hidden = YES;
+            NSLog(@"%@", carTypeModel.ID);
+        };
+    }
+    return _carTypeView;
 }
 
 @end

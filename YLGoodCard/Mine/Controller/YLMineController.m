@@ -5,6 +5,16 @@
 //  Created by lm on 2018/11/1.
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
+/**
+ 1、登录
+ 2、即将看车
+ 3、我的收藏
+ 4、浏览记录
+ 5、买车订单
+ 6、卖车订单
+ 7、砍价记录
+ */
+
 
 #import "YLMineController.h"
 #import "YLTableViewCell.h"

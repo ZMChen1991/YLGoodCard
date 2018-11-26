@@ -62,9 +62,9 @@
 - (void)labelClick:(UITapGestureRecognizer *)tap {
     
     UILabel *label = (UILabel *)tap.view;
-    if (![self isBlankString:label.text]) {
-        self.labelBlock(label.text);
-    }
+//    if (![self isBlankString:label.text]) {
+//        self.labelBlock(label.text);
+//    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(pushBuyControl)]) {
         [self.delegate pushBuyControl];
     }

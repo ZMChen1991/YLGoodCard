@@ -13,6 +13,7 @@
 #import "YLTableViewModel.h"
 #import "YLBrandModel.h"
 #import "YLSeriesModel.h"
+#import "YLCarTypeModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,6 +46,15 @@ NS_ASSUME_NONNULL_BEGIN
  @param failure 请求失败后的回调
  */
 + (void)seriesWithParam:(id)param success:(void (^)(NSArray<YLSeriesModel *> *result))success failure:(void (^)(NSError * error))failure;
+
+/**
+ 获取车辆车型数据
+ 
+ @param param 参数
+ @param success 请求成功后的回调
+ @param failure 请求失败后的回调
+ */
++ (void)carTypeWithParam:(id)param success:(void (^)(NSArray<YLCarTypeModel *> *result))success failure:(void (^)(NSError * error))failure;
 
 @end
 

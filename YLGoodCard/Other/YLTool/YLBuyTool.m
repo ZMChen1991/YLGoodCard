@@ -18,14 +18,20 @@
 
 + (void)brandWithParam:(id)param success:(void (^)(NSArray<YLBrandModel *> * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
     
-    NSString *urlString = @"http://ucarjava.bceapp.com/home?method=brand";
+    NSString *urlString = @"http://ucarjava.bceapp.com/vehicle?method=brand";
      [self getWithUrl:urlString param:param arrayForResultClass:[YLBrandModel class] success:success failure:failure];
 }
 
 + (void)seriesWithParam:(id)param success:(void (^)(NSArray<YLSeriesModel *> * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
-    NSString *urlString = @"http://ucarjava.bceapp.com/home?method=series";
+    NSString *urlString = @"http://ucarjava.bceapp.com/vehicle?method=series";
      [self getWithUrl:urlString param:param arrayForResultClass:[YLSeriesModel class] success:success failure:failure];
     
+}
+
++ (void)carTypeWithParam:(id)param success:(void (^)(NSArray<YLCarTypeModel *> * _Nonnull))success failure:(void (^)(NSError * _Nonnull))failure {
+    
+    NSString *urlString = @"http://ucarjava.bceapp.com/vehicle?method=config";
+    [self getWithUrl:urlString param:param arrayForResultClass:[YLCarTypeModel class] success:success failure:failure];
 }
 
 @end

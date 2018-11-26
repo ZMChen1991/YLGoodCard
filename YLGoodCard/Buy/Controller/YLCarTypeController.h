@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "YLSeriesModel.h"
+#import "YLBrandModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YLCarTypeController : UITableViewController
 
-@property (nonatomic, strong) YLSeriesModel *model;
-
+@property (nonatomic, strong) YLSeriesModel *seriesModel;
+@property (nonatomic, strong) YLBrandModel *brandModel;
 @end
 
 NS_ASSUME_NONNULL_END

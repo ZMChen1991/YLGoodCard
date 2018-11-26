@@ -35,9 +35,9 @@
         CGRect goupHeaderRect = CGRectMake(0, CGRectGetMaxY(notable.frame), width, 44);
         YLTableGroupHeader *groupHeader = [[YLTableGroupHeader alloc] initWithFrame:goupHeaderRect image:@"热门二手车" title:@"热门二手车" detailTitle:@"查看更多" arrowImage:@"更多"];
 //        groupHeader.backgroundColor = YLRandomColor;
-        groupHeader.labelBlock = ^(NSString * _Nonnull string) {
-//            NSLog(@"string%@",string);
-        };
+//        groupHeader.labelBlock = ^(NSString * _Nonnull string) {
+////            NSLog(@"string%@",string);
+//        };
         [self addSubview:groupHeader];
         self.groupHeader = groupHeader;
         

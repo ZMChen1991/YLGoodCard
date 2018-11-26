@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^NoneViewBlock)(void);
+
 @interface YLNoneView : UIView
+
+
+@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NoneViewBlock noneViewBlock;
 
 @end
 

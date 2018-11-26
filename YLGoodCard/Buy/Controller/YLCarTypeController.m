@@ -7,8 +7,12 @@
 //
 
 #import "YLCarTypeController.h"
+#import "YLBuyTool.h"
+#import "YLRequest.h"
 
 @interface YLCarTypeController ()
+
+@property (nonatomic, strong) NSMutableArray *carTypes;// 车型数组
 
 @end
 
@@ -16,79 +20,70 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.tableFooterView = [[UIView alloc] init];
     
-    
+    [self loadData];
 }
 
 - (void)loadData {
     
-    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    param[@"id"] = self.seriesModel.seriesId;
+    [YLBuyTool carTypeWithParam:param success:^(NSArray<YLCarTypeModel *> * _Nonnull result) {
+        for (YLCarTypeModel *model in result) {
+            [self.carTypes addObject:model];
+        }
+        YLCarTypeModel *model = [[YLCarTypeModel alloc] init];
+        model.name = @"不限";
+        model.ID = @"0000";
+        if (!self.carTypes.count) {
+            [self.carTypes addObject:model];
+        } else {
+            [self.carTypes insertObject:model atIndex:0];
+        }
+        [self.tableView reloadData];
+    } failure:^(NSError * _Nonnull error) {
+        
+    }];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.carTypes.count;
 }
 
-/*
+#pragma mark 循环利用cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
-    
+    static NSString *ID = @"Cell";
+    // 1.拿到一个标识先去缓存池中查找对应的cell
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    // 2.如果缓存池中没有，才需要传入一个标识创新的cell
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    YLCarTypeModel *model = self.carTypes[indexPath.row];
+    cell.textLabel.text = model.name;
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    YLCarTypeModel *model = self.carTypes[indexPath.row];
+    NSLog(@"%@-%@-%@", self.brandModel.brand, self.seriesModel.series, model.name);
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (NSMutableArray *)carTypes {
+    
+    if (!_carTypes) {
+        _carTypes = [NSMutableArray array];
+    }
+    return _carTypes;
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

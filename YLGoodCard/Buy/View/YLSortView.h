@@ -12,7 +12,7 @@
 
 @protocol YLSortViewDelegate <NSObject>
 
-- (void)didSelectSort:(NSString *)string;
+- (void)didSelectSort:(NSInteger)index;
 
 @end
 

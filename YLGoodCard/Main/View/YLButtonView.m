@@ -26,14 +26,6 @@
         for (int i = 0; i < btnTitles.count; i++) {
             int row = i / 4;
             int line = i % 4;
-//            UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            searchBtn.frame = CGRectMake(line * width, row * height, width, height);
-//            [searchBtn setTitle:btnTitles[i] forState:UIControlStateNormal];
-//            [searchBtn setTitleColor:YLColor(116.f, 116.f, 116.f) forState:UIControlStateNormal];
-//            searchBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-//            searchBtn.tag = 100 + i;
-//            [searchBtn addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
-//            [self addSubview:searchBtn];
             UILabel *searchL = [[UILabel alloc] init];
             searchL.frame = CGRectMake(line * width, row * height, width, height);
             searchL.text = btnTitles[i];

@@ -7,6 +7,7 @@
 //
 
 #import "YLBaseTool.h"
+#import "YLDetectCenterModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param success 请求成功后的回调
  @param failure 请求失败后的回调
  */
-+ (void)cityDetectWithParam:(id)param success:(void (^)(NSArray *result))success failure:(void (^)(NSError * _Nonnull))failure;
++ (void)cityDetectWithParam:(id)param success:(void (^)(NSArray<YLDetectCenterModel *> *result))success failure:(void (^)(NSError * _Nonnull))failure;
 
 @end
 

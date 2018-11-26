@@ -10,4 +10,6 @@
 
 @implementation YLSearchParamModel
 
+YLSingletonM
+
 @end

@@ -51,7 +51,7 @@
         }
     }
     self.cellHeight = CGRectGetMaxY(self.lineF);
-    NSLog(@"%f", self.cellHeight);
+//    NSLog(@"%f", self.cellHeight);
 }
 
 @end

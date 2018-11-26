@@ -6,10 +6,18 @@
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
+/**
+ 1、提交卖车x申请的个数
+ 2、预约卖车
+ */
+
 #import "YLSaleViewController.h"
 #import "YLSaleView.h"
 #import "YLOrderController.h"
 #import "YLSalerInformation.h"
+#import "YLAccount.h"
+#import "YLAccountTool.h"
+#import "YLLoginController.h"
 
 @interface YLSaleViewController () <YLConditionDelegate>
 
@@ -71,16 +79,23 @@
             if ([NSString isBlankString:telString]) {
                 [weakSelf showMessage:@"请输入电话号码"];
             } else {
-                NSArray *titles = @[@"城市", @"检测中心", @"选择车型", @"上牌时间", @"行驶里程", @"验车时间", @"联系电话"];
-                YLOrderController *orderVc = [[YLOrderController alloc] init];
-                orderVc.array = titles;
-                orderVc.telephone = telString;
-                orderVc.navigationItem.title = title;
-                [weakSelf.navigationController pushViewController:orderVc animated:YES];
-                // 保存用户信息
-                YLSalerInformation *saler = [YLSalerInformation saler];
-                saler.telephone = telString;
-                [YLSalerInformation saveInformation:saler];
+                // 这里判断用户是否登录，如果没有，跳转到登录界面
+                YLAccount *account = [YLAccountTool account];
+                if (account) {
+                    NSArray *titles = @[@"城市", @"检测中心", @"选择车型", @"上牌时间", @"行驶里程", @"验车时间", @"联系电话"];
+                    YLOrderController *orderVc = [[YLOrderController alloc] init];
+                    orderVc.array = titles;
+                    orderVc.telephone = telString;
+                    orderVc.navigationItem.title = title;
+                    [weakSelf.navigationController pushViewController:orderVc animated:YES];
+                    // 保存用户信息
+                    YLSalerInformation *saler = [YLSalerInformation saler];
+                    saler.telephone = telString;
+                    [YLSalerInformation saveInformation:saler];
+                } else {
+                    YLLoginController *login = [[YLLoginController alloc] init];
+                    [weakSelf.navigationController pushViewController:login animated:YES];
+                }
             }
         };
     }
