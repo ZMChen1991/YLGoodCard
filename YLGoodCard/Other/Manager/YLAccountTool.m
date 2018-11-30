@@ -23,15 +23,25 @@
     YLAccount *account = [NSKeyedUnarchiver unarchiveObjectWithFile:YLAccountPath];
     // 此处没有想好，以后再修改
     // 如果登录时间超过1小时，
-    long long time = 36000;
-    NSDate *expirseTime = [account.loginTime dateByAddingTimeInterval:time];
-    NSDate *now = [NSDate date];
-    NSLog(@"%@----%@", expirseTime, now);
-    NSComparisonResult result = [expirseTime compare:now];
-    if (result != NSOrderedDescending) {
-        return nil;
-    }
+//    long long time = 3600;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+//    NSString *string = [NSString stringWithFormat:@"%@", account.updateAt];
+//    NSDate *date = [formatter dateFromString:string];
+//    NSDate *expirseTime = [account.lastTime dateByAddingTimeInterval:time];
+//    NSDate *now = [NSDate date];
+//    NSLog(@"%@----%@", expirseTime, now);
+//    NSComparisonResult result = [expirseTime compare:now];
+//    if (result != NSOrderedDescending) {
+//        return nil;
+//    }
     return account;
+}
+
++ (void)loginOut {
+    YLAccount *account = [NSKeyedUnarchiver unarchiveObjectWithFile:YLAccountPath];
+    account = nil;
+    [self saveAccount:account];
 }
 
 @end

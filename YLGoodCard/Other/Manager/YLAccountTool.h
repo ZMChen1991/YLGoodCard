@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (YLAccount *)account;
 
++ (void)loginOut;
+
 @end
 
 NS_ASSUME_NONNULL_END

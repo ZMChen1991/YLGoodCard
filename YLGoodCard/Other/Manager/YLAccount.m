@@ -7,6 +7,7 @@
 //
 
 #import "YLAccount.h"
+#import "YLAccountTool.h"
 
 @implementation YLAccount
 
@@ -16,14 +17,25 @@
 
 + (instancetype)accountWithDict:(NSDictionary *)dict {
     
-    YLAccount *account = [[self alloc] init];
+    YLAccount *account = [YLAccountTool account];
+    if (!account) {
+        account = [[self alloc] init];
+    }
+//    YLAccount *account = [[self alloc] init];
     account.telephone = dict[@"telephone"];
     account.status = dict[@"status"];
     account.ID = dict[@"ID"];
     account.token = dict[@"token"];
-    account.loginTime = [NSDate date];
+    account.lastTime = account.updateAt;
+    account.updateAt = dict[@"updateAt"];
     return account;
 }
+
+//- (NSString *)stringWithDate:(NSDate *)date {
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
+//    return [formatter stringFromDate:date];
+//}
 
 /**
  *  当一个对象要归档进沙盒中时，就会调用这个方法
@@ -35,7 +47,8 @@
     [aCoder encodeObject:self.status forKey:@"status"];
     [aCoder encodeObject:self.ID forKey:@"ID"];
     [aCoder encodeObject:self.token forKey:@"token"];
-    [aCoder encodeObject:self.loginTime forKey:@"loginTime"];
+    [aCoder encodeObject:self.updateAt forKey:@"updateAt"];
+    [aCoder encodeObject:self.lastTime forKey:@"lastTime"];
 }
 
 /**
@@ -48,7 +61,8 @@
         self.status = [aDecoder decodeObjectForKey:@"status"];
         self.ID = [aDecoder decodeObjectForKey:@"ID"];
         self.token = [aDecoder decodeObjectForKey:@"token"];
-        self.loginTime = [aDecoder decodeObjectForKey:@"loginTime"];
+        self.updateAt = [aDecoder decodeObjectForKey:@"updateAt"];
+        self.lastTime = [aDecoder decodeObjectForKey:@"lastTime"];
     }
     return self;
 }

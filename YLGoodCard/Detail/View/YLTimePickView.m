@@ -193,7 +193,13 @@
 
 - (void)completionBtn {
     NSLog(@"z选择时间是：%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute);
-    NSString *timeString = [NSString stringWithFormat:@"%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute];
+//    NSString *timeString = [NSString stringWithFormat:@"%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute];
+    NSString *timeString;
+    if ([self.month compare:[NSString stringWithFormat:@"%ld", [self currentMonth]]] == NSOrderedAscending) {
+        timeString = [NSString stringWithFormat:@"%ld-%@-%@ %@:%@", (long)[self currentYear] + 1, self.month, self.day, self.hour, self.minute];
+    } else {
+        timeString = [NSString stringWithFormat:@"%ld-%@-%@ %@:%@", (long)[self currentYear], self.month, self.day, self.hour, self.minute];
+    }
     if (self.timePickBlock) {
         self.timePickBlock(timeString);
     }

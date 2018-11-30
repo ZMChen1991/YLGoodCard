@@ -36,9 +36,15 @@
 @property (nonatomic, strong) UIImageView *bg;
 @property (nonatomic, strong) UIView *labelView;
 @property (nonatomic, strong) UITableView *tableView;
+
 @property (nonatomic, strong) YLCoverView *cover;
-@property (nonatomic, strong) YLDetailModel *detailModel;
 @property (nonatomic, strong) YLDetailHeaderView *header;
+@property (nonatomic, strong) YLDetailFooterView *footer;
+
+@property (nonatomic, strong) YLDetailModel *detailModel;
+@property (nonatomic, strong) YLAccount *account;
+
+@property (nonatomic, strong) NSMutableArray *browsingHistory;
 
 
 @end
@@ -51,20 +57,22 @@
     [self loadData];
     [self setupNav];
     [self addTableView];
-    
+    [self saveBrowseHistory:self.model];
 }
 
 - (void)loadData {
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     param[@"id"] = self.model.carID;
+    param[@"telephone"] = self.account.telephone;
     __weak typeof(self) weakSelf = self;
+    // 获取详情车辆数据
     [YLDetailTool detailWithParam:param success:^(YLDetailModel *result) {
         self.detailModel = result;
-//        YLDetailHeaderModel *headerModel = [YLDetailHeaderModel mj_objectWithKeyValues:self.detailModel];
-//        NSLog(@"%@---%@--", result, headerModel);
         YLDetailHeaderModel *headerModel = [YLDetailHeaderModel mj_objectWithKeyValues:weakSelf.detailModel];
         weakSelf.header.model = headerModel;
+        weakSelf.footer.model = self.detailModel;
+        
         [weakSelf.tableView reloadData];
     } failure:^(NSError *error) {
 
@@ -92,6 +100,7 @@
     } if (indexPath.section == 1) {
         YLInformationCell *cell = [YLInformationCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        // 这里赋值给cell
         YLDetailInfoModel *infoModel = [YLDetailInfoModel mj_objectWithKeyValues:self.detailModel];
         if (infoModel) {
             cell.model = infoModel;
@@ -100,10 +109,14 @@
     } if (indexPath.section == 2) {
         YLReportCell *cell = [YLReportCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        // 这里赋值给cell
+        
         return cell;
     } else {
         YLCarInformationCell *cell = [YLCarInformationCell cellWithTable:tableView];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        // 这里赋值给cell
+        
         return cell;
     }
 }
@@ -164,15 +177,7 @@
     }
 }
 
-#pragma mark YLConditionDelegate
-//- (void)bargainPrice {
-//
-//    NSLog(@"bargainPrice");
-//    self.cover.hidden = NO;
-//
-//}
-
-#pragma mark PrivateMethod
+#pragma mark 添加视图
 - (void)addTableView {
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, YLScreenHeight - 60) style:UITableViewStyleGrouped];
@@ -187,29 +192,37 @@
     self.tableView.tableFooterView = [[UIView alloc] init];
     self.header = header;
     
+    __weak typeof(self) weakSelf = self;
     YLDetailFooterView *footer = [[YLDetailFooterView alloc] initWithFrame:CGRectMake(0, YLScreenHeight - 60, YLScreenWidth, 60)];
-    footer.detailFooterBlock = ^(UIButton *sender) {
-        // 判断用户是否登录，如果没有登录，则跳转到登录界面登录
-        if (sender.tag == 101) {
-            YLAccount *account = [YLAccountTool account];
-            if (account) {
-                [sender setImage:[UIImage imageNamed:@"已收藏"] forState:UIControlStateNormal];
-                [self showMessage:@"已收藏"];
+    footer.collectBlock = ^(BOOL isCollect) {
+        if (weakSelf.account) {
+            if (isCollect) {
+                // 点击收藏，向后台发送收藏请求
+                NSMutableDictionary *param = [NSMutableDictionary dictionary];
+                [param setValue:@"1" forKey:@"status"];
+                [param setValue:weakSelf.model.carID forKey:@"detailId"];
+                [param setValue:weakSelf.account.telephone forKey:@"telephone"];
+                [YLDetailTool favoriteWithParam:param success:^(NSDictionary *result) {
+                    NSLog(@"点击了收藏按钮:%@", result);
+                } failure:nil];
             } else {
-                YLLoginController *login = [[YLLoginController alloc] init];
-                [self.navigationController pushViewController:login animated:YES];
+                NSMutableDictionary *param = [NSMutableDictionary dictionary];
+                [param setValue:@"0" forKey:@"status"];
+                [param setValue:self.model.carID forKey:@"detailId"];
+                [param setValue:self.account.telephone forKey:@"telephone"];
+                [YLDetailTool favoriteWithParam:param success:^(NSDictionary *result) {
+                    NSLog(@"点击了取消收藏按钮:%@", result);
+                } failure:nil];
             }
-            
+        } else {
+            YLLoginController *login = [[YLLoginController alloc] init];
+            [weakSelf.navigationController pushViewController:login animated:YES];
         }
-        if (sender.tag == 102) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"联系方式" message:@"0662-88888888" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-        
     };
     [footer.bargain addTarget:self action:@selector(bargainClick) forControlEvents:UIControlEventTouchUpInside];
     [footer.order addTarget:self action:@selector(orderCarClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:footer];
+    self.footer = footer;
 }
 
 - (void)setupNav {
@@ -220,6 +233,7 @@
 //    self.navigationItem.rightBarButtonItems = @[share, down];
 }
 
+#pragma mark 按钮点击方法
 - (void)priceDown {
     NSLog(@"降价通知");
 }
@@ -228,12 +242,60 @@
     NSLog(@"分享");
 }
 
-- (void)bargainClick {
-    
-    NSLog(@"YLDetailController:点击了砍价");
+#pragma mark 砍价预约看车代理方法
+- (void)bargainPrice {
+    NSLog(@"点击了header的砍价");
     self.cover.salePrice = self.detailModel.price;
+    __weak typeof(self) weakSelf = self;
     self.cover.bargainBlock = ^(NSString *price) {
         NSLog(@"砍价的价格是：%@", price);
+        // 判断用户是否登录
+        if (weakSelf.account) {
+            NSString *bargainPrice = [NSString stringWithFormat:@"%.f", [price floatValue] * 10000];
+            // 向后台发送砍价请求
+            NSMutableDictionary *param = [NSMutableDictionary dictionary];
+            [param setValue:weakSelf.detailModel.telephone forKey:@"seller"];
+            [param setValue:weakSelf.account.telephone forKey:@"buyer"];
+            [param setValue:bargainPrice forKey:@"price"];
+            [param setValue:weakSelf.model.carID forKey:@"detailId"];
+            [param setValue:@"1" forKey:@"mark"];
+            [YLDetailTool bargainWithParam:param success:^(NSDictionary * _Nonnull result) {
+                NSLog(@"%@", result);
+            } failure:nil];
+        } else {
+            YLLoginController *login = [[YLLoginController alloc] init];
+            [weakSelf.navigationController pushViewController:login animated:YES];
+        }
+    };
+    self.cover.hidden = NO;
+    self.cover.bargainBg.hidden = NO;
+    self.cover.orderBg.hidden = YES;
+
+}
+- (void)bargainClick {
+
+    NSLog(@"YLDetailController:点击了砍价");
+    self.cover.salePrice = self.detailModel.price;
+    __weak typeof(self) weakSelf = self;
+    self.cover.bargainBlock = ^(NSString *price) {
+        NSLog(@"砍价的价格是：%@", price);
+        // 判断用户是否登录
+        if (weakSelf.account) {
+            NSString *bargainPrice = [NSString stringWithFormat:@"%.f", [price floatValue] * 10000];
+            // 向后台发送砍价请求
+            NSMutableDictionary *param = [NSMutableDictionary dictionary];
+            [param setValue:weakSelf.detailModel.telephone forKey:@"seller"];
+            [param setValue:weakSelf.account.telephone forKey:@"buyer"];
+            [param setValue:bargainPrice forKey:@"price"];
+            [param setValue:weakSelf.model.carID forKey:@"detailId"];
+            [param setValue:@"1" forKey:@"mark"];
+            [YLDetailTool bargainWithParam:param success:^(NSDictionary * _Nonnull result) {
+                NSLog(@"%@", result);
+            } failure:nil];
+        } else {
+            YLLoginController *login = [[YLLoginController alloc] init];
+            [weakSelf.navigationController pushViewController:login animated:YES];
+        }
     };
     self.cover.hidden = NO;
     self.cover.bargainBg.hidden = NO;
@@ -241,10 +303,26 @@
 }
 
 - (void)orderCarClick {
-    
+
     NSLog(@"YLDetailController:点击了预约看车");
+    __weak typeof(self) weakSelf = self;
     self.cover.timePickerBlock = ^(NSString *time) {
         NSLog(@"预约看车时间是：%@", time);
+        // 向后台发送预约看车请求
+        if (weakSelf.account) {
+            NSMutableDictionary *param = [NSMutableDictionary dictionary];
+            [param setValue:weakSelf.account.telephone forKey:@"telephone"];
+            [param setValue:time forKey:@"appointTime"];
+            [param setValue:weakSelf.detailModel.centerId forKey:@"centerId"];
+            [param setValue:weakSelf.model.carID forKey:@"detailId"];
+//            [param setValue:@"1" forKey:@"status"];
+            [YLDetailTool lookCarWithParam:param success:^(NSDictionary *result) {
+                NSLog(@"预约看车成功:%@", result);
+            } failure:nil];
+        } else {
+            YLLoginController *login = [[YLLoginController alloc] init];
+            [weakSelf.navigationController pushViewController:login animated:YES];
+        }
     };
     self.cover.hidden = NO;
     self.cover.bargainBg.hidden = YES;
@@ -271,6 +349,26 @@
     return _labelView;
 }
 
+- (NSMutableArray *)browsingHistory {
+    
+    if (!_browsingHistory) {
+        _browsingHistory = [NSKeyedUnarchiver unarchiveObjectWithFile:YLBrowsingHistoryPath];
+        if (!_browsingHistory) {
+            _browsingHistory = [NSMutableArray array];
+        }
+    }
+    return _browsingHistory;
+}
+
+- (YLAccount *)account {
+    
+    if (!_account) {
+        _account = [YLAccountTool account];
+    }
+    return _account;
+}
+
+#pragma mark 私有方法
 // 提示弹窗
 - (void)showMessage:(NSString *)message {
     UIWindow *window = [UIApplication sharedApplication].keyWindow;
@@ -293,5 +391,31 @@
         [messageLabel removeFromSuperview];
     }];
 }
+
+/**
+ 保存浏览记录
+
+ @param model 浏览模型对象
+ */
+- (void)saveBrowseHistory:(YLTableViewModel *)model {
+    
+    // 判断浏览记录是否已经存在，如果存在，删除旧的，重新添加到数组
+    if ([self.browsingHistory containsObject:model]) {
+        NSInteger index = [self.browsingHistory indexOfObject:model];
+        [self.browsingHistory removeObjectAtIndex:index];
+    }
+    [self.browsingHistory insertObject:model atIndex:0];
+    
+    // 保存到本地
+    BOOL success = [NSKeyedArchiver archiveRootObject:self.browsingHistory toFile:YLBrowsingHistoryPath];
+    if (success) {
+        NSLog(@"保存成功");
+    } else {
+        NSLog(@"保存失败");
+    }
+    
+}
+
+
 
 @end

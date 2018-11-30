@@ -23,6 +23,7 @@
     tableView.dataSource = self;
     [self addSubview:tableView];
     self.tableView = tableView;
+    self.tableView.tableFooterView = [[UIView alloc] init];
 }
 
 
@@ -31,7 +32,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"self.brands:%d", [self.brands[section] count]);
+    NSLog(@"self.brands:%ld", [self.brands[section] count]);
     if (![_brands[section] count]) {
         return 0;
     } else {
@@ -52,6 +53,7 @@
 //    NSLog(@"%@", self.brands[indexPath.section][indexPath.row]);
     YLBrandModel *model = self.brands[indexPath.section][indexPath.row];
     cell.textLabel.text = model.brand;
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     return cell;
 }
 

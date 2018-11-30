@@ -9,6 +9,12 @@
 #import "YLSettingController.h"
 #import "YLCondition.h"
 #import "YLAboutController.h"
+#import "YLTabBarController.h"
+#import "YLNavigationController.h"
+#import "YLMineController.h"
+
+#import "YLAccountTool.h"
+#import "YLAccount.h"
 
 @interface YLSettingController ()
 
@@ -38,11 +44,25 @@
     [footerView addSubview:logOut];
     [logOut addTarget:self action:@selector(logout) forControlEvents:UIControlEventTouchUpInside];
     self.tableView.tableFooterView = footerView;
+    
+    YLAccount *account = [YLAccountTool account];
+    if (account) {
+        footerView.hidden = NO;
+    } else {
+        footerView.hidden = YES;
+    }
 }
 
 - (void)logout {
     
     NSLog(@"退出登录");
+    [YLAccountTool loginOut];
+//    // 跳转m到买车控制器
+    YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    YLNavigationController *nav = tab.viewControllers[3];
+    YLMineController *mine = nav.viewControllers.firstObject;
+    mine.isLogin = NO;
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source

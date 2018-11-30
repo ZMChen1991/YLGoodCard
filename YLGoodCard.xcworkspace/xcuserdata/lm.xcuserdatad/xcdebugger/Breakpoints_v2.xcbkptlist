@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YLGoodCard/Sale/Controller/YLOrderController.m"
-            timestampString = "564917473.310624"
+            filePath = "YLGoodCard/Mine/Controller/YLFunctionController.m"
+            timestampString = "565202505.068586"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "-loadData"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "-setParams:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

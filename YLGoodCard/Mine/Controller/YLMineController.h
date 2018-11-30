@@ -10,4 +10,6 @@
 
 @interface YLMineController : UIViewController
 
+@property (nonatomic, assign) BOOL isLogin;
+
 @end

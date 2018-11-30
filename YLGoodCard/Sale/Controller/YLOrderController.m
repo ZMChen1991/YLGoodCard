@@ -9,14 +9,18 @@
 #import "YLOrderController.h"
 #import "YLReservationController.h"
 #import "YLDetectCenterView.h"
-//#import "YLDetectCenterTool.h"
 #import "YLBrandController.h"
+
+#import "YLBuyTool.h"
+#import "YLSaleTool.h"
+
 #import "YLBrandView.h"
 #import "YLSeriesView.h"
 #import "YLCartypeView.h"
-#import "YLBuyTool.h"
-
-#import "YLSaleTool.h"
+#import "YLCourseView.h"
+#import "YLLicenseTime.h"
+#import "YLCheckoutView.h"
+#import "YLCityView.h"
 
 @interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate, YLDetectCenterViewDelegate>
 
@@ -29,10 +33,21 @@
 @property (nonatomic, strong) YLBrandView *brandView;
 @property (nonatomic, strong) YLSeriesView *seriesView;
 @property (nonatomic, strong) YLCartypeView *carTypeView;
+@property (nonatomic, strong) YLCourseView *courseView;
+@property (nonatomic, strong) YLLicenseTime *licenseTime;
+@property (nonatomic, strong) YLCheckoutView *checkoutView;
+@property (nonatomic, strong) YLCityView *cityView;
 
-@property (nonatomic, strong) YLBrandModel *brandModel;
-@property (nonatomic, strong) YLSeriesModel *seriesModel;
-@property (nonatomic, strong) YLCarTypeModel *carTypeModel;
+@property (nonatomic, strong) NSString *brand;
+@property (nonatomic, strong) NSString *series;
+@property (nonatomic, strong) NSString *carType;
+
+// 提交的参数
+@property (nonatomic, strong) NSMutableDictionary *param;
+@property (nonatomic, strong) YLDetectCenterModel *detectCenterModel;
+@property (nonatomic, strong) NSString *checkOut;
+
+
 
 @end
 
@@ -64,6 +79,10 @@
     [self.cover addSubview:self.brandView];
     [self.cover addSubview:self.seriesView];
     [self.cover addSubview:self.carTypeView];
+    [self.cover addSubview:self.courseView];
+    [self.cover addSubview:self.licenseTime];
+    [self.cover addSubview:self.checkoutView];
+    [self.cover addSubview:self.cityView];
     [self.view addSubview:self.cover];
 }
 
@@ -72,8 +91,10 @@
     // 获取检测中心数据
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     [param setValue:@"阳江" forKey:@"city"];
+    // 添加参数城市
+    [self.param setValue:@"阳江" forKey:@"city"];
     [YLSaleTool cityDetectWithParam:param success:^(NSArray * _Nonnull result) {
-        NSLog(@"result:%@", result);
+//        NSLog(@"result:%@", result);
         self.detectCenterView.detectCenters = result;
     } failure:nil];
     
@@ -125,11 +146,7 @@
     }
     cell.textLabel.text = self.array[indexPath.row];
     cell.textLabel.font = [UIFont systemFontOfSize:14];
-    if (indexPath.row == self.array.count - 1) {
-        cell.detailTextLabel.text = self.telephone;
-    } else {
-        cell.detailTextLabel.text = self.detailArray[indexPath.row];
-    }
+    cell.detailTextLabel.text = self.detailArray[indexPath.row];
     cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     return cell;
 }
@@ -146,39 +163,161 @@
         self.cover.hidden = NO;
         self.detectCenterView.hidden = NO;
         self.brandView.hidden = YES;
+        self.checkoutView.hidden = YES;
+        self.licenseTime.hidden = YES;
+        self.courseView.hidden = YES;
+        self.cityView.hidden = YES;
     }
     if (indexPath.row == 2) {
         NSLog(@"弹出品牌列表");
         self.cover.hidden = NO;
         self.detectCenterView.hidden = YES;
         self.brandView.hidden = NO;
+        self.checkoutView.hidden = YES;
+        self.licenseTime.hidden = YES;
+        self.courseView.hidden = YES;
+        self.cityView.hidden = YES;
     }
+    if (indexPath.row == 3) {
+        NSLog(@"填写上牌城市");
+        self.cover.hidden = NO;
+        self.detectCenterView.hidden = YES;
+        self.brandView.hidden = YES;
+        self.checkoutView.hidden = YES;
+        self.licenseTime.hidden = YES;
+        self.courseView.hidden = YES;
+        self.cityView.hidden = NO;
+    }
+    if (indexPath.row == 4) {
+        // 弹出时间选择窗口
+        self.cover.hidden = NO;
+        self.licenseTime.hidden = NO;
+        self.brandView.hidden = YES;
+        self.detectCenterView.hidden = YES;
+        self.courseView.hidden = YES;
+        self.checkoutView.hidden = YES;
+        self.cityView.hidden = YES;
+    }
+    if (indexPath.row == 5) {
+        // 弹出行驶里程填写窗口
+        self.cover.hidden = NO;
+        self.courseView.hidden = NO;
+        self.licenseTime.hidden = YES;
+        self.brandView.hidden = YES;
+        self.detectCenterView.hidden = YES;
+        self.checkoutView.hidden = YES;
+        self.cityView.hidden = YES;
+    }
+    if (indexPath.row == 6) {
+        // 弹出验车时间窗口
+        self.cover.hidden = NO;
+        self.checkoutView.hidden = NO;
+        self.licenseTime.hidden = YES;
+        self.brandView.hidden = YES;
+        self.detectCenterView.hidden = YES;
+        self.courseView.hidden = YES;
+        self.cityView.hidden = YES;
+    }
+    
 }
 
 #pragma mark YLSaleButtonDelegate
 - (void)pushController:(UIButton *)sender {
     
-    NSLog(@"跳转另一个控制器:%@-- %ld", sender.titleLabel.text, sender.tag);
-    NSString *btnTitle = sender.titleLabel.text;
-    if ([btnTitle isEqualToString:@"预约卖车"]) {
-        NSLog(@"跳转到预约卖车界面");
+    if ([self isFullMessage]) {
         YLReservationController *reservationVc = [[YLReservationController alloc] init];
+        // 这里传需要的参数，可以使用数组或字典存放相关的参数
+        reservationVc.detectCenterModel = self.detectCenterModel;
+        reservationVc.checkOut = self.checkOut;
+        
+        // 提交卖车信息到后台
+        [YLSaleTool saleWithParam:self.param success:^(NSDictionary * _Nonnull result) {
+            NSLog(@"%@---%@", self.param, result);
+        } failure:nil];
+        
         [self.navigationController pushViewController:reservationVc animated:YES];
     } else {
-        NSLog(@"跳转到估价界面");
+        [self showMessage:@"请输入完整信息"];
     }
+    
+    
+//    NSLog(@"跳转另一个控制器:%@-- %ld", sender.titleLabel.text, sender.tag);
+//    NSString *btnTitle = sender.titleLabel.text;
+//    if ([btnTitle isEqualToString:@"预约卖车"]) {
+//        NSLog(@"跳转到预约卖车界面");
+//        YLReservationController *reservationVc = [[YLReservationController alloc] init];
+//        // 这里传需要的参数，可以使用数组或字典存放相关的参数
+//        reservationVc.detectCenterModel = self.detectCenterModel;
+//        reservationVc.checkOut = self.checkOut;
+//
+//        // 提交卖车信息到后台
+//        [self.navigationController pushViewController:reservationVc animated:YES];
+//    } else {
+//        NSLog(@"跳转到估价界面");
+//    }
     
 }
 
 - (void)detectCenterClick:(YLDetectCenterModel *)model {
     
     NSLog(@"点击了%@行", model.name);
+    self.detectCenterModel = model;
+    NSLog(@"%@", self.detectCenterModel.ID);
+    // 添加参数检测中心ID
+    [self.param setValue:model.ID forKey:@"centerId"];
     [self.detailArray replaceObjectAtIndex:1 withObject:model.name];
     [self.tableView reloadData];
     self.cover.hidden = YES;
 }
 
+- (BOOL)isFullMessage {
+    
+    NSInteger count = self.detailArray.count;
+    BOOL isFull = YES;
+    for (NSInteger i = 0; i < count; i++) {
+        NSString *str = self.detailArray[i];
+        if ([str isEqualToString:@"请输入"] || [str isEqualToString:@"请输入(单位:万公里)"] || [str isEqualToString:@"请选择"]) {
+            
+            isFull = NO;
+            break;
+        } else {
+            isFull = YES;
+        }
+    }
+    return isFull;
+}
+
+// 提示弹窗
+- (void)showMessage:(NSString *)message {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;// 获取最上层窗口
+    
+    UILabel *messageLabel = [[UILabel alloc] init];
+    CGSize messageSize = CGSizeMake([message getSizeWithFont:[UIFont systemFontOfSize:12]].width + 30, 30);
+    messageLabel.frame = CGRectMake((YLScreenWidth - messageSize.width) / 2, YLScreenHeight/2, messageSize.width, messageSize.height);
+    messageLabel.text = message;
+    messageLabel.font = [UIFont systemFontOfSize:12];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    messageLabel.layer.cornerRadius = 5.0f;
+    messageLabel.layer.masksToBounds = YES;
+    [window addSubview:messageLabel];
+    
+    [UIView animateWithDuration:1 animations:^{
+        messageLabel.alpha = 0;
+    } completion:^(BOOL finished) {
+        [messageLabel removeFromSuperview];
+    }];
+}
+
 #pragma mark 懒加载
+- (void)setTelephone:(NSString *)telephone {
+    _telephone = telephone;
+    // 添加参数电话
+    [self.param setValue:telephone forKey:@"telephone"];
+    [self.detailArray replaceObjectAtIndex:self.detailArray.count-1 withObject:telephone];
+}
+
 - (NSArray *)array {
     
     if (!_array) {
@@ -199,7 +338,7 @@
 
 - (NSMutableArray *)detailArray {
     if (!_detailArray) {
-        _detailArray = [NSMutableArray arrayWithObjects:@"阳江",@"请选择",@"请选择",@"请输入",@"请输入(单位:万公里)",@"请选择",@"请选择", nil];
+        _detailArray = [NSMutableArray arrayWithObjects:@"阳江",@"请选择",@"请选择",@"请输入",@"请输入",@"请输入(单位:万公里)",@"请输入",@"请选择", nil];
     }
     return _detailArray;
 }
@@ -221,7 +360,8 @@
         _brandView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _brandView.BrandViewBlock = ^(YLBrandModel * _Nonnull brandModel) {
-            NSLog(@"brandModel:%@", brandModel.brand);
+//            NSLog(@"brandModel:%@", brandModel.brand);
+            weakSelf.brand = brandModel.brand;
             weakSelf.cover.hidden = NO;
             weakSelf.brandView.hidden = YES;
             weakSelf.seriesView.hidden = NO;
@@ -243,14 +383,15 @@
         _seriesView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _seriesView.seriesBlock = ^(YLSeriesModel * _Nonnull seriesModel) {
-            NSLog(@"%@", seriesModel.series);
+//            NSLog(@"%@", seriesModel.series);
+            weakSelf.series = seriesModel.series;
             weakSelf.brandView.hidden = YES;
             weakSelf.seriesView.hidden = YES;
             // 获取车型数据
             NSMutableDictionary *carTypeParam = [NSMutableDictionary dictionary];
             [carTypeParam setValue:seriesModel.seriesId forKey:@"id"];
             [YLBuyTool carTypeWithParam:carTypeParam success:^(NSArray<YLCarTypeModel *> * _Nonnull result) {
-                NSLog(@"result:%@", result);
+//                NSLog(@"result:%@", result);
                 weakSelf.carTypeView.carTypes = (NSMutableArray *)result;
                 weakSelf.carTypeView.hidden = NO;
             } failure:nil];
@@ -266,13 +407,122 @@
         _carTypeView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _carTypeView.carTypeBlock = ^(YLCarTypeModel * _Nonnull carTypeModel) {
+//            NSLog(@"%@-%@", carTypeModel.name, carTypeModel.ID);
+            weakSelf.carType = carTypeModel.name;
             weakSelf.cover.hidden = YES;
             weakSelf.brandView.hidden = NO;
             weakSelf.seriesView.hidden = YES;
-            NSLog(@"%@", carTypeModel.ID);
+            weakSelf.carTypeView.hidden = YES;
+            // 添加参数车型ID
+            [weakSelf.param setValue:carTypeModel.ID forKey:@"typeId"];
+            // 修改detailArray
+            NSString *str = [NSString stringWithFormat:@"%@%@%@", weakSelf.brand, weakSelf.series, weakSelf.carType];
+            [weakSelf.detailArray replaceObjectAtIndex:2 withObject:str];
+            [weakSelf.tableView reloadData];
         };
     }
     return _carTypeView;
+}
+
+- (NSMutableDictionary *)param {
+    if (!_param) {
+        _param = [NSMutableDictionary dictionary];
+    }
+    return _param;
+}
+
+- (YLCourseView *)courseView {
+    if (!_courseView) {
+        _courseView = [[YLCourseView alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
+        _courseView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _courseView.cancelBlock = ^{
+            weakSelf.cover.hidden = YES;
+            weakSelf.courseView.hidden = YES;
+            [weakSelf.detailArray replaceObjectAtIndex:5 withObject:@"请输入(单位:万公里)"];
+            [weakSelf.tableView reloadData];
+        };
+        _courseView.sureBlock = ^(NSString * _Nonnull course) {
+            NSLog(@"%@", course);
+            [weakSelf.param setValue:course forKey:@"course"];
+            [weakSelf.detailArray replaceObjectAtIndex:5 withObject:course];
+            [weakSelf.tableView reloadData];
+            weakSelf.cover.hidden = YES;
+            weakSelf.courseView.hidden = YES;
+        };
+    }
+    return _courseView;
+}
+
+- (YLLicenseTime *)licenseTime {
+    if (!_licenseTime) {
+        _licenseTime = [[YLLicenseTime alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
+        _licenseTime.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _licenseTime.cancelBlock = ^{
+            weakSelf.cover.hidden = YES;
+            weakSelf.licenseTime.hidden = YES;
+            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:@"请输入"];
+            [weakSelf.tableView reloadData];
+        };
+        _licenseTime.sureBlock = ^(NSString * _Nonnull licenseTime) {
+            NSLog(@"%@", licenseTime);
+            [weakSelf.param setValue:licenseTime forKey:@"licenseTime"];
+            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:licenseTime];
+            [weakSelf.tableView reloadData];
+            weakSelf.cover.hidden = YES;
+            weakSelf.licenseTime.hidden = YES;
+        };
+    }
+    return _licenseTime;
+}
+
+- (YLCheckoutView *)checkoutView {
+    
+    if (!_checkoutView) {
+        _checkoutView = [[YLCheckoutView alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
+        _checkoutView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _checkoutView.cancelBlock = ^{
+            weakSelf.cover.hidden = YES;
+            weakSelf.checkoutView.hidden = YES;
+            [weakSelf.detailArray replaceObjectAtIndex:6 withObject:@"请输入"];
+            [weakSelf.tableView reloadData];
+        };
+        _checkoutView.sureBlock = ^(NSString * _Nonnull checkOut) {
+            NSLog(@"%@", checkOut);
+            [weakSelf.param setValue:checkOut forKey:@"examineTime"];
+            weakSelf.checkOut = checkOut;
+            [weakSelf.detailArray replaceObjectAtIndex:6 withObject:checkOut];
+            [weakSelf.tableView reloadData];
+            weakSelf.cover.hidden = YES;
+            weakSelf.checkoutView.hidden = YES;
+        };
+    }
+    return _checkoutView;
+}
+
+- (YLCityView *)cityView {
+    if (!_cityView) {
+        _cityView = [[YLCityView alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
+        _cityView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _cityView.cancelBlock = ^{
+            weakSelf.cover.hidden = YES;
+            weakSelf.cityView.hidden = YES;
+            [weakSelf.detailArray replaceObjectAtIndex:3 withObject:@"请输入(单位:万公里)"];
+            [weakSelf.tableView reloadData];
+        };
+        _cityView.sureBlock = ^(NSString * _Nonnull location) {
+            NSLog(@"%@", location);
+            [weakSelf.param setValue:location forKey:@"location"];
+            [weakSelf.detailArray replaceObjectAtIndex:3 withObject:location];
+            [weakSelf.tableView reloadData];
+            weakSelf.cover.hidden = YES;
+            weakSelf.courseView.hidden = YES;
+        };
+    }
+    return _cityView;
 }
 
 @end

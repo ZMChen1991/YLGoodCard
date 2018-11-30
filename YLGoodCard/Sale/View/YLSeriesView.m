@@ -22,6 +22,7 @@
     tableView.dataSource = self;
     [self addSubview:tableView];
     self.tableView = tableView;
+    self.tableView.tableFooterView = [[UIView alloc] init];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -44,6 +45,7 @@
     }
     YLSeriesModel *model = self.series[indexPath.row];
     cell.textLabel.text = model.series;
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     return cell;
 }
 

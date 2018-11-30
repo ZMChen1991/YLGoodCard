@@ -11,12 +11,10 @@
 
 @interface YLReservationView ()
 
-//@property (nonatomic, strong) UIImageView *icon;
-//@property (nonatomic, strong) UILabel *appointment;
-//@property (nonatomic, strong) UILabel *center;
-//@property (nonatomic, strong) UILabel *address;
-//@property (nonatomic, strong) UILabel *tel;
-//@property (nonatomic, strong) UILabel *time;
+@property (nonatomic, strong) UILabel *centerName;
+@property (nonatomic, strong) UILabel *address;
+@property (nonatomic, strong) UILabel *tel;
+@property (nonatomic, strong) UILabel *time;
 
 @end
 
@@ -58,29 +56,55 @@
     title.frame = CGRectMake(YLLeftMargin, YLLeftMargin, width - 2 * YLLeftMargin, 22);
     [view addSubview:title];
     // 后面的信息d到时候获取直接拼接
-    UILabel *center = [[UILabel alloc] init];
-    center.text = @"监测中心:";
-    center.font = [UIFont systemFontOfSize:14];
-    center.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(title.frame) + YLLeftMargin, width - 2 * YLLeftMargin, 20);
-    [view addSubview:center];
+    UILabel *centerName = [[UILabel alloc] init];
+    centerName.text = @"监测中心:";
+    centerName.font = [UIFont systemFontOfSize:14];
+    centerName.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(title.frame) + YLLeftMargin, 70, 20);
+    [view addSubview:centerName];
+    
+    UILabel *cent = [[UILabel alloc] init];
+    cent.font = [UIFont systemFontOfSize:14];
+    cent.frame = CGRectMake(CGRectGetMaxX(centerName.frame), CGRectGetMaxY(title.frame) + YLLeftMargin, width - 2 * YLLeftMargin - 70, 20);
+    cent.textAlignment = NSTextAlignmentLeft;
+    [view addSubview:cent];
+    self.centerName = cent;
     
     UILabel *address = [[UILabel alloc] init];
     address.text = @"检测地址:";
     address.font = [UIFont systemFontOfSize:14];
-    address.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(center.frame) + 5, width - 2 * YLLeftMargin, 20);
+    address.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(centerName.frame) + 5, 70, 20);
     [view addSubview:address];
+    
+    UILabel *addr = [[UILabel alloc] init];
+    addr.font = [UIFont systemFontOfSize:14];
+    addr.textAlignment = NSTextAlignmentLeft;
+    addr.frame = CGRectMake(CGRectGetMaxX(address.frame), CGRectGetMaxY(centerName.frame) + 5, width - 2 * YLLeftMargin - 70, 20);
+    [view addSubview:addr];
+    self.address = addr;
     
     UILabel *tel = [[UILabel alloc] init];
     tel.text = @"联系电话:";
     tel.font = [UIFont systemFontOfSize:14];
-    tel.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(address.frame) + 5, width - 2 * YLLeftMargin, 20);
+    tel.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(address.frame) + 5, 70, 20);
     [view addSubview:tel];
+    UILabel *telephone = [[UILabel alloc] init];
+    telephone.font = [UIFont systemFontOfSize:14];
+    telephone.textAlignment = NSTextAlignmentLeft;
+    telephone.frame = CGRectMake(CGRectGetMaxX(tel.frame), CGRectGetMaxY(address.frame) + 5, width - 2 * YLLeftMargin - 70, 20);
+    [view addSubview:telephone];
+    self.tel = telephone;
     
     UILabel *time = [[UILabel alloc] init];
     time.text = @"验车时间:";
     time.font = [UIFont systemFontOfSize:14];
-    time.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(tel.frame) + 5, width - 2 * YLLeftMargin, 20);
+    time.frame = CGRectMake(YLLeftMargin, CGRectGetMaxY(tel.frame) + 5, 70, 20);
     [view addSubview:time];
+    UILabel *checkOut = [[UILabel alloc] init];
+    checkOut.font = [UIFont systemFontOfSize:14];
+    checkOut.textAlignment = NSTextAlignmentLeft;
+    checkOut.frame = CGRectMake(CGRectGetMaxX(time.frame), CGRectGetMaxY(tel.frame) + 5, width - 2 * YLLeftMargin - 70, 20);
+    [view addSubview:checkOut];
+    self.time = checkOut;
     
     YLCondition *contact = [YLCondition buttonWithType:UIButtonTypeCustom];
     contact.type = YLConditionTypeWhite;
@@ -109,12 +133,29 @@
     
     NSLog(@"点击了完成按钮");
     // 跳转到首页或者其他界面
+    if (self.reserVationBlock) {
+        self.reserVationBlock();
+    }
 }
-
 
 - (void)layoutSubviews {
     
     [super layoutSubviews];
     
 }
+
+- (void)setModel:(YLDetectCenterModel *)model {
+    
+    _model = model;
+    self.centerName.text = model.name;
+    self.address.text = model.address;
+    self.tel.text = model.phone;
+}
+
+- (void)setCheckOut:(NSString *)checkOut {
+    
+    _checkOut = checkOut;
+    self.time.text = checkOut;
+}
+
 @end

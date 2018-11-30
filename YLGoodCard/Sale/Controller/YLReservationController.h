@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLDetectCenterModel.h"
 
 @interface YLReservationController : UIViewController
+
+@property (nonatomic, strong) YLDetectCenterModel *detectCenterModel;
+@property (nonatomic, strong) NSString *checkOut;
+
 
 @end

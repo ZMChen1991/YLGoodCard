@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = @"登录";
     
     float width = self.view.frame.size.width - 2 * YLLeftMargin;
     UILabel *attention = [[UILabel alloc] initWithFrame:CGRectMake(YLLeftMargin, YLLeftMargin + 64, width, 17)];
@@ -49,7 +50,7 @@
     verificationCodeBtn.frame = CGRectMake(width - YLLeftMargin - width / 4, CGRectGetMaxY(attention.frame) + 5, width / 3, 40);
     [verificationCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     verificationCodeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [verificationCodeBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [verificationCodeBtn setTitleColor:YLColor(8.f, 169.f, 255.f) forState:UIControlStateNormal];
     [verificationCodeBtn addTarget:self action:@selector(verificationCode) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:verificationCodeBtn];
     self.verificationCodeBtn = verificationCodeBtn;
@@ -97,6 +98,7 @@
     if([NSString isBlankString:self.tel.text]) {
         
         NSLog(@"请输入电话号码");
+        [self showMessage:@"请输入电话号码"];
     } else {
         [self timeDown];
         // 获取短信验证码
@@ -104,8 +106,10 @@
         param[@"telephone"] = self.tel.text;
         [YLMessageCodeTool messageCodeWithParam:param success:^(NSDictionary * _Nonnull result) {
             NSLog(@"验证码发送成功");
+            [self showMessage:@"验证码发送成功"];
         } failure:^(NSError * _Nonnull error) {
             NSLog(@"验证码发送失败");
+            [self showMessage:@"验证码发送失败"];
         }];
     }
 }

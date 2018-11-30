@@ -119,7 +119,7 @@
     
 }
 
-- (void)setControllers:(NSArray *)controllers {
+- (void)setControllers:(NSMutableArray *)controllers {
     _controllers = controllers;
     [self setupScroll:controllers];
     for (NSInteger i = 0; i < controllers.count; i++) {

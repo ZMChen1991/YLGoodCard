@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, YLTableViewCellStatus) {
     YLTableViewCellStatusDownPrice,
 };
 
-@interface YLTableViewModel : NSObject
+@interface YLTableViewModel : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSString *carID;
 @property (nonatomic, strong) NSString *displayImg;

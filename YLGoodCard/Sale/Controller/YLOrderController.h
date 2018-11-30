@@ -11,7 +11,7 @@
 
 @interface YLOrderController : UIViewController
 
-@property (nonatomic, strong) NSArray *array;
+@property (nonatomic, strong) NSArray *array; // 标题数组
 @property (nonatomic, strong) NSString *telephone;// 电话
 @property (nonatomic, strong) YLOrderView *orderView;
 

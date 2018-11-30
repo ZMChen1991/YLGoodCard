@@ -22,6 +22,7 @@
     tableView.dataSource = self;
     [self addSubview:tableView];
     self.tableView = tableView;
+    self.tableView.tableFooterView = [[UIView alloc] init];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -44,6 +45,7 @@
     }
     YLCarTypeModel *model = self.carTypes[indexPath.row];
     cell.textLabel.text = model.name;
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     return cell;
 }
 
@@ -57,14 +59,14 @@
 
 - (void)setCarTypes:(NSMutableArray *)carTypes {
     
-    YLCarTypeModel *model = [[YLCarTypeModel alloc] init];
-    model.name = @"不限";
-    model.ID = @"0000";
-    if (![carTypes count]) {
-        [carTypes addObject:model];
-    } else {
-        [carTypes insertObject:model atIndex:0];
-    }
+//    YLCarTypeModel *model = [[YLCarTypeModel alloc] init];
+//    model.name = @"不限";
+//    model.ID = @"0000";
+//    if (![carTypes count]) {
+//        [carTypes addObject:model];
+//    } else {
+//        [carTypes insertObject:model atIndex:0];
+//    }
     _carTypes = carTypes;
     
     [self setupUI];

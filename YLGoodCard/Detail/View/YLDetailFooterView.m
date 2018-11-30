@@ -7,6 +7,8 @@
 //
 
 #import "YLDetailFooterView.h"
+#import "YLAccount.h"
+#import "YLAccountTool.h"
 
 
 @interface YLDetailFooterView ()
@@ -14,6 +16,7 @@
 @property (nonatomic, strong) UIButton *favorite;
 @property (nonatomic, strong) UIButton *customer;
 
+@property (nonatomic, strong) YLAccount *account;
 
 @end
 
@@ -24,7 +27,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupUI];
-        self.isFavorite = NO;
+//        self.isCollect = NO;
     }
     return self;
 }
@@ -40,7 +43,7 @@
     [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
     self.favorite.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.favorite setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.favorite.frame = CGRectMake(YLLeftMargin, YLTopMargin, 27, self.frame.size.height - 2 * YLTopMargin);
+    self.favorite.frame = CGRectMake(YLLeftMargin, YLTopMargin, 30, self.frame.size.height - 2 * YLTopMargin);
     [self.favorite addTarget:self action:@selector(clickFavorite:) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -73,21 +76,31 @@
 }
 
 - (void)clickFavorite:(UIButton *)sender {
-    NSLog(@"favorite");
-    
-    if (self.detailFooterBlock) {
-        self.detailFooterBlock(sender);
-    }
-    self.isFavorite = !self.isFavorite;
-    if (self.isFavorite) {
-        [self.favorite setImage:[UIImage imageNamed:@"已收藏"] forState:UIControlStateNormal];
-    } else {
+//    NSLog(@"favorite");
+    // 这里要判断用户是否登录
+    if (self.account) {
+        self.model.isCollect = !self.model.isCollect;
+        if (self.model.isCollect) {
+            NSLog(@"收藏");
+            [self.favorite setImage:[UIImage imageNamed:@"已收藏"] forState:UIControlStateNormal];
+        } else {
+            NSLog(@"取消收藏");
+            [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+        }
+    }  else {
+        NSLog(@"用户没有登录，不能收藏");
         [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+    }
+    if (self.collectBlock) {
+        self.collectBlock(self.model.isCollect);
     }
 }
 
 - (void)clickCustomer:(UIButton *)sender {
     NSLog(@"customer");
+    if (self.customBlock) {
+        self.customBlock();
+    }
 }
 
 - (void)clickBargain {
@@ -96,6 +109,23 @@
 
 - (void)clickOrder {
     NSLog(@"order");
+}
+
+- (void)setModel:(YLDetailModel *)model {
+    
+    _model = model;
+    if (model.isCollect) {
+        [self.favorite setImage:[UIImage imageNamed:@"已收藏"] forState:UIControlStateNormal];
+    } else {
+        [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+    }
+}
+
+- (YLAccount *)account {
+    if (!_account) {
+        _account = [YLAccountTool account];
+    }
+    return _account;
 }
 
 @end

@@ -7,10 +7,16 @@
 //
 
 #import "YLSubController.h"
-#import "YLBargainCell.h"
-#import "YLTableViewCell.h"
+#import "YLSuggestionController.h"
+#import "YLMineTool.h"
+#import "YLLookCarModel.h"
+#import "YLSubCellModel.h"
+#import "YLSubCell.h"
+
 
 @interface YLSubController ()
+
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -21,6 +27,20 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
+- (void)loadData {
+    
+    // 根据提供的参数提交请求获取数据
+    [YLMineTool lookforWithParam:self.param success:^(NSArray * _Nonnull result) {
+        NSLog(@"YLSubController:%@", result);
+        for (YLLookCarModel *model in result) {
+            YLSubCellModel *cellModel = [[YLSubCellModel alloc] init];
+            cellModel.lookCarModel = model;
+            [self.dataArray addObject:cellModel];
+            [self.tableView reloadData];
+        }
+    } failure:nil];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -28,26 +48,39 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.dataArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (self.cellType == YLCellTypeNormal) {
-        YLTableViewCell *cell = [YLTableViewCell cellWithTableView:tableView];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    } else {
-        
-        YLBargainCell *cell = [YLBargainCell cellWithTableView:tableView];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    }
+
+    YLSubCell *cell = [YLSubCell cellWithTableView:tableView];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    YLSubCellModel *model = self.dataArray[indexPath.row];
+    cell.model = model;
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return 110;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"");
+    YLSuggestionController *su = [[YLSuggestionController alloc] init];
+    [self.navigationController pushViewController:su animated:YES];
+}
+
+- (void)setParam:(NSMutableDictionary *)param {
+    _param = param;
+    [self loadData];
+}
+
+- (NSMutableArray *)dataArray {
+    if (!_dataArray) {
+        _dataArray = [NSMutableArray array];
+    }
+    return _dataArray;
 }
 
 @end

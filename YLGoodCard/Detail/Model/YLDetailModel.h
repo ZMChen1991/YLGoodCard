@@ -61,10 +61,74 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *type;//车型
 @property (nonatomic, strong) NSString *typeId;//车型ID
 @property (nonatomic, strong) NSString *updateAt;//更新时间
+@property (nonatomic, assign) BOOL isCollect; // 是否收藏
+@property (nonatomic, assign) BOOL isBook;// 是否订阅
 
 - (instancetype)initWithDict:(NSDictionary *)dict;
 + (instancetype)initWithDict:(NSDictionary *)dict;
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key;
+//- (void)setValue:(id)value forUndefinedKey:(NSString *)key;
 @end
+
+
+/**
+ "annualInspection": "2020.06",
+ "appearance": "0",
+ "approveAt": "",
+ "backReason": "",
+ "bodyStructure": "两厢轿车",
+ "brand": "别克",
+ "centerId": 0,
+ "childSeatInterface": "",
+ "clickSum": 15,
+ "color": "红色",
+ "commercialInsurance": "2019.06",
+ "country": "意大利",
+ "course": 11,
+ "createAt": "",
+ "displayImg": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1542710634967&di=668a60c8ecacb4b0bb448f1f99f20d26&imgtype=0&src=http%3A%2F%2Fwww.bitauto.com%2Ftopics%2Fad_topic%2Fbenzdq160830%2Fimages%2Ftp5.jpg",
+ "emission": 2.4,
+ "emissionStandard": "国三",
+ "floorPrice": 0,
+ "fuelForm": "电动",
+ "gearbox": "手动",
+ "genuineLeather": "",
+ "gps": "",
+ "id": 100003,
+ "interior": "0",
+ "isBargain": "",
+ "keylessEntrySystem": "",
+ "licenseTime": "2013-11",
+ "location": "上海",
+ "meetingPlace": "阳江",
+ "operatingCondition": "0",
+ "originalPrice": "299000",
+ "overInstall": "",
+ "panoramicSunroof": "1",
+ "parkingRadar": "",
+ "price": 134400,
+ "purpose": "拉人/拉货",
+ "remarks": "",
+ "reverseVideo": "",
+ "seatsNum": "7",
+ "series": "君越",
+ "stabilityControl": "",
+ "status": "3",
+ "telephone": "18500000000",
+ "title": "别克 君越 2013款 2.4L SIDI豪华舒适型3",
+ "trafficInsurance": "2019.06",
+ "transfer": "0",
+ "type": "suv",
+ "typeId": 0,
+ "updateAt": "2018-10-30 14:41:50",
+ "isCollect": true,
+ "isBook": false
+ },
+ "image": {
+ "license": [],
+ "vehicle": [],
+ "blemish": [],
+ "video": []
+ }
+ */
 
 NS_ASSUME_NONNULL_END

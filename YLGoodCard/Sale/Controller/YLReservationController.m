@@ -23,6 +23,12 @@
     self.navigationItem.title = @"我要卖车";
     
     YLReservationView *reservationView = [[YLReservationView alloc] initWithFrame:CGRectMake(0, 64, YLScreenWidth, YLScreenHeight)];
+    reservationView.model = self.detectCenterModel;
+    reservationView.checkOut = self.checkOut;
+    reservationView.reserVationBlock = ^{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    };
+    
     [self.view addSubview:reservationView];
 }
 

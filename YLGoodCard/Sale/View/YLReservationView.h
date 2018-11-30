@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLDetectCenterModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef void(^ReserVationBlock)(void);
+
 @interface YLReservationView : UIView
+
+@property (nonatomic, strong) YLDetectCenterModel *model;
+@property (nonatomic, strong) NSString *checkOut;
+@property (nonatomic, copy) ReserVationBlock reserVationBlock;
 
 @end
 
