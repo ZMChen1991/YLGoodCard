@@ -1,5 +1,5 @@
 //
-//  YLBuyOrderController.h
+//  YLDepreciateController.h
 //  YLGoodCard
 //
 //  Created by lm on 2018/11/30.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YLBuyOrderController : UIViewController
+@interface YLDepreciateController : UITableViewController
 
 @end
 

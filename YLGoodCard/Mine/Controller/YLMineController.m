@@ -24,6 +24,10 @@
 #import "YLFunctionController.h"
 #import "YLSubController.h"
 #import "YLBrowseController.h"
+#import "YLCollectController.h"
+#import "YLSaleOrderController.h"
+#import "YLBuyOrderController.h"
+#import "YLBargainHistoryController.h"
 
 #import "YLTableGroupHeader.h"
 #import "YLFunctionView.h"
@@ -78,17 +82,12 @@
         self.mineIcon.hidden = YES;
         self.loginHeader.hidden =NO;
     }
+    
+    [self addNotification];
 }
 
+#pragma mark 加载即将看车、我的收藏、浏览记录、砍价数量
 - (void)loadDate {
-    
-    // 获取即将看车的个数
-//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-//    [param setValue:self.account.telephone forKey:@"telephone"];
-//    [param setValue:@"1" forKey:@"status"];
-//    [YLMineTool lookforWithParam:param success:^(NSArray * _Nonnull result) {
-//        NSLog(@"%@", result);
-//    } failure:nil];
     
     // 获取本地浏览记录个数
     self.browsingHistoryCount = self.browsingHistory.count;
@@ -123,6 +122,7 @@
     }
 }
 
+#pragma mark UI
 - (void)setupUI {
     
     self.mineIcon = [[YLMineIcon alloc] initWithFrame:CGRectMake(0, 64, YLScreenWidth, 96)];
@@ -167,17 +167,27 @@
     [self.navigationController.navigationBar addSubview:statusBarView];
 }
 
-//- (void)addchildViewControl {
-//
-//
-//}
-
-
 - (void)rightBarButtonItemClick {
     NSLog(@"点击了设置按钮");
     
     YLSettingController *setting = [[YLSettingController alloc] init];
     [self.navigationController pushViewController:setting animated:YES];
+}
+
+- (void)addNotification {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:@"REFRESHTABLEVIEW" object:nil];
+}
+
+- (void)refreshTableView {
+    
+    NSLog(@"接受到消息");
+    [self loadDate];
+}
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -234,11 +244,11 @@
     if (index == 1) {
         NSArray *titles = @[@"在售", @"已下架"];
         NSArray *params = @[@"3", @"0"];
-        YLFunctionController *fun = [[YLFunctionController alloc] init];
-        fun.title = array[index];
-        fun.titles = titles;
-        fun.params = params;
-        [self.navigationController pushViewController:fun animated:YES];
+        YLCollectController *collect = [[YLCollectController alloc] init];
+        collect.title = array[index];
+        collect.titles = titles;
+        collect.params = params;
+        [self.navigationController pushViewController:collect animated:YES];
         return;
     }
     if (index == 2) {
@@ -247,18 +257,9 @@
         [self.navigationController pushViewController:browse animated:YES];
     }
     if (index == 3) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"此功能以后开放" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-        [alert show];
+        [self showMessage:@"开发中,敬请期待"];
         return;
     }
-    
-//    NSArray *titles = @[@"在售", @"已下架"];
-//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-//
-//    YLFunctionController *fun = [[YLFunctionController alloc] init];
-//    fun.title = array[index];
-//    fun.titles = titles;
-//    [self.navigationController pushViewController:fun animated:YES];
 }
 
 - (void)skipToLogin {
@@ -278,20 +279,40 @@
     if(self.account) {
         NSLog(@"已登录");
         NSLog(@"%@",sender.titleLabel.text);
+        NSInteger index = sender.tag - 100;
         NSString *title = sender.titleLabel.text;
-        if (sender.tag == 100) {
+        NSArray *array = @[@"卖车订单", @"买车订单", @"砍价记录", @"降价提醒"];
+        if (index == 0) {
             NSLog(@"%@----卖车订单", title);
+            NSArray *titles = @[@"全部", @"待上架",@"售卖中", @"已售出",@"已下架"];
+            NSArray *params = @[@"", @"1", @"3", @"4", @"0"];
+            YLSaleOrderController *saleOrder = [[YLSaleOrderController alloc] init];
+            saleOrder.title = array[index];
+            saleOrder.titles = titles;
+            saleOrder.params = params;
+            [self.navigationController pushViewController:saleOrder animated:YES];
+            return;
         }
-        if (sender.tag == 101) {
+        if (index == 1) {
             NSLog(@"%@=----买车订单", title);
+            NSArray *titles = @[@"全部", @"待复检过户",@"交易完成"];
+            NSArray *params = @[@"", @"3", @"4"];
+            YLBuyOrderController *buyOrder = [[YLBuyOrderController alloc] init];
+            buyOrder.title = array[index];
+            buyOrder.titles = titles;
+            buyOrder.params = params;
+            [self.navigationController pushViewController:buyOrder animated:YES];
+            return;
         }
-        if (sender.tag == 102) {
+        if (index == 2) {
             NSLog(@"%@=--=-砍价记录", title);
-            YLFunctionController *lookCar = [[YLFunctionController alloc] init];
-            lookCar.navigationItem.title = title;
-            [self.navigationController pushViewController:lookCar animated:YES];
+            NSArray *titles = @[@"买家", @"卖家"];
+            YLBargainHistoryController *bargainHistory = [[YLBargainHistoryController alloc] init];
+            bargainHistory.title = array[index];
+            bargainHistory.titles = titles;
+            [self.navigationController pushViewController:bargainHistory animated:YES];
         }
-        if (sender.tag == 103) {
+        if (index == 3) {
             NSLog(@"降价提醒");
         }
     } else {
@@ -331,6 +352,29 @@
     [self.navigationController pushViewController:suggestionVc animated:YES];
 }
 
+// 提示弹窗
+- (void)showMessage:(NSString *)message {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;// 获取最上层窗口
+    
+    UILabel *messageLabel = [[UILabel alloc] init];
+    CGSize messageSize = CGSizeMake([message getSizeWithFont:[UIFont systemFontOfSize:12]].width + 30, 30);
+    messageLabel.frame = CGRectMake((YLScreenWidth - messageSize.width) / 2, YLScreenHeight/2, messageSize.width, messageSize.height);
+    messageLabel.text = message;
+    messageLabel.font = [UIFont systemFontOfSize:12];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    messageLabel.layer.cornerRadius = 5.0f;
+    messageLabel.layer.masksToBounds = YES;
+    [window addSubview:messageLabel];
+    
+    [UIView animateWithDuration:1 animations:^{
+        messageLabel.alpha = 0;
+    } completion:^(BOOL finished) {
+        [messageLabel removeFromSuperview];
+    }];
+}
+
 
 #pragma mark 懒加载
 - (YLLoginController *)loginVc {
@@ -343,6 +387,7 @@
 - (NSMutableArray *)browsingHistory {
     
     if (!_browsingHistory) {
+        NSLog(@"%@", YLBrowsingHistoryPath);
         _browsingHistory = [NSKeyedUnarchiver unarchiveObjectWithFile:YLBrowsingHistoryPath];
         if (!_browsingHistory) {
             _browsingHistory = [NSMutableArray array];
@@ -361,6 +406,7 @@
 - (void)setIsLogin:(BOOL)isLogin {
     _isLogin = isLogin;
     if (isLogin) {
+        self.account = [YLAccountTool account];
         self.mineIcon.telephone = self.account.telephone;
         self.mineIcon.hidden = NO;
         self.loginHeader.hidden = YES;

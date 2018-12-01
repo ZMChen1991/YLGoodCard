@@ -119,6 +119,13 @@
     } else {
         [self.favorite setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
     }
+    
+    if (model.isBook) {
+        [self.order setTitle:@"已预约" forState:UIControlStateNormal];
+        [self.order setUserInteractionEnabled:NO];
+    } else {
+        
+    }
 }
 
 - (YLAccount *)account {

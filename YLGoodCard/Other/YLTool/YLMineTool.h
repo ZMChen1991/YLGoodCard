@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)lookforWithParam:(id)param success:(void (^)(NSArray *result))success failure:(void (^)(NSError * error))failure;
 
 /**
-我的收藏列表
+我的收藏、即将看车、砍价条数
  
  @param param 车辆的参数，如id=100006
  @param success 请求成功后的回调
@@ -32,6 +32,14 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)favoriteWithParam:(id)param success:(void (^)(NSDictionary *result))success failure:(void (^)(NSError * error))failure;
 
+/**
+ 我的收藏
+ 
+ @param param 车辆的参数，如id=100006
+ @param success 请求成功后的回调
+ @param failure 请求失败后的回调
+ */
++ (void)collectWithParam:(id)param success:(void (^)(NSArray *result))success failure:(void (^)(NSError * error))failure;
 
 /**
 卖车订单列表

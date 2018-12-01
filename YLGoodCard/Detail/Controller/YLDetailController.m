@@ -204,6 +204,7 @@
                 [param setValue:weakSelf.account.telephone forKey:@"telephone"];
                 [YLDetailTool favoriteWithParam:param success:^(NSDictionary *result) {
                     NSLog(@"点击了收藏按钮:%@", result);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHTABLEVIEW" object:nil];
                 } failure:nil];
             } else {
                 NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -212,6 +213,7 @@
                 [param setValue:self.account.telephone forKey:@"telephone"];
                 [YLDetailTool favoriteWithParam:param success:^(NSDictionary *result) {
                     NSLog(@"点击了取消收藏按钮:%@", result);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHTABLEVIEW" object:nil];
                 } failure:nil];
             }
         } else {
@@ -260,7 +262,13 @@
             [param setValue:weakSelf.model.carID forKey:@"detailId"];
             [param setValue:@"1" forKey:@"mark"];
             [YLDetailTool bargainWithParam:param success:^(NSDictionary * _Nonnull result) {
-                NSLog(@"%@", result);
+//                NSLog(@"%@", result);
+                if ([result[@"code"] isEqualToString:@"200"]) {
+                    NSLog(@"砍价成功:%@", result[@"message"]);
+                } else {
+                    NSLog(@"a砍价失败");
+                }
+                
             } failure:nil];
         } else {
             YLLoginController *login = [[YLLoginController alloc] init];
@@ -290,7 +298,13 @@
             [param setValue:weakSelf.model.carID forKey:@"detailId"];
             [param setValue:@"1" forKey:@"mark"];
             [YLDetailTool bargainWithParam:param success:^(NSDictionary * _Nonnull result) {
-                NSLog(@"%@", result);
+//                NSLog(@"%@", result);
+                if ([result[@"code"] isEqualToString:@"200"]) {
+                    NSLog(@"砍价成功:%@", result[@"message"]);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHTABLEVIEW" object:nil];
+                } else {
+                    NSLog(@"a砍价失败");
+                }
             } failure:nil];
         } else {
             YLLoginController *login = [[YLLoginController alloc] init];
@@ -318,6 +332,14 @@
 //            [param setValue:@"1" forKey:@"status"];
             [YLDetailTool lookCarWithParam:param success:^(NSDictionary *result) {
                 NSLog(@"预约看车成功:%@", result);
+                if ([result[@"code"] isEqualToString:@"200"]) {
+                    NSLog(@"预约看车成功");
+                    [weakSelf.footer.order setTitle:@"已预约" forState:UIControlStateNormal];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHTABLEVIEW" object:nil];
+                } else {
+                    NSLog(@"预约失败:%@", result[@"message"]);
+                }
+                
             } failure:nil];
         } else {
             YLLoginController *login = [[YLLoginController alloc] init];
@@ -400,9 +422,11 @@
 - (void)saveBrowseHistory:(YLTableViewModel *)model {
     
     // 判断浏览记录是否已经存在，如果存在，删除旧的，重新添加到数组
-    if ([self.browsingHistory containsObject:model]) {
-        NSInteger index = [self.browsingHistory indexOfObject:model];
-        [self.browsingHistory removeObjectAtIndex:index];
+    for (YLTableViewModel *historyModel in self.browsingHistory) {
+        if ([historyModel.carID isEqualToString:model.carID]) {
+            NSInteger index = [self.browsingHistory indexOfObject:historyModel];
+            [self.browsingHistory removeObjectAtIndex:index];
+        }
     }
     [self.browsingHistory insertObject:model atIndex:0];
     
@@ -413,7 +437,6 @@
     } else {
         NSLog(@"保存失败");
     }
-    
 }
 
 

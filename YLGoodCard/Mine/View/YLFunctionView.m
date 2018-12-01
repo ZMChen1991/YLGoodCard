@@ -74,23 +74,6 @@
     }
 }
 
-- (void)viewClick:(UITapGestureRecognizer *)tap {
-
-    NSInteger tag = tap.view.tag - 200;
-    if (tag == 0) {
-        NSLog(@"点击了即将看车");
-    }
-    if (tag == 1) {
-        NSLog(@"点击了我的收藏");
-    }
-    if (tag == 2) {
-        NSLog(@"点击了浏览记录");
-    }
-    if (tag == 3) {
-        NSLog(@"点击了我的订阅");
-    }
-}
-
 - (void)layoutSubviews {
     
     [super layoutSubviews];

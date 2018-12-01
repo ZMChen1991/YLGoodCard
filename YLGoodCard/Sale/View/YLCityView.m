@@ -58,6 +58,8 @@
 
 - (void)cancelClick {
     NSLog(@"点击取消，清空文本框");
+    [self.textField resignFirstResponder];
+    
     if (self.cancelBlock) {
         self.cancelBlock();
     }
@@ -67,6 +69,8 @@
 - (void)sureClick {
     
     NSLog(@"点击确定");
+    [self.textField resignFirstResponder];
+    
     if (self.sureBlock) {
         self.sureBlock(self.textField.text);
     }

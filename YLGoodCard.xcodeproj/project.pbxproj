@@ -29,6 +29,13 @@
 		8A21113C219168880014132C /* YLDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21113B219168880014132C /* YLDetailHeaderView.m */; };
 		8A21113F219169CD0014132C /* YLInformationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21113E219169CD0014132C /* YLInformationView.m */; };
 		8A21114221916C900014132C /* YLDetailFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A21114121916C900014132C /* YLDetailFooterView.m */; };
+		8A25C5DA21B220BF00538437 /* YLYearMonthPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A25C5D821B220BF00538437 /* YLYearMonthPicker.m */; };
+		8A25C5DD21B2213300538437 /* YLAllTimePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A25C5DC21B2213300538437 /* YLAllTimePicker.m */; };
+		8A25C5E021B2385600538437 /* YLSaleOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A25C5DF21B2385600538437 /* YLSaleOrderModel.m */; };
+		8A25C5E321B2386C00538437 /* YLSaleOrderCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A25C5E221B2386C00538437 /* YLSaleOrderCellFrame.m */; };
+		8A25C5E621B2388500538437 /* YLSaleOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A25C5E521B2388500538437 /* YLSaleOrderCell.m */; };
+		8A25C5E921B239AB00538437 /* YLSaleOrderDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A25C5E821B239AB00538437 /* YLSaleOrderDetailModel.m */; };
+		8A25C5EC21B255D700538437 /* YLBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A25C5EB21B255D700538437 /* YLBannerView.m */; };
 		8A265C6F219A5B6300FB58A3 /* YLSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A265C6E219A5B6300FB58A3 /* YLSettingController.m */; };
 		8A265C72219A629700FB58A3 /* YLAboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A265C71219A629700FB58A3 /* YLAboutController.m */; };
 		8A339C98219BD1BC00A75DE0 /* YLBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A339C97219BD1BC00A75DE0 /* YLBanner.m */; };
@@ -45,8 +52,6 @@
 		8A37DF01218C2E77003A18F0 /* YLMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A37DF00218C2E77003A18F0 /* YLMessageController.m */; };
 		8A37DF04218C3536003A18F0 /* YLMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A37DF03218C3536003A18F0 /* YLMessageCell.m */; };
 		8A444E07219A9C030028422F /* YLBargainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E06219A9C030028422F /* YLBargainCell.m */; };
-		8A444E0A219AA1DB0028422F /* YLFunctionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E09219AA1DB0028422F /* YLFunctionController.m */; };
-		8A444E10219AA4C40028422F /* YLSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E0F219AA4C40028422F /* YLSubController.m */; };
 		8A444E14219AC4F60028422F /* YLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A444E13219AC4F60028422F /* YLRequest.m */; };
 		8A4A66F9219E7EB0001B3CC0 /* YLBrandModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A66F8219E7EB0001B3CC0 /* YLBrandModel.m */; };
 		8A69139C218FCF86003B0EE2 /* pic_3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 8A691398218FCF86003B0EE2 /* pic_3.jpeg */; };
@@ -67,13 +72,8 @@
 		8AC3547D21AD14F400A464AF /* YLCityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC3547C21AD14F400A464AF /* YLCityView.m */; };
 		8AC3548021AD25F500A464AF /* YLNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC3547F21AD25F500A464AF /* YLNumberView.m */; };
 		8AC354DD21AE64E300A464AF /* YLCarInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354DC21AE64E300A464AF /* YLCarInformationModel.m */; };
-		8AC354E021AFD99F00A464AF /* YLLookCarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354DF21AFD99F00A464AF /* YLLookCarModel.m */; };
-		8AC354E321AFDC4C00A464AF /* YLLookCarDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354E221AFDC4C00A464AF /* YLLookCarDetailModel.m */; };
-		8AC354E621AFE66700A464AF /* YLSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354E521AFE66700A464AF /* YLSubCell.m */; };
-		8AC354E921AFE6CF00A464AF /* YLSubCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354E821AFE6CF00A464AF /* YLSubCellModel.m */; };
 		8AC354EC21B0468B00A464AF /* YLCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354EB21B0468B00A464AF /* YLCollectController.m */; };
 		8AC354F221B046CD00A464AF /* YLSubscribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354F121B046CD00A464AF /* YLSubscribeController.m */; };
-		8AC354F521B046EA00A464AF /* YLBuyOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354F421B046EA00A464AF /* YLBuyOrderController.m */; };
 		8AC354F821B0470200A464AF /* YLSaleOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354F721B0470200A464AF /* YLSaleOrderController.m */; };
 		8AC354FB21B0472500A464AF /* YLBargainHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354FA21B0472500A464AF /* YLBargainHistoryController.m */; };
 		8AC354FE21B0484500A464AF /* YLBrowseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC354FD21B0484500A464AF /* YLBrowseController.m */; };
@@ -95,6 +95,22 @@
 		8ADE764621A698B000C78F00 /* YLSaleTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE764521A698B000C78F00 /* YLSaleTool.m */; };
 		8ADE764921A69A1C00C78F00 /* YLMineTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE764821A69A1C00C78F00 /* YLMineTool.m */; };
 		8ADE765021A6AFF000C78F00 /* YLSearchParamModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE764F21A6AFF000C78F00 /* YLSearchParamModel.m */; };
+		8ADEE4D621B0C56B00BAD2CD /* YLSubCollectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4D521B0C56B00BAD2CD /* YLSubCollectController.m */; };
+		8ADEE4D921B0C85500BAD2CD /* YLCollectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4D821B0C85500BAD2CD /* YLCollectModel.m */; };
+		8ADEE4DC21B0D0BB00BAD2CD /* YLCollectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4DB21B0D0BB00BAD2CD /* YLCollectionModel.m */; };
+		8ADEE4E221B0D25300BAD2CD /* YLCollectCellFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4E121B0D25300BAD2CD /* YLCollectCellFrame.m */; };
+		8ADEE4E521B0D27700BAD2CD /* YLCollectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4E421B0D27700BAD2CD /* YLCollectCell.m */; };
+		8ADEE4EB21B0DACF00BAD2CD /* YLSubSaleOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4EA21B0DACF00BAD2CD /* YLSubSaleOrderController.m */; };
+		8ADEE4EE21B0E0DD00BAD2CD /* YLSubBargainHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4ED21B0E0DD00BAD2CD /* YLSubBargainHistoryController.m */; };
+		8ADEE4F221B0E40000BAD2CD /* YLDepreciateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4F121B0E40000BAD2CD /* YLDepreciateController.m */; };
+		8ADEE50021B0E4D400BAD2CD /* YLSubCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4F421B0E4D400BAD2CD /* YLSubCellModel.m */; };
+		8ADEE50121B0E4D400BAD2CD /* YLSubController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4F521B0E4D400BAD2CD /* YLSubController.m */; };
+		8ADEE50221B0E4D400BAD2CD /* YLLookCarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4F821B0E4D400BAD2CD /* YLLookCarModel.m */; };
+		8ADEE50321B0E4D400BAD2CD /* YLSubCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4FA21B0E4D400BAD2CD /* YLSubCell.m */; };
+		8ADEE50421B0E4D400BAD2CD /* YLFunctionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4FB21B0E4D400BAD2CD /* YLFunctionController.m */; };
+		8ADEE50521B0E4D400BAD2CD /* YLLookCarDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE4FF21B0E4D400BAD2CD /* YLLookCarDetailModel.m */; };
+		8ADEE50B21B0E4E000BAD2CD /* YLBuyOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE50821B0E4E000BAD2CD /* YLBuyOrderController.m */; };
+		8ADEE50C21B0E4E000BAD2CD /* YLSubBuyOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADEE50A21B0E4E000BAD2CD /* YLSubBuyOrderController.m */; };
 		8AE1D68B21A8EA4500726A3E /* YLCarTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AE1D68A21A8EA4500726A3E /* YLCarTypeModel.m */; };
 		8AE1D6B821ABD3D000726A3E /* YLBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AE1D6B721ABD3D000726A3E /* YLBrandView.m */; };
 		8AE1D6BB21ABD3E300726A3E /* YLSeriesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AE1D6BA21ABD3E300726A3E /* YLSeriesView.m */; };
@@ -175,6 +191,20 @@
 		8A21113E219169CD0014132C /* YLInformationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLInformationView.m; sourceTree = "<group>"; };
 		8A21114021916C900014132C /* YLDetailFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLDetailFooterView.h; sourceTree = "<group>"; };
 		8A21114121916C900014132C /* YLDetailFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLDetailFooterView.m; sourceTree = "<group>"; };
+		8A25C5D621B220BF00538437 /* YLYearMonthPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLYearMonthPicker.h; sourceTree = "<group>"; };
+		8A25C5D821B220BF00538437 /* YLYearMonthPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLYearMonthPicker.m; sourceTree = "<group>"; };
+		8A25C5DB21B2213300538437 /* YLAllTimePicker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLAllTimePicker.h; sourceTree = "<group>"; };
+		8A25C5DC21B2213300538437 /* YLAllTimePicker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLAllTimePicker.m; sourceTree = "<group>"; };
+		8A25C5DE21B2385600538437 /* YLSaleOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSaleOrderModel.h; sourceTree = "<group>"; };
+		8A25C5DF21B2385600538437 /* YLSaleOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSaleOrderModel.m; sourceTree = "<group>"; };
+		8A25C5E121B2386C00538437 /* YLSaleOrderCellFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSaleOrderCellFrame.h; sourceTree = "<group>"; };
+		8A25C5E221B2386C00538437 /* YLSaleOrderCellFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSaleOrderCellFrame.m; sourceTree = "<group>"; };
+		8A25C5E421B2388500538437 /* YLSaleOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSaleOrderCell.h; sourceTree = "<group>"; };
+		8A25C5E521B2388500538437 /* YLSaleOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSaleOrderCell.m; sourceTree = "<group>"; };
+		8A25C5E721B239AB00538437 /* YLSaleOrderDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSaleOrderDetailModel.h; sourceTree = "<group>"; };
+		8A25C5E821B239AB00538437 /* YLSaleOrderDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSaleOrderDetailModel.m; sourceTree = "<group>"; };
+		8A25C5EA21B255D700538437 /* YLBannerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBannerView.h; sourceTree = "<group>"; };
+		8A25C5EB21B255D700538437 /* YLBannerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBannerView.m; sourceTree = "<group>"; };
 		8A265C6D219A5B6300FB58A3 /* YLSettingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSettingController.h; sourceTree = "<group>"; };
 		8A265C6E219A5B6300FB58A3 /* YLSettingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSettingController.m; sourceTree = "<group>"; };
 		8A265C70219A629700FB58A3 /* YLAboutController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLAboutController.h; sourceTree = "<group>"; };
@@ -208,10 +238,6 @@
 		8A37DF03218C3536003A18F0 /* YLMessageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLMessageCell.m; sourceTree = "<group>"; };
 		8A444E05219A9C030028422F /* YLBargainCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBargainCell.h; sourceTree = "<group>"; };
 		8A444E06219A9C030028422F /* YLBargainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBargainCell.m; sourceTree = "<group>"; };
-		8A444E08219AA1DB0028422F /* YLFunctionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFunctionController.h; sourceTree = "<group>"; };
-		8A444E09219AA1DB0028422F /* YLFunctionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFunctionController.m; sourceTree = "<group>"; };
-		8A444E0E219AA4C30028422F /* YLSubController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubController.h; sourceTree = "<group>"; };
-		8A444E0F219AA4C40028422F /* YLSubController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubController.m; sourceTree = "<group>"; };
 		8A444E12219AC4F60028422F /* YLRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLRequest.h; sourceTree = "<group>"; };
 		8A444E13219AC4F60028422F /* YLRequest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLRequest.m; sourceTree = "<group>"; };
 		8A4A66F7219E7EB0001B3CC0 /* YLBrandModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBrandModel.h; sourceTree = "<group>"; };
@@ -248,20 +274,10 @@
 		8AC3547F21AD25F500A464AF /* YLNumberView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLNumberView.m; sourceTree = "<group>"; };
 		8AC354DB21AE64E300A464AF /* YLCarInformationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCarInformationModel.h; sourceTree = "<group>"; };
 		8AC354DC21AE64E300A464AF /* YLCarInformationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCarInformationModel.m; sourceTree = "<group>"; };
-		8AC354DE21AFD99F00A464AF /* YLLookCarModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLLookCarModel.h; sourceTree = "<group>"; };
-		8AC354DF21AFD99F00A464AF /* YLLookCarModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLLookCarModel.m; sourceTree = "<group>"; };
-		8AC354E121AFDC4C00A464AF /* YLLookCarDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLLookCarDetailModel.h; sourceTree = "<group>"; };
-		8AC354E221AFDC4C00A464AF /* YLLookCarDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLLookCarDetailModel.m; sourceTree = "<group>"; };
-		8AC354E421AFE66700A464AF /* YLSubCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubCell.h; sourceTree = "<group>"; };
-		8AC354E521AFE66700A464AF /* YLSubCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubCell.m; sourceTree = "<group>"; };
-		8AC354E721AFE6CF00A464AF /* YLSubCellModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubCellModel.h; sourceTree = "<group>"; };
-		8AC354E821AFE6CF00A464AF /* YLSubCellModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubCellModel.m; sourceTree = "<group>"; };
 		8AC354EA21B0468A00A464AF /* YLCollectController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCollectController.h; sourceTree = "<group>"; };
 		8AC354EB21B0468B00A464AF /* YLCollectController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCollectController.m; sourceTree = "<group>"; };
 		8AC354F021B046CD00A464AF /* YLSubscribeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubscribeController.h; sourceTree = "<group>"; };
 		8AC354F121B046CD00A464AF /* YLSubscribeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubscribeController.m; sourceTree = "<group>"; };
-		8AC354F321B046EA00A464AF /* YLBuyOrderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBuyOrderController.h; sourceTree = "<group>"; };
-		8AC354F421B046EA00A464AF /* YLBuyOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBuyOrderController.m; sourceTree = "<group>"; };
 		8AC354F621B0470200A464AF /* YLSaleOrderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSaleOrderController.h; sourceTree = "<group>"; };
 		8AC354F721B0470200A464AF /* YLSaleOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSaleOrderController.m; sourceTree = "<group>"; };
 		8AC354F921B0472500A464AF /* YLBargainHistoryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBargainHistoryController.h; sourceTree = "<group>"; };
@@ -303,6 +319,38 @@
 		8ADE764821A69A1C00C78F00 /* YLMineTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLMineTool.m; sourceTree = "<group>"; };
 		8ADE764E21A6AFF000C78F00 /* YLSearchParamModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSearchParamModel.h; sourceTree = "<group>"; };
 		8ADE764F21A6AFF000C78F00 /* YLSearchParamModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSearchParamModel.m; sourceTree = "<group>"; };
+		8ADEE4D421B0C56B00BAD2CD /* YLSubCollectController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubCollectController.h; sourceTree = "<group>"; };
+		8ADEE4D521B0C56B00BAD2CD /* YLSubCollectController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubCollectController.m; sourceTree = "<group>"; };
+		8ADEE4D721B0C85500BAD2CD /* YLCollectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCollectModel.h; sourceTree = "<group>"; };
+		8ADEE4D821B0C85500BAD2CD /* YLCollectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCollectModel.m; sourceTree = "<group>"; };
+		8ADEE4DA21B0D0BB00BAD2CD /* YLCollectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCollectionModel.h; sourceTree = "<group>"; };
+		8ADEE4DB21B0D0BB00BAD2CD /* YLCollectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCollectionModel.m; sourceTree = "<group>"; };
+		8ADEE4E021B0D25300BAD2CD /* YLCollectCellFrame.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCollectCellFrame.h; sourceTree = "<group>"; };
+		8ADEE4E121B0D25300BAD2CD /* YLCollectCellFrame.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCollectCellFrame.m; sourceTree = "<group>"; };
+		8ADEE4E321B0D27700BAD2CD /* YLCollectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCollectCell.h; sourceTree = "<group>"; };
+		8ADEE4E421B0D27700BAD2CD /* YLCollectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCollectCell.m; sourceTree = "<group>"; };
+		8ADEE4E921B0DACF00BAD2CD /* YLSubSaleOrderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubSaleOrderController.h; sourceTree = "<group>"; };
+		8ADEE4EA21B0DACF00BAD2CD /* YLSubSaleOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubSaleOrderController.m; sourceTree = "<group>"; };
+		8ADEE4EC21B0E0DD00BAD2CD /* YLSubBargainHistoryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLSubBargainHistoryController.h; sourceTree = "<group>"; };
+		8ADEE4ED21B0E0DD00BAD2CD /* YLSubBargainHistoryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLSubBargainHistoryController.m; sourceTree = "<group>"; };
+		8ADEE4F021B0E40000BAD2CD /* YLDepreciateController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLDepreciateController.h; sourceTree = "<group>"; };
+		8ADEE4F121B0E40000BAD2CD /* YLDepreciateController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLDepreciateController.m; sourceTree = "<group>"; };
+		8ADEE4F421B0E4D400BAD2CD /* YLSubCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLSubCellModel.m; sourceTree = "<group>"; };
+		8ADEE4F521B0E4D400BAD2CD /* YLSubController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLSubController.m; sourceTree = "<group>"; };
+		8ADEE4F621B0E4D400BAD2CD /* YLFunctionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLFunctionController.h; sourceTree = "<group>"; };
+		8ADEE4F721B0E4D400BAD2CD /* YLSubCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSubCell.h; sourceTree = "<group>"; };
+		8ADEE4F821B0E4D400BAD2CD /* YLLookCarModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLLookCarModel.m; sourceTree = "<group>"; };
+		8ADEE4F921B0E4D400BAD2CD /* YLLookCarDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLLookCarDetailModel.h; sourceTree = "<group>"; };
+		8ADEE4FA21B0E4D400BAD2CD /* YLSubCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLSubCell.m; sourceTree = "<group>"; };
+		8ADEE4FB21B0E4D400BAD2CD /* YLFunctionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLFunctionController.m; sourceTree = "<group>"; };
+		8ADEE4FC21B0E4D400BAD2CD /* YLSubController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSubController.h; sourceTree = "<group>"; };
+		8ADEE4FD21B0E4D400BAD2CD /* YLSubCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSubCellModel.h; sourceTree = "<group>"; };
+		8ADEE4FE21B0E4D400BAD2CD /* YLLookCarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLLookCarModel.h; sourceTree = "<group>"; };
+		8ADEE4FF21B0E4D400BAD2CD /* YLLookCarDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLLookCarDetailModel.m; sourceTree = "<group>"; };
+		8ADEE50721B0E4E000BAD2CD /* YLSubBuyOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLSubBuyOrderController.h; sourceTree = "<group>"; };
+		8ADEE50821B0E4E000BAD2CD /* YLBuyOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLBuyOrderController.m; sourceTree = "<group>"; };
+		8ADEE50921B0E4E000BAD2CD /* YLBuyOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLBuyOrderController.h; sourceTree = "<group>"; };
+		8ADEE50A21B0E4E000BAD2CD /* YLSubBuyOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLSubBuyOrderController.m; sourceTree = "<group>"; };
 		8AE1D68921A8EA4500726A3E /* YLCarTypeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCarTypeModel.h; sourceTree = "<group>"; };
 		8AE1D68A21A8EA4500726A3E /* YLCarTypeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCarTypeModel.m; sourceTree = "<group>"; };
 		8AE1D6B621ABD3D000726A3E /* YLBrandView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBrandView.h; sourceTree = "<group>"; };
@@ -516,6 +564,8 @@
 				8AEFA6A3219D720B00C21452 /* YLCommandCellView.m */,
 				8AEFA6A2219D720A00C21452 /* YLTableViewCell.h */,
 				8AEFA6A4219D720B00C21452 /* YLTableViewCell.m */,
+				8A25C5EA21B255D700538437 /* YLBannerView.h */,
+				8A25C5EB21B255D700538437 /* YLBannerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -613,6 +663,10 @@
 				8AE1D6C921AC56A600726A3E /* YLCheckoutView.m */,
 				8AC3547B21AD14F400A464AF /* YLCityView.h */,
 				8AC3547C21AD14F400A464AF /* YLCityView.m */,
+				8A25C5D621B220BF00538437 /* YLYearMonthPicker.h */,
+				8A25C5D821B220BF00538437 /* YLYearMonthPicker.m */,
+				8A25C5DB21B2213300538437 /* YLAllTimePicker.h */,
+				8A25C5DC21B2213300538437 /* YLAllTimePicker.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -631,27 +685,18 @@
 		8A0E3F61218A9B5900275131 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8ADEE50621B0E4E000BAD2CD /* BuyOrder */,
+				8ADEE4F321B0E4D400BAD2CD /* LookingCar */,
+				8ADEE4EF21B0E35200BAD2CD /* Depreciate */,
+				8ADEE4D321B0C49D00BAD2CD /* Subscribe */,
+				8ADEE4D221B0C47400BAD2CD /* BargainHistory */,
+				8ADEE4D121B0C46700BAD2CD /* Suggestion */,
+				8ADEE4D021B0C41200BAD2CD /* SalerOrder */,
+				8ADEE4CE21B0C3DF00BAD2CD /* Browse */,
+				8ADEE4CD21B0C3D400BAD2CD /* Collection */,
 				8A444E03219A9ADA0028422F /* Setting */,
 				8A0E3F4F218A95F300275131 /* YLMineController.h */,
 				8A0E3F50218A95F300275131 /* YLMineController.m */,
-				8AB874502199462C00FB0A93 /* YLSuggestionController.h */,
-				8AB874512199462C00FB0A93 /* YLSuggestionController.m */,
-				8A444E08219AA1DB0028422F /* YLFunctionController.h */,
-				8A444E09219AA1DB0028422F /* YLFunctionController.m */,
-				8A444E0E219AA4C30028422F /* YLSubController.h */,
-				8A444E0F219AA4C40028422F /* YLSubController.m */,
-				8AC354EA21B0468A00A464AF /* YLCollectController.h */,
-				8AC354EB21B0468B00A464AF /* YLCollectController.m */,
-				8AC354F021B046CD00A464AF /* YLSubscribeController.h */,
-				8AC354F121B046CD00A464AF /* YLSubscribeController.m */,
-				8AC354F321B046EA00A464AF /* YLBuyOrderController.h */,
-				8AC354F421B046EA00A464AF /* YLBuyOrderController.m */,
-				8AC354F621B0470200A464AF /* YLSaleOrderController.h */,
-				8AC354F721B0470200A464AF /* YLSaleOrderController.m */,
-				8AC354F921B0472500A464AF /* YLBargainHistoryController.h */,
-				8AC354FA21B0472500A464AF /* YLBargainHistoryController.m */,
-				8AC354FC21B0484500A464AF /* YLBrowseController.h */,
-				8AC354FD21B0484500A464AF /* YLBrowseController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -673,8 +718,6 @@
 				8A90399721A264FA0099BC98 /* YLNoneView.m */,
 				8AC3547E21AD25F500A464AF /* YLNumberView.h */,
 				8AC3547F21AD25F500A464AF /* YLNumberView.m */,
-				8AC354E421AFE66700A464AF /* YLSubCell.h */,
-				8AC354E521AFE66700A464AF /* YLSubCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -682,12 +725,6 @@
 		8A0E3F63218A9B6600275131 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8AC354DE21AFD99F00A464AF /* YLLookCarModel.h */,
-				8AC354DF21AFD99F00A464AF /* YLLookCarModel.m */,
-				8AC354E121AFDC4C00A464AF /* YLLookCarDetailModel.h */,
-				8AC354E221AFDC4C00A464AF /* YLLookCarDetailModel.m */,
-				8AC354E721AFE6CF00A464AF /* YLSubCellModel.h */,
-				8AC354E821AFE6CF00A464AF /* YLSubCellModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -909,6 +946,121 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		8ADEE4CD21B0C3D400BAD2CD /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				8AC354EA21B0468A00A464AF /* YLCollectController.h */,
+				8AC354EB21B0468B00A464AF /* YLCollectController.m */,
+				8ADEE4D421B0C56B00BAD2CD /* YLSubCollectController.h */,
+				8ADEE4D521B0C56B00BAD2CD /* YLSubCollectController.m */,
+				8ADEE4D721B0C85500BAD2CD /* YLCollectModel.h */,
+				8ADEE4D821B0C85500BAD2CD /* YLCollectModel.m */,
+				8ADEE4DA21B0D0BB00BAD2CD /* YLCollectionModel.h */,
+				8ADEE4DB21B0D0BB00BAD2CD /* YLCollectionModel.m */,
+				8ADEE4E021B0D25300BAD2CD /* YLCollectCellFrame.h */,
+				8ADEE4E121B0D25300BAD2CD /* YLCollectCellFrame.m */,
+				8ADEE4E321B0D27700BAD2CD /* YLCollectCell.h */,
+				8ADEE4E421B0D27700BAD2CD /* YLCollectCell.m */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
+		8ADEE4CE21B0C3DF00BAD2CD /* Browse */ = {
+			isa = PBXGroup;
+			children = (
+				8AC354FC21B0484500A464AF /* YLBrowseController.h */,
+				8AC354FD21B0484500A464AF /* YLBrowseController.m */,
+			);
+			path = Browse;
+			sourceTree = "<group>";
+		};
+		8ADEE4D021B0C41200BAD2CD /* SalerOrder */ = {
+			isa = PBXGroup;
+			children = (
+				8AC354F621B0470200A464AF /* YLSaleOrderController.h */,
+				8AC354F721B0470200A464AF /* YLSaleOrderController.m */,
+				8ADEE4E921B0DACF00BAD2CD /* YLSubSaleOrderController.h */,
+				8ADEE4EA21B0DACF00BAD2CD /* YLSubSaleOrderController.m */,
+				8A25C5DE21B2385600538437 /* YLSaleOrderModel.h */,
+				8A25C5DF21B2385600538437 /* YLSaleOrderModel.m */,
+				8A25C5E721B239AB00538437 /* YLSaleOrderDetailModel.h */,
+				8A25C5E821B239AB00538437 /* YLSaleOrderDetailModel.m */,
+				8A25C5E121B2386C00538437 /* YLSaleOrderCellFrame.h */,
+				8A25C5E221B2386C00538437 /* YLSaleOrderCellFrame.m */,
+				8A25C5E421B2388500538437 /* YLSaleOrderCell.h */,
+				8A25C5E521B2388500538437 /* YLSaleOrderCell.m */,
+			);
+			path = SalerOrder;
+			sourceTree = "<group>";
+		};
+		8ADEE4D121B0C46700BAD2CD /* Suggestion */ = {
+			isa = PBXGroup;
+			children = (
+				8AB874502199462C00FB0A93 /* YLSuggestionController.h */,
+				8AB874512199462C00FB0A93 /* YLSuggestionController.m */,
+			);
+			path = Suggestion;
+			sourceTree = "<group>";
+		};
+		8ADEE4D221B0C47400BAD2CD /* BargainHistory */ = {
+			isa = PBXGroup;
+			children = (
+				8AC354F921B0472500A464AF /* YLBargainHistoryController.h */,
+				8AC354FA21B0472500A464AF /* YLBargainHistoryController.m */,
+				8ADEE4EC21B0E0DD00BAD2CD /* YLSubBargainHistoryController.h */,
+				8ADEE4ED21B0E0DD00BAD2CD /* YLSubBargainHistoryController.m */,
+			);
+			path = BargainHistory;
+			sourceTree = "<group>";
+		};
+		8ADEE4D321B0C49D00BAD2CD /* Subscribe */ = {
+			isa = PBXGroup;
+			children = (
+				8AC354F021B046CD00A464AF /* YLSubscribeController.h */,
+				8AC354F121B046CD00A464AF /* YLSubscribeController.m */,
+			);
+			path = Subscribe;
+			sourceTree = "<group>";
+		};
+		8ADEE4EF21B0E35200BAD2CD /* Depreciate */ = {
+			isa = PBXGroup;
+			children = (
+				8ADEE4F021B0E40000BAD2CD /* YLDepreciateController.h */,
+				8ADEE4F121B0E40000BAD2CD /* YLDepreciateController.m */,
+			);
+			name = Depreciate;
+			sourceTree = "<group>";
+		};
+		8ADEE4F321B0E4D400BAD2CD /* LookingCar */ = {
+			isa = PBXGroup;
+			children = (
+				8ADEE4FD21B0E4D400BAD2CD /* YLSubCellModel.h */,
+				8ADEE4F421B0E4D400BAD2CD /* YLSubCellModel.m */,
+				8ADEE4FC21B0E4D400BAD2CD /* YLSubController.h */,
+				8ADEE4F521B0E4D400BAD2CD /* YLSubController.m */,
+				8ADEE4F621B0E4D400BAD2CD /* YLFunctionController.h */,
+				8ADEE4FB21B0E4D400BAD2CD /* YLFunctionController.m */,
+				8ADEE4F721B0E4D400BAD2CD /* YLSubCell.h */,
+				8ADEE4FA21B0E4D400BAD2CD /* YLSubCell.m */,
+				8ADEE4FE21B0E4D400BAD2CD /* YLLookCarModel.h */,
+				8ADEE4F821B0E4D400BAD2CD /* YLLookCarModel.m */,
+				8ADEE4F921B0E4D400BAD2CD /* YLLookCarDetailModel.h */,
+				8ADEE4FF21B0E4D400BAD2CD /* YLLookCarDetailModel.m */,
+			);
+			path = LookingCar;
+			sourceTree = "<group>";
+		};
+		8ADEE50621B0E4E000BAD2CD /* BuyOrder */ = {
+			isa = PBXGroup;
+			children = (
+				8ADEE50721B0E4E000BAD2CD /* YLSubBuyOrderController.h */,
+				8ADEE50821B0E4E000BAD2CD /* YLBuyOrderController.m */,
+				8ADEE50921B0E4E000BAD2CD /* YLBuyOrderController.h */,
+				8ADEE50A21B0E4E000BAD2CD /* YLSubBuyOrderController.m */,
+			);
+			path = BuyOrder;
+			sourceTree = "<group>";
+		};
 		8AEFA694219D4A4900C21452 /* YLTool */ = {
 			isa = PBXGroup;
 			children = (
@@ -1060,32 +1212,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8A444E0A219AA1DB0028422F /* YLFunctionController.m in Sources */,
 				8AFC7B4521A4F17200570E83 /* YLMessageCodeTool.m in Sources */,
 				8A0E3F45218A942D00275131 /* YLNavigationController.m in Sources */,
 				8A4A66F9219E7EB0001B3CC0 /* YLBrandModel.m in Sources */,
 				8AB874492199149500FB0A93 /* YLLoginHeader.m in Sources */,
 				8A0E3F3A218A927100275131 /* main.m in Sources */,
 				8AC75B9821994AF100D159C9 /* UITextView+Extension.m in Sources */,
+				8ADEE4E221B0D25300BAD2CD /* YLCollectCellFrame.m in Sources */,
 				8AFC7B3A21A396B700570E83 /* YLDetailInfoModel.m in Sources */,
 				8AEFA6AF219DDBBB00C21452 /* YLCustomButton.m in Sources */,
 				8ADE764921A69A1C00C78F00 /* YLMineTool.m in Sources */,
+				8ADEE50521B0E4D400BAD2CD /* YLLookCarDetailModel.m in Sources */,
 				8AF43E512192CB83003E2D5B /* YLCondition.m in Sources */,
 				8ADE765021A6AFF000C78F00 /* YLSearchParamModel.m in Sources */,
-				8AC354E621AFE66700A464AF /* YLSubCell.m in Sources */,
 				8AEFA693219D2BA600C21452 /* YLButtonView.m in Sources */,
 				8A37DEFE218C0F22003A18F0 /* YLSaleViewModel.m in Sources */,
 				8ADE763721A6797500C78F00 /* YLSeriesController.m in Sources */,
+				8A25C5E921B239AB00538437 /* YLSaleOrderDetailModel.m in Sources */,
 				8A90399521A2595C0099BC98 /* YLReservationView.m in Sources */,
 				8AEFA6A9219D736C00C21452 /* YLTableViewModel.m in Sources */,
 				8AE1D6BB21ABD3E300726A3E /* YLSeriesView.m in Sources */,
 				8A21114221916C900014132C /* YLDetailFooterView.m in Sources */,
-				8AC354F521B046EA00A464AF /* YLBuyOrderController.m in Sources */,
 				8AEFA697219D4A7600C21452 /* YLBaseTool.m in Sources */,
 				8AE1D6C721AC567C00726A3E /* YLLicenseTime.m in Sources */,
 				8A9039A421A299B40099BC98 /* YLDetectCenterModel.m in Sources */,
 				8A265C72219A629700FB58A3 /* YLAboutController.m in Sources */,
-				8AC354E021AFD99F00A464AF /* YLLookCarModel.m in Sources */,
 				8AC354FE21B0484500A464AF /* YLBrowseController.m in Sources */,
 				8A211130219163F20014132C /* YLSafeguardCell.m in Sources */,
 				8A0E3F67218AA14200275131 /* YLTitleBar.m in Sources */,
@@ -1096,8 +1247,12 @@
 				8A90399E21A285C40099BC98 /* YLDetectCenterCell.m in Sources */,
 				8A339C98219BD1BC00A75DE0 /* YLBanner.m in Sources */,
 				8AD7897A21A7A65D0002946B /* YLBuyCellFrame.m in Sources */,
+				8ADEE4DC21B0D0BB00BAD2CD /* YLCollectionModel.m in Sources */,
 				8AE1D6CA21AC56A600726A3E /* YLCheckoutView.m in Sources */,
+				8ADEE50121B0E4D400BAD2CD /* YLSubController.m in Sources */,
+				8ADEE4D621B0C56B00BAD2CD /* YLSubCollectController.m in Sources */,
 				8A0E3F4B218A949B00275131 /* YLBuyController.m in Sources */,
+				8A25C5E321B2386C00538437 /* YLSaleOrderCellFrame.m in Sources */,
 				8A35F8EC218D3DAF00BDBC9E /* YLOrderController.m in Sources */,
 				8AEFA6A6219D720C00C21452 /* YLTableViewCell.m in Sources */,
 				8AB8744C219918E100FB0A93 /* YLFunctionView.m in Sources */,
@@ -1106,25 +1261,35 @@
 				8A21113F219169CD0014132C /* YLInformationView.m in Sources */,
 				8AC3548021AD25F500A464AF /* YLNumberView.m in Sources */,
 				8A444E07219A9C030028422F /* YLBargainCell.m in Sources */,
+				8A25C5DD21B2213300538437 /* YLAllTimePicker.m in Sources */,
 				8ADE763421A65CAF00C78F00 /* YLBuyTableViewCell.m in Sources */,
 				8A37DF01218C2E77003A18F0 /* YLMessageController.m in Sources */,
+				8ADEE4EE21B0E0DD00BAD2CD /* YLSubBargainHistoryController.m in Sources */,
 				8ADE763A21A679D500C78F00 /* YLSeriesModel.m in Sources */,
+				8ADEE4F221B0E40000BAD2CD /* YLDepreciateController.m in Sources */,
 				8A37DEFB218C0D88003A18F0 /* YLSaleView.m in Sources */,
 				8AEFA6A0219D55BB00C21452 /* YLNotableModel.m in Sources */,
 				8A265C6F219A5B6300FB58A3 /* YLSettingController.m in Sources */,
+				8ADEE50C21B0E4E000BAD2CD /* YLSubBuyOrderController.m in Sources */,
 				8AEFA690219D1D7B00C21452 /* YLTableGroupHeader.m in Sources */,
 				8AEFA6A5219D720C00C21452 /* YLCommandCellView.m in Sources */,
 				8A35F8E6218D35E800BDBC9E /* YLSearchBar.m in Sources */,
 				8AEF3B2A219CFE0000A2375D /* YLNotable.m in Sources */,
+				8A25C5EC21B255D700538437 /* YLBannerView.m in Sources */,
 				8AFC7B4821A4FB5400570E83 /* YLAccount.m in Sources */,
 				8A90399821A264FA0099BC98 /* YLNoneView.m in Sources */,
 				8A37DF04218C3536003A18F0 /* YLMessageCell.m in Sources */,
+				8A25C5E021B2385600538437 /* YLSaleOrderModel.m in Sources */,
 				8AD7CEAF219FD00900E5962A /* YLSearchView.m in Sources */,
+				8ADEE4EB21B0DACF00BAD2CD /* YLSubSaleOrderController.m in Sources */,
 				8A0E3F42218A940800275131 /* YLTabBarController.m in Sources */,
 				8AB874522199462C00FB0A93 /* YLSuggestionController.m in Sources */,
 				8AC354EC21B0468B00A464AF /* YLCollectController.m in Sources */,
+				8ADEE4E521B0D27700BAD2CD /* YLCollectCell.m in Sources */,
 				8AE1D6B821ABD3D000726A3E /* YLBrandView.m in Sources */,
 				8ADE764621A698B000C78F00 /* YLSaleTool.m in Sources */,
+				8A25C5E621B2388500538437 /* YLSaleOrderCell.m in Sources */,
+				8ADEE50B21B0E4E000BAD2CD /* YLBuyOrderController.m in Sources */,
 				8A211139219164AD0014132C /* YLCarInformationCell.m in Sources */,
 				8A35F8E9218D36CC00BDBC9E /* UIImage+Extension.m in Sources */,
 				8A0E3F4E218A94D800275131 /* YLSaleViewController.m in Sources */,
@@ -1137,29 +1302,33 @@
 				8AC3547D21AD14F400A464AF /* YLCityView.m in Sources */,
 				8ADE764021A6960A00C78F00 /* YLHomeTool.m in Sources */,
 				8AEFA69D219D553E00C21452 /* YLBannerModel.m in Sources */,
+				8ADEE50321B0E4D400BAD2CD /* YLSubCell.m in Sources */,
 				8AC354F221B046CD00A464AF /* YLSubscribeController.m in Sources */,
 				8A35F8EF218D3E9C00BDBC9E /* YLOrderCell.m in Sources */,
 				8AFC7B4E21A53C3000570E83 /* YLMineIcon.m in Sources */,
 				8AC354DD21AE64E300A464AF /* YLCarInformationModel.m in Sources */,
 				8AD7897D21A7FF830002946B /* YLCarTypeController.m in Sources */,
 				8A35F8F8218D5F9F00BDBC9E /* YLReservationController.m in Sources */,
-				8A444E10219AA4C40028422F /* YLSubController.m in Sources */,
 				8AE1D6BE21ABD3F600726A3E /* YLCartypeView.m in Sources */,
 				8A9039B021A2F6600099BC98 /* YLDetailTool.m in Sources */,
 				8A21113C219168880014132C /* YLDetailHeaderView.m in Sources */,
+				8ADEE50021B0E4D400BAD2CD /* YLSubCellModel.m in Sources */,
 				8AE1D6C421AC564600726A3E /* YLCourseView.m in Sources */,
+				8A25C5DA21B220BF00538437 /* YLYearMonthPicker.m in Sources */,
 				8A9039AD21A2D1F60099BC98 /* YLConfigController.m in Sources */,
 				8AF0DB112196C74400A3A11F /* YLSelectView.m in Sources */,
 				8AC3554321955F8A00D16503 /* YLTimePickView.m in Sources */,
-				8AC354E321AFDC4C00A464AF /* YLLookCarDetailModel.m in Sources */,
 				8AF43E572192DF3F003E2D5B /* YLCustomPrice.m in Sources */,
 				8A35F8F5218D541400BDBC9E /* YLOrderView.m in Sources */,
 				8AFC7B4B21A4FEAA00570E83 /* YLAccountTool.m in Sources */,
 				8AC75B9B2199544900D159C9 /* YLLoginController.m in Sources */,
 				8AE1D68B21A8EA4500726A3E /* YLCarTypeModel.m in Sources */,
 				8A2111332191642E0014132C /* YLInformationCell.m in Sources */,
+				8ADEE4D921B0C85500BAD2CD /* YLCollectModel.m in Sources */,
 				8A2111362191645D0014132C /* YLReportCell.m in Sources */,
 				8AC354F821B0470200A464AF /* YLSaleOrderController.m in Sources */,
+				8ADEE50221B0E4D400BAD2CD /* YLLookCarModel.m in Sources */,
+				8ADEE50421B0E4D400BAD2CD /* YLFunctionController.m in Sources */,
 				8ADE764321A696CE00C78F00 /* YLBuyTool.m in Sources */,
 				8A0E3F2C218A926F00275131 /* AppDelegate.m in Sources */,
 				8A21111D219157AB0014132C /* YLBrandController.m in Sources */,
@@ -1171,7 +1340,6 @@
 				8A339CCA219C0C6D00A75DE0 /* YLDetailModel.m in Sources */,
 				8AF0DB172196C93C00A3A11F /* YLCollectHeader.m in Sources */,
 				8A21112A219163880014132C /* YLDetailController.m in Sources */,
-				8AC354E921AFE6CF00A464AF /* YLSubCellModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

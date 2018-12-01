@@ -31,12 +31,16 @@
 #import "YLSearchParamModel.h"
 #import "YLNavigationController.h"
 
+#import "YLRequest.h"
+
 @interface YLMainController ()<UITableViewDelegate, UITableViewDataSource, YLButtonViewDelegate, YLTableGroupHeaderDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray *images; // 存放转播图的数组
+
+
 @property (nonatomic, strong) NSMutableArray *recommends; // 存放推荐类别
-@property (nonatomic, strong) NSMutableArray *notableTitles; // 存放走马灯广告
+//@property (nonatomic, copy) NSMutableArray *images; // 存放转播图的数组
+//@property (nonatomic, copy) NSMutableArray *notableTitles; // 存放走马灯广告
 
 //@property (nonatomic, strong) YLSearchParamModel *searchParam;
 //@property (nonatomic, strong) YLTabBarController *tabBarVc;
@@ -53,36 +57,91 @@
     self.automaticallyAdjustsScrollViewInsets = NO; // 不自动调节滚动区域
 
     
-    [self load];
+    [self loadData];
     [self setNav];
     [self setupTableView];
 }
 
-- (void)load {
+//- (void)load {
+//
+//    // 获取轮播图数组
+//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+//    [YLHomeTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
+//        for (YLBannerModel *model in result) {
+//            [self.images addObject:model.img];
+//        }
+//    } failure:nil];
+//
+//    // 获取走马灯广告数组
+//    [YLHomeTool notableWithParam:param success:^(NSArray<YLNotableModel *> * _Nonnull result) {
+//        for (YLNotableModel *model in result) {
+//            [self.notableTitles addObject:model.text];
+//        }
+//    } failure:nil];
+//
+//    // 获取推荐列表数组
+//    [YLHomeTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
+//        for (YLTableViewModel *model in result) {
+//            [self.recommends addObject:model];
+//        }
+//        [self.tableView reloadData]; // 获取到数据刷新表格
+//    } failure:nil];
+//}
+
+- (void)loadData {
     
-    // 获取轮播图数组
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    [YLHomeTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
-        for (YLBannerModel *model in result) {
-            [self.images addObject:model.img];
-        }
-    } failure:nil];
+//    // 获取轮播图
+//    NSString *bannerStr = @"http://ucarjava.bceapp.com/home?method=slide";
+//    [YLRequest GET:bannerStr parameters:nil success:^(id  _Nonnull responseObject) {
+//        if ([responseObject[@"code"] isEqualToString:@"400"]) {
+//            NSLog(@"bannerStr%@", responseObject[@"message"]);
+//        } else {
+//            NSLog(@"bannerStr%@", responseObject[@"data"]);
+//            NSArray *banners = [YLBannerModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+//            for (YLBannerModel *model in banners) {
+//                [self.images addObject:model];
+//            }
+//            NSLog(@"%@", self.images);
+//        }
+//    } failed:nil];
+//
+//    // 获取成交记录
+//    NSString *notableStr = @"http://ucarjava.bceapp.com/trade?method=random";
+//    [YLRequest GET:notableStr parameters:nil success:^(id  _Nonnull responseObject) {
+//        if ([responseObject[@"code"] isEqualToString:@"400"]) {
+//            NSLog(@"notableStr%@", responseObject[@"message"]);
+//        } else {
+//            NSLog(@"notableStr%@", responseObject[@"data"]);
+//            NSArray *notables = [YLNotableModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+//            for (YLNotableModel *model in notables) {
+//                NSString *notable = model.text;
+//                [self.notableTitles addObject:notable];
+//            }
+//            NSLog(@"%@", self.notableTitles);
+//        }
+//    } failed:nil];
     
-    // 获取走马灯广告数组
-    [YLHomeTool notableWithParam:param success:^(NSArray<YLNotableModel *> * _Nonnull result) {
-        for (YLNotableModel *model in result) {
-            [self.notableTitles addObject:model.text];
+    // 获取推荐列表
+    NSString *recommendStr = @"http://ucarjava.bceapp.com/detail?method=recommend";
+    [YLRequest GET:recommendStr parameters:nil success:^(id  _Nonnull responseObject) {
+        if ([responseObject[@"code"] isEqualToString:@"400"]) {
+            NSLog(@"recommendStr%@", responseObject[@"message"]);
+        } else {
+            NSLog(@"recommendStr%@", responseObject[@"data"]);
+            NSArray *recomments = [YLTableViewModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            for (YLTableViewModel *model in recomments) {
+                [self.recommends addObject:model];
+            }
+            [self.tableView reloadData];
         }
-    } failure:nil];
-    
-    // 获取推荐列表数组
-    [YLHomeTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-        for (YLTableViewModel *model in result) {
-            [self.recommends addObject:model];
-        }
-        [self.tableView reloadData]; // 获取到数据刷新表格
-    } failure:nil];
+    } failed:nil];
 }
+
+- (void)loadMoreData {
+    
+    
+}
+
 
 - (void)setupTableView {
     
@@ -90,15 +149,12 @@
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.bounces = NO; // 禁止弹跳
+//    self.tableView.bounces = NO; // 禁止弹跳
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefresh)];
 
-    NSMutableArray *bannerTitles = [NSMutableArray arrayWithObjects:@"http://image-public.gz.bcebos.com/vehicle.jpg", @"http://image-public.gz.bcebos.com/vehicle2.jpg", @"http://image-public.gz.bcebos.com/vehicle3.jpg", nil];
-    
     CGRect frame = CGRectMake(0, 100, YLScreenWidth, 424);
-    YLHomeHeader *homeHeader = [[YLHomeHeader alloc] initWithFrame:frame bannerTitles:bannerTitles notabletitles:self.notableTitles];
-    // 代理
-//    homeHeader.buttonView.delegate = self;
+    YLHomeHeader *homeHeader = [[YLHomeHeader alloc] initWithFrame:frame bannerTitles:self.images notabletitles:self.notableTitles];
     homeHeader.groupHeader.delegate = self;
     
     __weak typeof(self) weakSelf = self;
@@ -127,6 +183,14 @@
         [weakSelf.param removeAllObjects];
     };
     self.tableView.tableHeaderView = homeHeader;
+}
+
+- (void)headerRefresh {
+    
+    NSLog(@"下拉刷新");
+    [self.recommends removeAllObjects];
+    [self loadData];
+    [self.tableView.mj_header endRefreshing];
 }
 
 #pragma mark UITableViewDataSource/UITableViewDelegate
@@ -244,17 +308,7 @@
 
 - (void)leftBarButtonItemClick {
     
-//    // 获取tabBarVC里的导航控制器存放的子控制器，传值到子控制器，再切换视图
-//    YLTabBarController *tab = (YLTabBarController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-//    YLNavigationController *nav2 = tab.viewControllers[1];
-//    YLBuyController *buy = nav2.viewControllers.firstObject;
-//    buy.searchTitle = @"雪佛兰";
-//    tab.selectedIndex = 1;
-    
-    NSLog(@"leftBarButtonItem被点击了!");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"暂时只支持阳江市" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-    [alert show];
-    
+    [self showMessage:@"暂时只支持阳江市"];
 }
 
 - (void)rightBarButtonItemClick {
@@ -262,6 +316,29 @@
     NSLog(@"消息中心被点击了！");
     YLMessageController *messageVc = [[YLMessageController alloc] init];
     [self.navigationController pushViewController:messageVc animated:YES];
+}
+
+// 提示弹窗
+- (void)showMessage:(NSString *)message {
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;// 获取最上层窗口
+    
+    UILabel *messageLabel = [[UILabel alloc] init];
+    CGSize messageSize = CGSizeMake([message getSizeWithFont:[UIFont systemFontOfSize:12]].width + 30, 30);
+    messageLabel.frame = CGRectMake((YLScreenWidth - messageSize.width) / 2, YLScreenHeight/2, messageSize.width, messageSize.height);
+    messageLabel.text = message;
+    messageLabel.font = [UIFont systemFontOfSize:12];
+    messageLabel.textColor = [UIColor blackColor];
+    messageLabel.textAlignment = NSTextAlignmentCenter;
+    messageLabel.backgroundColor = YLColor(233.f, 233.f, 233.f);
+    messageLabel.layer.cornerRadius = 5.0f;
+    messageLabel.layer.masksToBounds = YES;
+    [window addSubview:messageLabel];
+    
+    [UIView animateWithDuration:1 animations:^{
+        messageLabel.alpha = 0;
+    } completion:^(BOOL finished) {
+        [messageLabel removeFromSuperview];
+    }];
 }
 
 #pragma mark 懒加载
@@ -273,21 +350,21 @@
     return _recommends;
 }
 
-- (NSMutableArray *)images {
-    
-    if (!_images) {
-        _images = [NSMutableArray array];
-    }
-    return _images;
-}
-
-- (NSMutableArray *)notableTitles {
-    
-    if (!_notableTitles) {
-        _notableTitles = [NSMutableArray array];
-    }
-    return _notableTitles;
-}
+//- (NSMutableArray *)images {
+//
+//    if (!_images) {
+//        _images = [NSMutableArray array];
+//    }
+//    return _images;
+//}
+//
+//- (NSMutableArray *)notableTitles {
+//
+//    if (!_notableTitles) {
+//        _notableTitles = [NSMutableArray array];
+//    }
+//    return _notableTitles;
+//}
 
 
 - (NSMutableDictionary *)param {
@@ -296,6 +373,14 @@
         _param = [NSMutableDictionary dictionary];
     }
     return _param;
+}
+
+- (void)setImages:(NSMutableArray *)images {
+    _images = images;
+}
+
+- (void)setNotableTitles:(NSMutableArray *)notableTitles {
+    _notableTitles = notableTitles;
 }
 
 @end

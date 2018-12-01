@@ -27,6 +27,7 @@
     // 获取本地浏览记录个数
     NSInteger count = self.browsingHistory.count;
     NSLog(@"count:%ld", count);
+    self.tableView.tableFooterView = [[UIView alloc] init];
 }
 
 #pragma mark - Table view data source

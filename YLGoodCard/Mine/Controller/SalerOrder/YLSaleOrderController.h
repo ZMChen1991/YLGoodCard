@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLSkipView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YLSaleOrderController : UIViewController
+
+@property (nonatomic, strong) NSArray *titles;
+@property (nonatomic, strong) NSArray *params;
+@property (nonatomic, strong) YLSkipView *skip;
 
 @end
 

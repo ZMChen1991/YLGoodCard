@@ -1,21 +1,21 @@
 //
-//  YLFunctionController.m
+//  YLSaleOrderController.m
 //  YLGoodCard
 //
-//  Created by lm on 2018/11/13.
+//  Created by lm on 2018/11/30.
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
-#import "YLFunctionController.h"
-#import "YLSubController.h"
+#import "YLSaleOrderController.h"
+#import "YLSubSaleOrderController.h"
 #import "YLAccountTool.h"
 #import "YLAccount.h"
 
-@interface YLFunctionController ()
+@interface YLSaleOrderController ()
 
 @end
 
-@implementation YLFunctionController
+@implementation YLSaleOrderController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,14 +27,14 @@
     [param setValue:account.telephone forKey:@"telephone"];
     NSMutableArray *ctrs = [NSMutableArray array];
     for (NSInteger i = 0; i < self.titles.count; i++) {
-        YLSubController *ctr1 = [[YLSubController alloc] init];
-        ctr1.cellType = YLCellTypeBargain;
+        YLSubSaleOrderController *ctr = [[YLSubSaleOrderController alloc] init];
         [param setValue:self.params[i] forKey:@"status"];
-        ctr1.param = param;
+        ctr.param = param;
+        ctr.view.backgroundColor = YLRandomColor;
         // 传请求
-        NSLog(@"%@", ctr1.param);
-        [self addChildViewController:ctr1];
-        [ctrs addObject:ctr1];
+        NSLog(@"%@", ctr.param);
+        [self addChildViewController:ctr];
+        [ctrs addObject:ctr];
     }
     self.skip.controllers = ctrs;
     [self.view addSubview:_skip];

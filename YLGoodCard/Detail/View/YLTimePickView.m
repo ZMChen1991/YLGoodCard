@@ -118,11 +118,22 @@
     [self daysWithYear:currentYear month:currentMonth];
     
     for (NSInteger i = 0; i < 24; i++) {
-        NSString *str = [NSString stringWithFormat:@"%ld", (long)i];
+        NSString *str;
+        if (i < 10) {
+            str = [NSString stringWithFormat:@"0%ld", (long)i];
+        } else {
+            str = [NSString stringWithFormat:@"%ld", (long)i];
+        }
         [hourArray addObject:str];
     }
     for (NSInteger i = 0; i < 60; i++) {
-        NSString *str = [NSString stringWithFormat:@"%ld", (long)i];
+//        NSString *str = [NSString stringWithFormat:@"%ld", (long)i];
+        NSString *str;
+        if (i < 10) {
+            str = [NSString stringWithFormat:@"0%ld", (long)i];
+        } else {
+            str = [NSString stringWithFormat:@"%ld", (long)i];
+        }
         [minutehArray addObject:str];
     }
     
@@ -158,6 +169,12 @@
     
     for (NSInteger i = 1; i <= totalDay; i++) {
         NSString *str = [NSString stringWithFormat:@"%ld", (long)i];
+//        NSString *str;
+//        if (i < 10) {
+//            str = [NSString stringWithFormat:@"0%ld", (long)i];
+//        } else {
+//            str = [NSString stringWithFormat:@"%ld", (long)i];
+//        }
         [dayArray addObject:str];
     }
     
@@ -192,7 +209,7 @@
 }
 
 - (void)completionBtn {
-    NSLog(@"z选择时间是：%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute);
+    NSLog(@"选择时间是：%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute);
 //    NSString *timeString = [NSString stringWithFormat:@"%@月%@日 %@:%@", self.month, self.day, self.hour, self.minute];
     NSString *timeString;
     if ([self.month compare:[NSString stringWithFormat:@"%ld", [self currentMonth]]] == NSOrderedAscending) {

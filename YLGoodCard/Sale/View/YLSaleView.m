@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) UIImageView *icon;
 @property (nonatomic, strong) UILabel *numberL;
-@property (nonatomic, strong) UITextField *telephone;
+@property (nonatomic, strong) UITextField *telephoneT;
 @property (nonatomic, strong) UILabel *label1; // 位车主提交卖车申请
 
 @end
@@ -83,7 +83,7 @@
     telephone.layer.masksToBounds = YES;
     telephone.backgroundColor = [UIColor whiteColor];
     [self addSubview:telephone];
-    self.telephone = telephone;
+    self.telephoneT = telephone;
 }
 
 - (void)layoutSubviews {
@@ -111,10 +111,10 @@
     float telephoneY = CGRectGetMaxY(self.numberL.frame) + margin1;
     float telephoneW = iconW - 2 * margin;
     float telephoneH = 40;
-    self.telephone.frame = CGRectMake(telephoneX, telephoneY, telephoneW, telephoneH);
+    self.telephoneT.frame = CGRectMake(telephoneX, telephoneY, telephoneW, telephoneH);
     
     float salaBtnX = margin;
-    float salaBtnY = CGRectGetMaxY(self.telephone.frame) + margin1;
+    float salaBtnY = CGRectGetMaxY(self.telephoneT.frame) + margin1;
     float salaBtnW = iconW - 2 * margin;
     float salaBtnH = 40;
     self.saleBtn.frame = CGRectMake(salaBtnX, salaBtnY, salaBtnW, salaBtnH);
@@ -137,19 +137,19 @@
 - (void)appraise:(UIButton *)sender {
     
     NSLog(@"点击了估价按钮");
-    [self.telephone resignFirstResponder];
+    [self.telephoneT resignFirstResponder];
     if (self.appraiseBtn.delegate && [self.appraiseBtn.delegate respondsToSelector:@selector(pushController:)]) {
         [self.appraiseBtn.delegate pushController:sender];
     }
     if (self.appraiseBlock) {
-        self.appraiseBlock(self.telephone.text);
+        self.appraiseBlock(self.telephoneT.text);
     }
 }
 // 咨询
 - (void)consult:(UIButton *)sender {
     
     NSLog(@"点击了咨询按钮");
-    [self.telephone resignFirstResponder];
+    [self.telephoneT resignFirstResponder];
     if (self.consultBtn.delegate && [self.consultBtn.delegate respondsToSelector:@selector(pushController:)]) {
         [self.consultBtn.delegate pushController:sender];
     }
@@ -158,18 +158,23 @@
 - (void)sale:(UIButton *)sender {
     
     NSLog(@"点击了预约卖车按钮");
-    [self.telephone resignFirstResponder];
+    [self.telephoneT resignFirstResponder];
     if (self.saleBtn.delegate && [self.saleBtn.delegate respondsToSelector:@selector(pushController:)]) {
         [self.saleBtn.delegate pushController:sender];
     }
     if (self.saleTelBlock) {
-        self.saleTelBlock(self.telephone.text);
+        self.saleTelBlock(self.telephoneT.text);
     }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
-    [self.telephone resignFirstResponder];
+    [self.telephoneT resignFirstResponder];
+}
+
+- (void)setTelephone:(NSString *)telephone {
+    _telephone = telephone;
+    self.telephoneT.text = telephone;
 }
 
 @end

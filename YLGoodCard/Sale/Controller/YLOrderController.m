@@ -21,6 +21,8 @@
 #import "YLLicenseTime.h"
 #import "YLCheckoutView.h"
 #import "YLCityView.h"
+#import "YLYearMonthPicker.h"
+#import "YLAllTimePicker.h"
 
 @interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate, YLDetectCenterViewDelegate>
 
@@ -34,9 +36,12 @@
 @property (nonatomic, strong) YLSeriesView *seriesView;
 @property (nonatomic, strong) YLCartypeView *carTypeView;
 @property (nonatomic, strong) YLCourseView *courseView;
-@property (nonatomic, strong) YLLicenseTime *licenseTime;
-@property (nonatomic, strong) YLCheckoutView *checkoutView;
+//@property (nonatomic, strong) YLLicenseTime *licenseTime;
+//@property (nonatomic, strong) YLCheckoutView *checkoutView;
 @property (nonatomic, strong) YLCityView *cityView;
+@property (nonatomic, strong) YLYearMonthPicker *licenseTimeView;
+@property (nonatomic, strong) YLAllTimePicker *checkTimeView;
+
 
 @property (nonatomic, strong) NSString *brand;
 @property (nonatomic, strong) NSString *series;
@@ -80,8 +85,8 @@
     [self.cover addSubview:self.seriesView];
     [self.cover addSubview:self.carTypeView];
     [self.cover addSubview:self.courseView];
-    [self.cover addSubview:self.licenseTime];
-    [self.cover addSubview:self.checkoutView];
+    [self.cover addSubview:self.licenseTimeView];
+    [self.cover addSubview:self.checkTimeView];
     [self.cover addSubview:self.cityView];
     [self.view addSubview:self.cover];
 }
@@ -163,8 +168,8 @@
         self.cover.hidden = NO;
         self.detectCenterView.hidden = NO;
         self.brandView.hidden = YES;
-        self.checkoutView.hidden = YES;
-        self.licenseTime.hidden = YES;
+        self.checkTimeView.hidden = YES;
+        self.licenseTimeView.hidden = YES;
         self.courseView.hidden = YES;
         self.cityView.hidden = YES;
     }
@@ -173,8 +178,8 @@
         self.cover.hidden = NO;
         self.detectCenterView.hidden = YES;
         self.brandView.hidden = NO;
-        self.checkoutView.hidden = YES;
-        self.licenseTime.hidden = YES;
+        self.checkTimeView.hidden = YES;
+        self.licenseTimeView.hidden = YES;
         self.courseView.hidden = YES;
         self.cityView.hidden = YES;
     }
@@ -183,36 +188,36 @@
         self.cover.hidden = NO;
         self.detectCenterView.hidden = YES;
         self.brandView.hidden = YES;
-        self.checkoutView.hidden = YES;
-        self.licenseTime.hidden = YES;
+        self.checkTimeView.hidden = YES;
+        self.licenseTimeView.hidden = YES;
         self.courseView.hidden = YES;
         self.cityView.hidden = NO;
     }
     if (indexPath.row == 4) {
         // 弹出时间选择窗口
         self.cover.hidden = NO;
-        self.licenseTime.hidden = NO;
+        self.licenseTimeView.hidden = NO;
         self.brandView.hidden = YES;
         self.detectCenterView.hidden = YES;
         self.courseView.hidden = YES;
-        self.checkoutView.hidden = YES;
+        self.checkTimeView.hidden = YES;
         self.cityView.hidden = YES;
     }
     if (indexPath.row == 5) {
         // 弹出行驶里程填写窗口
         self.cover.hidden = NO;
         self.courseView.hidden = NO;
-        self.licenseTime.hidden = YES;
+        self.licenseTimeView.hidden = YES;
         self.brandView.hidden = YES;
         self.detectCenterView.hidden = YES;
-        self.checkoutView.hidden = YES;
+        self.checkTimeView.hidden = YES;
         self.cityView.hidden = YES;
     }
     if (indexPath.row == 6) {
         // 弹出验车时间窗口
         self.cover.hidden = NO;
-        self.checkoutView.hidden = NO;
-        self.licenseTime.hidden = YES;
+        self.checkTimeView.hidden = NO;
+        self.licenseTimeView.hidden = YES;
         self.brandView.hidden = YES;
         self.detectCenterView.hidden = YES;
         self.courseView.hidden = YES;
@@ -346,7 +351,7 @@
 - (YLDetectCenterView *)detectCenterView {
     
     if (!_detectCenterView) {
-        _detectCenterView = [[YLDetectCenterView alloc] initWithFrame:CGRectMake(47, 0, YLScreenWidth - 47, YLScreenHeight-30)];
+        _detectCenterView = [[YLDetectCenterView alloc] initWithFrame:CGRectMake(47, 0, YLScreenWidth - 47, YLScreenHeight + 20)];
         _detectCenterView.delegate = self;
         _detectCenterView.hidden = YES;
     }
@@ -433,7 +438,7 @@
 
 - (YLCourseView *)courseView {
     if (!_courseView) {
-        _courseView = [[YLCourseView alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
+        _courseView = [[YLCourseView alloc] initWithFrame:CGRectMake(0, 200, YLScreenWidth, 150)];
         _courseView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _courseView.cancelBlock = ^{
@@ -454,57 +459,105 @@
     return _courseView;
 }
 
-- (YLLicenseTime *)licenseTime {
-    if (!_licenseTime) {
-        _licenseTime = [[YLLicenseTime alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
-        _licenseTime.hidden = YES;
-        __weak typeof(self) weakSelf = self;
-        _licenseTime.cancelBlock = ^{
-            weakSelf.cover.hidden = YES;
-            weakSelf.licenseTime.hidden = YES;
-            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:@"请输入"];
-            [weakSelf.tableView reloadData];
-        };
-        _licenseTime.sureBlock = ^(NSString * _Nonnull licenseTime) {
-            NSLog(@"%@", licenseTime);
-            [weakSelf.param setValue:licenseTime forKey:@"licenseTime"];
-            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:licenseTime];
-            [weakSelf.tableView reloadData];
-            weakSelf.cover.hidden = YES;
-            weakSelf.licenseTime.hidden = YES;
-        };
-    }
-    return _licenseTime;
-}
+//- (YLLicenseTime *)licenseTime {
+//    if (!_licenseTime) {
+//        _licenseTime = [[YLLicenseTime alloc] initWithFrame:CGRectMake(0, 200, YLScreenWidth, 150)];
+//        _licenseTime.hidden = YES;
+//        __weak typeof(self) weakSelf = self;
+//        _licenseTime.cancelBlock = ^{
+//            weakSelf.cover.hidden = YES;
+//            weakSelf.licenseTime.hidden = YES;
+//            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:@"请输入"];
+//            [weakSelf.tableView reloadData];
+//        };
+//        _licenseTime.sureBlock = ^(NSString * _Nonnull licenseTime) {
+//            NSLog(@"%@", licenseTime);
+//            [weakSelf.param setValue:licenseTime forKey:@"licenseTime"];
+//            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:licenseTime];
+//            [weakSelf.tableView reloadData];
+//            weakSelf.cover.hidden = YES;
+//            weakSelf.licenseTime.hidden = YES;
+//        };
+//    }
+//    return _licenseTime;
+//}
 
-- (YLCheckoutView *)checkoutView {
-    
-    if (!_checkoutView) {
-        _checkoutView = [[YLCheckoutView alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
-        _checkoutView.hidden = YES;
+//- (YLCheckoutView *)checkoutView {
+//
+//    if (!_checkoutView) {
+//        _checkoutView = [[YLCheckoutView alloc] initWithFrame:CGRectMake(0, 200, YLScreenWidth, 150)];
+//        _checkoutView.hidden = YES;
+//        __weak typeof(self) weakSelf = self;
+//        _checkoutView.cancelBlock = ^{
+//            weakSelf.cover.hidden = YES;
+//            weakSelf.checkoutView.hidden = YES;
+//            [weakSelf.detailArray replaceObjectAtIndex:6 withObject:@"请输入"];
+//            [weakSelf.tableView reloadData];
+//        };
+//        _checkoutView.sureBlock = ^(NSString * _Nonnull checkOut) {
+//            NSLog(@"%@", checkOut);
+//            [weakSelf.param setValue:checkOut forKey:@"examineTime"];
+//            weakSelf.checkOut = checkOut;
+//            [weakSelf.detailArray replaceObjectAtIndex:6 withObject:checkOut];
+//            [weakSelf.tableView reloadData];
+//            weakSelf.cover.hidden = YES;
+//            weakSelf.checkoutView.hidden = YES;
+//        };
+//    }
+//    return _checkoutView;
+//}
+
+- (YLAllTimePicker *)checkTimeView {
+    if (!_checkTimeView) {
+        _checkTimeView = [[YLAllTimePicker alloc] initWithFrame:CGRectMake(0, 200, YLScreenWidth, 150)];
+        _checkTimeView.hidden = YES;
         __weak typeof(self) weakSelf = self;
-        _checkoutView.cancelBlock = ^{
+        _checkTimeView.cancelBlock = ^{
             weakSelf.cover.hidden = YES;
-            weakSelf.checkoutView.hidden = YES;
+            weakSelf.checkTimeView.hidden = YES;
             [weakSelf.detailArray replaceObjectAtIndex:6 withObject:@"请输入"];
             [weakSelf.tableView reloadData];
         };
-        _checkoutView.sureBlock = ^(NSString * _Nonnull checkOut) {
-            NSLog(@"%@", checkOut);
+        _checkTimeView.sureBlock = ^(NSString * _Nonnull checkOut) {
+            NSLog(@"checkOut :%@", checkOut);
             [weakSelf.param setValue:checkOut forKey:@"examineTime"];
             weakSelf.checkOut = checkOut;
             [weakSelf.detailArray replaceObjectAtIndex:6 withObject:checkOut];
             [weakSelf.tableView reloadData];
             weakSelf.cover.hidden = YES;
-            weakSelf.checkoutView.hidden = YES;
+            weakSelf.checkTimeView.hidden = YES;
         };
     }
-    return _checkoutView;
+    return _checkTimeView;
 }
+
+- (YLYearMonthPicker *)licenseTimeView {
+    if (!_licenseTimeView) {
+        _licenseTimeView = [[YLYearMonthPicker alloc] initWithFrame:CGRectMake(0, 200, YLScreenWidth, 150)];
+        _licenseTimeView.hidden = YES;
+        __weak typeof(self) weakSelf = self;
+        _licenseTimeView.cancelBlock = ^{
+            weakSelf.cover.hidden = YES;
+            weakSelf.licenseTimeView.hidden = YES;
+            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:@"请输入"];
+            [weakSelf.tableView reloadData];
+        };
+        _licenseTimeView.sureBlock = ^(NSString * _Nonnull licenseTime) {
+            [weakSelf.param setValue:licenseTime forKey:@"licenseTime"];
+            weakSelf.checkOut = licenseTime;
+            [weakSelf.detailArray replaceObjectAtIndex:4 withObject:licenseTime];
+            [weakSelf.tableView reloadData];
+            weakSelf.cover.hidden = YES;
+            weakSelf.licenseTimeView.hidden = YES;
+        };
+    }
+    return _licenseTimeView;
+}
+
 
 - (YLCityView *)cityView {
     if (!_cityView) {
-        _cityView = [[YLCityView alloc] initWithFrame:CGRectMake((YLScreenWidth-300) / 2, 200, 300, 100)];
+        _cityView = [[YLCityView alloc] initWithFrame:CGRectMake(0, 200, YLScreenWidth, 150)];
         _cityView.hidden = YES;
         __weak typeof(self) weakSelf = self;
         _cityView.cancelBlock = ^{

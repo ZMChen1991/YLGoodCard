@@ -9,6 +9,7 @@
 #import "YLMineTool.h"
 #import "YLRequest.h"
 #import "YLLookCarModel.h"
+#import "YLCollectionModel.h"
 
 @implementation YLMineTool
 
@@ -36,6 +37,17 @@
         NSDictionary *dict = responseObject[@"data"];
         if (success) {
             success(dict);
+        }
+    } failed:nil];
+}
+
++ (void)collectWithParam:(id)param success:(void (^)(NSArray *result))success failure:(void (^)(NSError * error))failure {
+    NSString *urlString = @"http://ucarjava.bceapp.com/collection?method=my";
+    [YLRequest GET:urlString parameters:param responseCache:nil success:^(id  _Nonnull responseObject) {
+
+        id result = [YLCollectionModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+        if (success) {
+            success(result);
         }
     } failed:nil];
 }

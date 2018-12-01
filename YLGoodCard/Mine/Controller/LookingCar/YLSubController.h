@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, YLCellType) {
 @interface YLSubController : UITableViewController
 
 @property (nonatomic, strong) NSMutableDictionary *param;
-@property (nonatomic, assign) YLCellType cellType; // cell的类型
+//@property (nonatomic, assign) YLCellType cellType; // cell的类型
 
 @end
 

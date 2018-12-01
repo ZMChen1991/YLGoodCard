@@ -23,4 +23,7 @@ typedef void(^AppraiseBlock)(NSString *telString);
 @property (nonatomic, copy) saleTelBlock saleTelBlock;
 @property (nonatomic, copy) AppraiseBlock appraiseBlock;
 
+@property (nonatomic, strong) NSString *telephone;// 预约卖车电话
+@property (nonatomic, strong) NSString *salerNum;// 卖车数
+
 @end

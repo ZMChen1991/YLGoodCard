@@ -32,7 +32,9 @@
     
     [self setupNav];
     
+    YLAccount *account = [YLAccountTool account];
     YLSaleView *saleView = [[YLSaleView alloc] init];
+    saleView.telephone = account.telephone;
     saleView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self.view addSubview:saleView];
     self.saleView = saleView;
@@ -61,9 +63,7 @@
 - (void)rightBarButtonItemClick {
     
     NSLog(@"按钮被点击了...");
-    
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"暂时只支持阳江市" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-//    [alert show];
+
 }
 
 #pragma mark YLSaleButton代理方法
@@ -72,44 +72,32 @@
     NSLog(@"%@---%ld", sender.titleLabel.text, sender.tag);
     NSString *title = sender.titleLabel.text;
     NSInteger index = sender.tag;
-    __weak typeof(self) weakSelf = self;
     if (index == 301) {
-        self.saleView.saleTelBlock = ^(NSString *telString) {
-            if ([NSString isBlankString:telString]) {
-                [weakSelf showMessage:@"请输入电话号码"];
-            } else {
-                // 这里判断用户是否登录，如果没有，跳转到登录界面
-                YLAccount *account = [YLAccountTool account];
-                if (account) {
-                    NSArray *titles = @[@"城市", @"检测中心", @"选择车型",@"上牌城市", @"上牌时间", @"行驶里程(:万公里)", @"验车时间", @"联系电话"];
-                    YLOrderController *orderVc = [[YLOrderController alloc] init];
-                    orderVc.array = titles;
-                    orderVc.telephone = telString;
-                    orderVc.navigationItem.title = title;
-                    [weakSelf.navigationController pushViewController:orderVc animated:YES];
-                } else {
-                    YLLoginController *login = [[YLLoginController alloc] init];
-                    [weakSelf.navigationController pushViewController:login animated:YES];
-                }
-            }
-        };
+        // 这里判断用户是否登录，如果没有，跳转到登录界面
+        YLAccount *account = [YLAccountTool account];
+        if (account) {
+            NSArray *titles = @[@"城市", @"检测中心", @"选择车型",@"上牌城市", @"上牌时间", @"行驶里程(:万公里)", @"验车时间", @"联系电话"];
+            YLOrderController *orderVc = [[YLOrderController alloc] init];
+            orderVc.array = titles;
+            orderVc.telephone = account.telephone;
+            orderVc.navigationItem.title = title;
+            [self.navigationController pushViewController:orderVc animated:YES];
+        } else {
+            YLLoginController *login = [[YLLoginController alloc] init];
+            [self.navigationController pushViewController:login animated:YES];
+        }
+
     }
-    if (index == 302) {
+    if (index == 302) { // 免费咨询
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"联系电话"
                                                         message:@"0662-12345678"
                                                        delegate:nil
                                               cancelButtonTitle:@"好的"
-                                              otherButtonTitles:nil, nil];
+                                              otherButtonTitles:@"拨打", nil];
         [alert show];
     }
-    if (index == 303) {
-        // 如果电话号码为空，点击按钮弹出提示框
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                        message:@"此功能以后开放"
-                                                       delegate:nil
-                                              cancelButtonTitle:@"好的"
-                                              otherButtonTitles:nil, nil];
-        [alert show];
+    if (index == 303) { // 爱车估价
+        [self showMessage:@"开发中，敬请期待"];
     }
     
 }

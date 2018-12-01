@@ -41,7 +41,12 @@
 + (void)bargainWithParam:(id)param success:(void (^)(NSDictionary * result))success failure:(void (^)(NSError * _Nonnull))failure {
     
     NSString *urlString = @"http://ucarjava.bceapp.com/bargain?method=dicker";
-    [self getWithUrl:urlString param:param dictForResultClass:[NSDictionary class] success:success failure:failure];
+//    [self getWithUrl:urlString param:param dictForResultClass:[NSDictionary class] success:success failure:failure];
+    [YLRequest GET:urlString parameters:param responseCache:nil success:^(id  _Nonnull responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failed:nil];
 }
 
 + (void)configWithParam:(id)param success:(void (^)(NSDictionary * result))success failure:(void (^)(NSError * _Nonnull))failure {

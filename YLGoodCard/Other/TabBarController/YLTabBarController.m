@@ -13,7 +13,14 @@
 #import "YLSaleViewController.h"
 #import "YLMineController.h"
 
+#import "YLRequest.h"
+#import "YLBannerModel.h"
+#import "YLNotableModel.h"
+
 @interface YLTabBarController ()
+
+@property (nonatomic, strong) NSMutableArray *banners;// 轮播图数组
+@property (nonatomic, strong) NSMutableArray *notables;// 成交记录数组
 
 @end
 
@@ -22,7 +29,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self loadData];
+    
     YLMainController *mainVc = [[YLMainController alloc] init];
+    mainVc.images = self.banners;
+    mainVc.notableTitles = self.notables;
     [self addChildViewController:mainVc title:@"首页" image:@"首页点击" selectImage:nil];
     
     YLBuyController *buyVc = [[YLBuyController alloc] init];
@@ -35,9 +46,37 @@
     [self addChildViewController:mineVc title:@"我的" image:@"我的" selectImage:nil];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)loadData {
+    
+    // 获取轮播图
+    NSString *bannerStr = @"http://ucarjava.bceapp.com/home?method=slide";
+    [YLRequest GET:bannerStr parameters:nil success:^(id  _Nonnull responseObject) {
+        if ([responseObject[@"code"] isEqualToString:@"400"]) {
+            NSLog(@"bannerStr%@", responseObject[@"message"]);
+        } else {
+            NSLog(@"bannerStr%@", responseObject[@"data"]);
+            NSArray *banners = [YLBannerModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            for (YLBannerModel *model in banners) {
+                [self.banners addObject:model.img];
+            }
+            NSLog(@"%@", self.banners);
+        }
+    } failed:nil];
+    
+    // 获取成交记录
+    NSString *notableStr = @"http://ucarjava.bceapp.com/trade?method=random";
+    [YLRequest GET:notableStr parameters:nil success:^(id  _Nonnull responseObject) {
+        if ([responseObject[@"code"] isEqualToString:@"400"]) {
+            NSLog(@"notableStr%@", responseObject[@"message"]);
+        } else {
+            NSLog(@"notableStr%@", responseObject[@"data"]);
+            NSArray *notables = [YLNotableModel mj_objectArrayWithKeyValuesArray:responseObject[@"data"]];
+            for (YLNotableModel *model in notables) {
+                [self.notables addObject:model.text];
+            }
+            NSLog(@"%@", self.notables);
+        }
+    } failed:nil];
 }
 
 - (void)addChildViewController:(UIViewController *)childController title:(NSString *)title image:(NSString *)image selectImage:(NSString *)selectImage {
@@ -58,5 +97,21 @@
     
     [self addChildViewController:nav];
     
+}
+
+- (NSMutableArray *)banners {
+    
+    if (!_banners) {
+        _banners = [NSMutableArray array];
+    }
+    return  _banners;
+}
+
+- (NSMutableArray *)notables {
+    
+    if (!_notables) {
+        _notables = [NSMutableArray array];
+    }
+    return  _notables;
 }
 @end

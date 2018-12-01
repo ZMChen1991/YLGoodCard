@@ -1,5 +1,5 @@
 //
-//  YLCollectController.h
+//  YLSubCollectController.h
 //  YLGoodCard
 //
 //  Created by lm on 2018/11/30.
@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YLCollectController : UIViewController
+@interface YLSubCollectController : UITableViewController
+
+@property (nonatomic, strong) NSMutableDictionary *param;
 
 @end
 

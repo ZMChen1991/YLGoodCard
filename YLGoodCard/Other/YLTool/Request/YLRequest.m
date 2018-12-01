@@ -37,6 +37,22 @@ YLSingletonM
 }
 
 
++ (void)GET:(NSString *)URL parameters:(id)parameters success:(DMHTTPRequestSuccess)success failed:(DMHTTPRequestFailed)failed {
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager GET:URL parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableLeaves error:nil];
+        if (success) {
+            success(dict);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failed) {
+            failed(error);
+        }
+    }];
+}
+
 + (void)GET:(NSString *)URL parameters:(id)parameters responseCache:(DMHTTPRequestCache)requestCache success:(DMHTTPRequestSuccess)success failed:(DMHTTPRequestFailed)failed {
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

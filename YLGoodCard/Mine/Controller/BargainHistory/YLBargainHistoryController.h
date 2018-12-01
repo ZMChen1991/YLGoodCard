@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YLSkipView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YLBargainHistoryController : UIViewController
 
+@property (nonatomic, strong) NSArray *titles;
+@property (nonatomic, strong) YLSkipView *skip;
 @end
 
 NS_ASSUME_NONNULL_END

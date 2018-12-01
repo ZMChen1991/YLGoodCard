@@ -14,18 +14,18 @@
     
 }
 
-+ (instancetype)initWithDict:(NSMutableDictionary *)dict {
-    
-    return [[self alloc] initWithDict:dict];
-}
-
-- (instancetype)initWithDict:(NSMutableDictionary *)dict {
-    
-    self = [super init];
-    if (self) {
-        [self setValuesForKeysWithDictionary:dict];
-    }
-    return self;
-}
+//+ (instancetype)initWithDict:(NSMutableDictionary *)dict {
+//    
+//    return [[self alloc] initWithDict:dict];
+//}
+//
+//- (instancetype)initWithDict:(NSMutableDictionary *)dict {
+//    
+//    self = [super init];
+//    if (self) {
+//        [self setValuesForKeysWithDictionary:dict];
+//    }
+//    return self;
+//}
 
 @end

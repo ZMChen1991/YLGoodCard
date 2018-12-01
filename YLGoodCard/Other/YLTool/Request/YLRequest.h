@@ -67,6 +67,17 @@ YLSingletonH
  */
 + (void)GET:(NSString *)URL parameters:(id)parameters responseCache:(DMHTTPRequestCache)requestCache success:(DMHTTPRequestSuccess)success failed:(DMHTTPRequestFailed)failed;
 
+
+/**
+ GET请求
+ 
+ @param URL 请求地址
+ @param parameters 请求参数
+ @param success 请求成功的回调
+ @param failed 请求失败的回调
+ */
++ (void)GET:(NSString *)URL parameters:(id)parameters success:(DMHTTPRequestSuccess)success failed:(DMHTTPRequestFailed)failed;
+
 /**
  POST请求
  

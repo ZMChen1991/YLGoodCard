@@ -1,18 +1,14 @@
 //
-//  YLSubCell.m
+//  YLSaleOrderCell.m
 //  YLGoodCard
 //
-//  Created by lm on 2018/11/29.
+//  Created by lm on 2018/12/1.
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
-#import "YLSubCell.h"
+#import "YLSaleOrderCell.h"
 
-#define YLLeftSpace 15
-#define YLTopSpace 12
-
-
-@interface YLSubCell ()
+@interface YLSaleOrderCell ()
 
 @property (nonatomic, strong) UIImageView *icon; // 图片
 @property (nonatomic, strong) UILabel *title; // 名称
@@ -22,17 +18,16 @@
 @property (nonatomic, strong) UILabel *lookCarTime; // 看车时间
 
 @property (nonatomic, strong) UIView *line;// 底线
-
 @end
 
-@implementation YLSubCell
+@implementation YLSaleOrderCell
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
     
     static NSString *ID = @"YLSubCell";
-    YLSubCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    YLSaleOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
-        cell = [[YLSubCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+        cell = [[YLSaleOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
     return cell;
 }
@@ -93,23 +88,22 @@
     self.line = line;
 }
 
-- (void)setModel:(YLSubCellModel *)model {
+- (void)setSaleOrderCellFrame:(YLSaleOrderCellFrame *)saleOrderCellFrame {
+    _saleOrderCellFrame = saleOrderCellFrame;
     
-    _model = model;
-    self.icon.frame = model.iconF;
-    self.title.frame = model.titleF;
-    self.course.frame = model.courseF;
-    self.price.frame = model.priceF;
-    self.originalPrice.frame = model.originalPriceF;
-    self.lookCarTime.frame = model.lookCarTimeF;
-    
-    [self.icon sd_setImageWithURL:[NSURL URLWithString:model.lookCarModel.detail.displayImg] placeholderImage:nil];
-    self.title.text = model.lookCarModel.detail.title;
-    self.course.text = [NSString stringWithFormat:@"%@年/万公里",model.lookCarModel.detail.course];
-    self.price.text = [self stringToNumber:model.lookCarModel.detail.price];
-    self.originalPrice.text = [self stringToNumber:model.lookCarModel.detail.originalPrice];
-    self.lookCarTime.text = model.lookCarModel.appointTime;
+    self.icon.frame = saleOrderCellFrame.iconF;
+    self.title.frame = saleOrderCellFrame.titleF;
+    self.price.frame = saleOrderCellFrame.priceF;
+    self.originalPrice.frame = saleOrderCellFrame.originalPriceF;
+    self.line.frame = saleOrderCellFrame.lineF;
+
+    //  赋值
+//    [self.icon sd_setImageWithURL:[NSURL URLWithString:saleOrderCellFrame.model.detail] placeholderImage:nil];
+//    self.title.text = @"";
+//    self.price.text = @"";
+//    self.originalPrice.text = @"";
 }
+
 
 - (NSString *)stringToNumber:(NSString *)number {
     

@@ -8,15 +8,11 @@
 
 #import "YLCheckoutView.h"
 #import "YLCondition.h"
+#import "YLAllTimePicker.h"
 
 @interface YLCheckoutView ()
 
-//@property (nonatomic, strong) UITextField *textField;
-
-@property (nonatomic, strong) UITextField *month;
-@property (nonatomic, strong) UITextField *day;
-@property (nonatomic, strong) UITextField *hour;
-@property (nonatomic, strong) UITextField *minute;
+@property (nonatomic, strong) NSString *checkTime;
 
 @end
 
@@ -36,61 +32,19 @@
 
 - (void)setupUI {
     
-    CGFloat width = 50;
-    CGFloat height = 30;
-    CGFloat labelW = 20;
+    CGFloat height = 100;
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake((300 - 260) / 2, YLLeftMargin, 260, height)];
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, YLLeftMargin, YLScreenWidth, height)];
     [self addSubview:view];
-    // 月
-    UITextField *month = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-    month.textAlignment = NSTextAlignmentRight;
-    month.placeholder = @"月份";
-    [view addSubview:month];
-    self.month = month;
     
-    UILabel *monthL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(month.frame), 0, labelW, height)];
-    monthL.text = @"月";
-    monthL.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:monthL];
-    // 日
-    UITextField *day = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(monthL.frame), 0, width, height)];
-    day.textAlignment = NSTextAlignmentRight;
-    day.placeholder = @"日期";
-    [view addSubview:day];
-    self.day = day;
+    YLAllTimePicker *time = [[YLAllTimePicker alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, height)];
+//    time.timePickerBlock = ^(NSString * _Nonnull time) {
+//        NSLog(@"%@", time);
+//        self.checkTime = time;
+//    };
+    [view addSubview:time];
     
-    UILabel *dayL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(day.frame), 0, labelW, height)];
-    dayL.text = @"日";
-    dayL.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:dayL];
-    // 时
-    UITextField *hour = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(dayL.frame), 0, width, height)];
-    hour.textAlignment = NSTextAlignmentRight;
-    hour.placeholder = @"小时";
-    [view addSubview:hour];
-    self.hour = hour;
-    
-    UILabel *hourL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(hour.frame), 0, labelW, height)];
-    hourL.text = @":";
-    hourL.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:hourL];
-    // 分
-    UITextField *minute = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(hourL.frame), 0, width, height)];
-    minute.placeholder = @"分钟";
-    [view addSubview:minute];
-    self.minute = minute;
-    
-//    UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(YLLeftMargin, YLLeftMargin, self.frame.size.width-YLLeftMargin * 2, self.frame.size.height-70)];
-//    textField.placeholder = @"请输入验车时间 格式：YYYY-MM-dd";
-//    [textField setValue:[UIFont boldSystemFontOfSize:12] forKeyPath:@"_placeholderLabel.font"];
-//    textField.clearsOnBeginEditing = YES;
-//    textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-//    textField.layer.borderWidth = 0.5;
-//    textField.layer.borderColor = [UIColor grayColor].CGColor;
-//    [self addSubview:textField];
-//    self.textField = textField;
-//
     YLCondition *cancelBtn = [YLCondition buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0, CGRectGetMaxY(view.frame) + YLLeftMargin, self.frame.size.width / 2, 40);
     cancelBtn.type = YLConditionTypeWhite;
@@ -108,28 +62,19 @@
 
 - (void)cancelClick {
     NSLog(@"点击取消，清空文本框");
+    
     if (self.cancelBlock) {
         self.cancelBlock();
     }
-    self.month.text = @"";
-    self.day.text = @"";
-    self.hour.text = @"";
-    self.minute.text = @"";
 }
 
 - (void)sureClick {
     
     NSLog(@"点击确定");
-    NSString *checkOut = [NSString stringWithFormat:@"%@月%@日%@:%@", self.month.text, self.day.text, self.hour.text, self.minute.text];
+    
     if (self.sureBlock) {
-        self.sureBlock(checkOut);
+        self.sureBlock(self.checkTime);
     }
-}
-
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
-    
 }
 
 

@@ -135,7 +135,7 @@
 
 - (void)changeBuy:(UISlider *)sender {
     
-    NSLog(@"%f", sender.value);
+//    NSLog(@"%f", sender.value);
     self.buye.text = [NSString stringWithFormat:@"%.2f万",sender.value];
 }
 
