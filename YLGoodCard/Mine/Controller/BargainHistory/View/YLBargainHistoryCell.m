@@ -1,33 +1,35 @@
 //
-//  YLSaleOrderCell.m
+//  YLBargainHistoryCell.m
 //  YLGoodCard
 //
-//  Created by lm on 2018/12/1.
+//  Created by lm on 2018/12/2.
 //  Copyright © 2018 Chenzhiming. All rights reserved.
 //
 
-#import "YLSaleOrderCell.h"
+#import "YLBargainHistoryCell.h"
+#import "YLCondition.h"
 
-@interface YLSaleOrderCell ()
+@interface YLBargainHistoryCell ()
 
 @property (nonatomic, strong) UIImageView *icon; // 图片
 @property (nonatomic, strong) UILabel *title; // 名称
 @property (nonatomic, strong) UILabel *course; // 年/万公里
 @property (nonatomic, strong) UILabel *price; // 销售价格
 @property (nonatomic, strong) UILabel *originalPrice; // 新车价
-@property (nonatomic, strong) UILabel *lookCarTime; // 看车时间
+@property (nonatomic, strong) YLCondition *bargainNumber;// 砍价数量
 
-@property (nonatomic, strong) UIView *line;// 底线
+@property (nonatomic, strong) UIView *line;
+
 @end
 
-@implementation YLSaleOrderCell
+@implementation YLBargainHistoryCell
 
 + (instancetype)cellWithTableView:(UITableView *)tableView {
     
-    static NSString *ID = @"YLSubCell";
-    YLSaleOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    static NSString *ID = @"YLSaleOrderCell";
+    YLBargainHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
-        cell = [[YLSaleOrderCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+        cell = [[YLBargainHistoryCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
     }
     return cell;
 }
@@ -75,33 +77,37 @@
     [self addSubview:price];
     self.price = price;
     
-    UILabel *lookCarTime = [[UILabel alloc] init];
-    lookCarTime.text = @"看车时间:11月11日 17:50";
-    lookCarTime.font = [UIFont systemFontOfSize:12];
-    lookCarTime.textColor = [UIColor grayColor];
-    [self addSubview:lookCarTime];
-    self.lookCarTime = lookCarTime;
     
     UIView *line = [[UIView alloc] init];
     line.backgroundColor = [UIColor grayColor];
     [self addSubview:line];
     self.line = line;
+    
+    YLCondition *bargainNumber = [YLCondition buttonWithType:UIButtonTypeCustom];
+    bargainNumber.type = YLConditionTypeWhite;
+    [bargainNumber setTitle:@"10" forState:UIControlStateNormal];
+    bargainNumber.layer.cornerRadius = 18.f;
+    bargainNumber.layer.masksToBounds = YES;
+    [self addSubview:bargainNumber];
+    self.bargainNumber = bargainNumber;
 }
 
-- (void)setSaleOrderCellFrame:(YLSaleOrderCellFrame *)saleOrderCellFrame {
-    _saleOrderCellFrame = saleOrderCellFrame;
+- (void)setCellFrame:(YLBargainHistoryCellFrame *)cellFrame {
+    _cellFrame = cellFrame;
     
-    self.icon.frame = saleOrderCellFrame.iconF;
-    self.title.frame = saleOrderCellFrame.titleF;
-    self.price.frame = saleOrderCellFrame.priceF;
-    self.originalPrice.frame = saleOrderCellFrame.originalPriceF;
-    self.line.frame = saleOrderCellFrame.lineF;
-
-    //  赋值
-//    [self.icon sd_setImageWithURL:[NSURL URLWithString:saleOrderCellFrame.model.detail] placeholderImage:nil];
-//    self.title.text = @"";
-//    self.price.text = @"";
-//    self.originalPrice.text = @"";
+    self.icon.frame = cellFrame.iconF;
+    self.title.frame = cellFrame.titleF;
+    self.price.frame = cellFrame.priceF;
+    self.course.frame = cellFrame.courseF;
+    self.originalPrice.frame = cellFrame.originalPriceF;
+    self.bargainNumber.frame = cellFrame.bargainNumberF;
+    self.line.frame = cellFrame.lineF;
+    
+    self.title.text = @"xxxxx";
+    self.price.text = @"12.9万";
+    self.course.text = @"25万公里/年";
+    self.originalPrice.text = @"新车含税价25.6万";
+    [self.bargainNumber setTitle:@"6" forState:UIControlStateNormal];
 }
 
 

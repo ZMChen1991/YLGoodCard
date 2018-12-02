@@ -28,6 +28,7 @@
 #import "YLSaleOrderController.h"
 #import "YLBuyOrderController.h"
 #import "YLBargainHistoryController.h"
+#import "YLDepreciateController.h"
 
 #import "YLTableGroupHeader.h"
 #import "YLFunctionView.h"
@@ -314,6 +315,8 @@
         }
         if (index == 3) {
             NSLog(@"降价提醒");
+            YLDepreciateController *depreciate = [[YLDepreciateController alloc] init];
+            [self.navigationController pushViewController:depreciate animated:YES];
         }
     } else {
         NSLog(@"没有登录");

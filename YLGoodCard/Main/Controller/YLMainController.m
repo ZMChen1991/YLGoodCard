@@ -62,32 +62,6 @@
     [self setupTableView];
 }
 
-//- (void)load {
-//
-//    // 获取轮播图数组
-//    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-//    [YLHomeTool bannerWithParam:param success:^(NSArray<YLBannerModel *> * _Nonnull result) {
-//        for (YLBannerModel *model in result) {
-//            [self.images addObject:model.img];
-//        }
-//    } failure:nil];
-//
-//    // 获取走马灯广告数组
-//    [YLHomeTool notableWithParam:param success:^(NSArray<YLNotableModel *> * _Nonnull result) {
-//        for (YLNotableModel *model in result) {
-//            [self.notableTitles addObject:model.text];
-//        }
-//    } failure:nil];
-//
-//    // 获取推荐列表数组
-//    [YLHomeTool recommendWithParam:param success:^(NSArray<YLTableViewModel *> * _Nonnull result) {
-//        for (YLTableViewModel *model in result) {
-//            [self.recommends addObject:model];
-//        }
-//        [self.tableView reloadData]; // 获取到数据刷新表格
-//    } failure:nil];
-//}
-
 - (void)loadData {
     
 //    // 获取轮播图
@@ -152,6 +126,8 @@
 //    self.tableView.bounces = NO; // 禁止弹跳
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRefresh)];
+    self.tableView.mj_footer = [MJRefreshAutoStateFooter footerWithRefreshingTarget:self refreshingAction:@selector(footerRefresh)];
+    
 
     CGRect frame = CGRectMake(0, 100, YLScreenWidth, 424);
     YLHomeHeader *homeHeader = [[YLHomeHeader alloc] initWithFrame:frame bannerTitles:self.images notabletitles:self.notableTitles];
@@ -191,6 +167,13 @@
     [self.recommends removeAllObjects];
     [self loadData];
     [self.tableView.mj_header endRefreshing];
+}
+
+- (void)footerRefresh {
+    
+    NSLog(@"上拉刷新");
+    [self loadMoreData];
+//    [self.tableView.mj_footer endRefreshing];
 }
 
 #pragma mark UITableViewDataSource/UITableViewDelegate

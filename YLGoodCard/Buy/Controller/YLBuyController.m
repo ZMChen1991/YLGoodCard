@@ -132,6 +132,9 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshHeader)];
+    self.tableView.mj_footer = [MJRefreshAutoFooter footerWithRefreshingTarget:self refreshingAction:@selector(refreshFooter)];
+    
     // 添加蒙版
     [self.view addSubview:self.coverView];
     [self.coverView addSubview:self.sortView];
@@ -144,6 +147,18 @@
     self.customPrice.hidden = YES;
     self.selectView.hidden = YES;
     self.isSelect = NO;
+}
+
+- (void)refreshHeader {
+    NSLog(@"下拉刷新");
+    [self loadData];
+    [self.tableView.mj_header endRefreshing];
+}
+
+- (void)refreshFooter {
+    NSLog(@"上拉刷新");
+    [self loadMoreData];
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (void)titleClick {
