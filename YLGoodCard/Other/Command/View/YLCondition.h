@@ -16,9 +16,8 @@ typedef NS_ENUM(NSInteger, YLConditionType) {
 
 @class YLCondition;
 @protocol YLConditionDelegate <NSObject>
-@optional
+
 - (void)bargainPrice;
-- (void)pushController:(UIButton *)sender;
 
 @end
 

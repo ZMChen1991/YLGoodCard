@@ -18,7 +18,7 @@
 #import "YLAccountTool.h"
 #import "YLLoginController.h"
 
-@interface YLSaleViewController () <YLConditionDelegate>
+@interface YLSaleViewController () <YLSaleButtonDelegate>
 
 @property (nonatomic, strong) YLSaleView *saleView;
 
@@ -40,8 +40,6 @@
     self.saleView = saleView;
     
     saleView.saleBtn.delegate = self;
-    saleView.consultBtn.delegate = self;
-    saleView.appraiseBtn.delegate = self;
 }
 
 - (void)setupNav {
@@ -67,6 +65,7 @@
 }
 
 #pragma mark YLSaleButton代理方法
+<<<<<<< HEAD
 - (void)pushController:(UIButton *)sender {
     
     NSLog(@"%@---%ld", sender.titleLabel.text, sender.tag);
@@ -130,4 +129,12 @@
     }];
 }
 
+=======
+- (void)pushController:(YLSaleButton *)sender {
+    
+    YLOrderController *orderVc = [[YLOrderController alloc] init];
+    [self.navigationController pushViewController:orderVc animated:YES];
+}
+
+>>>>>>> parent of 1116516... a
 @end

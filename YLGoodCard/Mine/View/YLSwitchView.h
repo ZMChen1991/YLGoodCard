@@ -1,5 +1,5 @@
 //
-//  YLSkipView.h
+//  YLSwitchView.h
 //  YLGoodCard
 //
 //  Created by lm on 2018/11/12.
@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YLSkipView : UIView
+@interface YLSwitchView : UIView
 
 @property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSArray *controllers;
-
 
 @end

@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "YLCondition.h"
+#import "YLSaleButton.h"
 
 @interface YLOrderView : UIView
 
-@property (nonatomic, strong) YLCondition *saleBtn; // 预约卖车
-@property (nonatomic, strong) YLCondition *consultBtn; // 免费咨询
+@property (nonatomic, strong) YLSaleButton *saleBtn; // 预约卖车
+@property (nonatomic, strong) YLSaleButton *consultBtn; // 免费咨询
 
 @end

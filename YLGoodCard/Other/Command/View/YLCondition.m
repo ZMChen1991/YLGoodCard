@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.layer.cornerRadius = 4;
+        self.layer.cornerRadius = 5;
         self.layer.masksToBounds = YES;
     }
     return self;

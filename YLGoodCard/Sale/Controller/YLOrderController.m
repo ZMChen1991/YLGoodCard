@@ -11,6 +11,7 @@
 #import "YLDetectCenterView.h"
 #import "YLBrandController.h"
 
+<<<<<<< HEAD
 #import "YLBuyTool.h"
 #import "YLSaleTool.h"
 
@@ -25,6 +26,9 @@
 #import "YLAllTimePicker.h"
 
 @interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLConditionDelegate, YLDetectCenterViewDelegate>
+=======
+@interface YLOrderController () <UITableViewDelegate, UITableViewDataSource, YLSaleButtonDelegate>
+>>>>>>> parent of 1116516... a
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) UIView *cover; // 蒙板
@@ -62,11 +66,15 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+<<<<<<< HEAD
     [self setupUI];
     [self loadData];
 }
 
 - (void)setupUI {
+=======
+    self.navigationItem.title = @"预约卖车";
+>>>>>>> parent of 1116516... a
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, YLScreenHeight)];
     tableView.delegate = self;
@@ -75,6 +83,12 @@
     self.tableView = tableView;
     
     YLOrderView *orderView = [[YLOrderView alloc] initWithFrame:CGRectMake(0, 0, YLScreenWidth, 130)];
+<<<<<<< HEAD
+=======
+//    orderView.backgroundColor = [UIColor redColor];
+    self.tableView.tableFooterView = orderView;
+   
+>>>>>>> parent of 1116516... a
     orderView.saleBtn.delegate = self;
     [orderView.saleBtn setTitle:self.navigationItem.title forState:UIControlStateNormal];
     self.tableView.tableFooterView = orderView;
@@ -158,6 +172,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+<<<<<<< HEAD
     NSLog(@"弹出%@弹窗", self.array[indexPath.row]);
     if (indexPath.row == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"暂时只支持阳江市" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
@@ -224,10 +239,13 @@
         self.cityView.hidden = YES;
     }
     
+=======
+    NSLog(@"%@", self.array[indexPath.row]);
+>>>>>>> parent of 1116516... a
 }
 
 #pragma mark YLSaleButtonDelegate
-- (void)pushController:(UIButton *)sender {
+- (void)pushController {
     
     if ([self isFullMessage]) {
         YLReservationController *reservationVc = [[YLReservationController alloc] init];
